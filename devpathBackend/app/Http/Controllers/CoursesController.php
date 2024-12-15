@@ -25,7 +25,7 @@ class CoursesController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**

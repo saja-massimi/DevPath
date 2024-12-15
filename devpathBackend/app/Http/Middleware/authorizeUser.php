@@ -16,8 +16,7 @@ class authorizeUser
      */
     public function handle(Request $request, Closure $next): Response
     {
-        dd(Auth::user());
-        
+
         if (!Auth::user()) {
             return redirect('/');
         } else

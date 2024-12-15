@@ -1,19 +1,58 @@
 <?php
 
+use App\Http\Controllers\api\AuthApiController;
+use App\Http\Controllers\api\ProfileApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\CoursesApiController;
+use App\Http\Controllers\Api\EnrollmentsApiController;
+use App\Http\Controllers\Api\CategoriesApiController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+//************************** Login & Registration ************************ */
+Route::post('/register', [AuthApiController::class, 'register']);
+Route::post('/login', [AuthApiController::class, 'login']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+
+/******************************* Profile ******************************** */
+
+Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
+    Route::get('/profile', [ProfileApiController::class, 'view'])->name('view');
+    Route::patch('/profile', [ProfileApiController::class, 'updateProfile'])->name('update');
+});
+
+//***************************** Courses **************************** */
+
+Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
+    Route::get('/courses', [CoursesApiController::class, 'index'])->name('index');
+    Route::post('/courses', [CoursesApiController::class, 'store'])->name('store');
+    Route::get('/courses/{course}', [CoursesApiController::class, 'show'])->name('show');
+    Route::patch('/courses/{course}', [CoursesApiController::class, 'update'])->name('update');
+    Route::delete('/courses/{course}', [CoursesApiController::class, 'destroy'])->name('destroy');
+});
+
+//***************************** Enrollments **************************** */
+
+Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
+    Route::get('/enrollments', [EnrollmentsApiController::class, 'index'])->name('index');
+    Route::post('/enrollments', [EnrollmentsApiController::class, 'store'])->name('store');
+    Route::get('/enrollments/{enrollment}', [EnrollmentsApiController::class, 'show'])->name('show');
+    Route::patch('/enrollments/{enrollment}', [EnrollmentsApiController::class, 'update'])->name('update');
+    Route::delete('/enrollments/{enrollment}', [EnrollmentsApiController::class, 'destroy'])->name('destroy');
+});
+
+//***************************** Categories **************************** */
+
+Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
+    Route::get('/categories', [CategoriesApiController::class, 'index'])->name('index');
+    Route::post('/categories', [CategoriesApiController::class, 'store'])->name('store');
+    Route::get('/categories/{category}', [CategoriesApiController::class, 'show'])->name('show');
+    Route::patch('/categories/{category}', [CategoriesApiController::class, 'update'])->name('update');
+    Route::delete('/categories/{category}', [CategoriesApiController::class, 'destroy'])->name('destroy');
+});
+
+
+//***************************** Logout **************************** */
+
+Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
+    Route::post('/logout', [AuthApiController::class, 'logout'])->name('logout');
 });
