@@ -1,6 +1,15 @@
 import Logo from '../assets/img/devpath-high-resolution-logo.png';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Navbar() {
+
+    const isLoggedIn = !!localStorage.getItem("authToken");
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("user_id");
+        navigate("/login");
+    };
     return (
         <>
             <header className="header rs-nav">
@@ -9,7 +18,7 @@ function Navbar() {
                         <div className="container clearfix">
                             {/* Header Logo ==== */}
                             <div className="menu-logo">
-                                <a href="index.html">
+                                <a href="/">
                                     <img src={Logo} alt="" />
                                 </a>
                             </div>
@@ -32,25 +41,19 @@ function Navbar() {
                                 <div className="secondary-inner">
                                     <ul>
                                         <li>
-                                            <a href="javascript:;" className="btn-link">
-                                                <i className="fa fa-facebook" />
+                                            <a href="/register" className="btn-link">
+                                                <span>Register </span>
                                             </a>
                                         </li>
-                                        <li>
-                                            <a href="javascript:;" className="btn-link">
-                                                <i className="fa fa-google-plus" />
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;" className="btn-link">
-                                                <i className="fa fa-linkedin" />
-                                            </a>
-                                        </li>
+
+
                                         {/* Search Button ==== */}
                                         <li className="search-btn">
-                                            <button id="quik-search-btn" type="button" className="btn-link">
-                                                <i className="fa fa-search" />
-                                            </button>
+
+                                            <a href="/login" className="btn-link">
+                                                <span>Login </span>
+                                            </a>
+
                                         </li>
                                     </ul>
                                 </div>
@@ -229,7 +232,7 @@ function Navbar() {
                                             Dashboard <i className="fa fa-chevron-down" />
                                         </a>
                                         <ul className="sub-menu">
-                                           
+
                                             <li>
                                                 <a href="admin/add-listing.html">Add Listing</a>
                                             </li>

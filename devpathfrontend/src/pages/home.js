@@ -1,7 +1,6 @@
 import Header from "../components/header";
-import Services from "../components/services";
 import About from "../components/about";
-import Categories from "../components/categories";
+import About2 from "../components/about2";
 import Courses from "../components/courses";
 
 function Home() {
@@ -14,7 +13,8 @@ function Home() {
             </div>
             <div class="content-block">
                 <Courses />
-
+                <About />
+                <About2></About2>
             </div>
 
 

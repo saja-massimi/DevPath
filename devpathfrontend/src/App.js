@@ -1,4 +1,6 @@
-import './App.css';
+import React, { useEffect } from "react";
+
+
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'animate.css/animate.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -13,40 +15,87 @@ import './assets/vendors/revolution/css/navigation.css';
 import './assets/vendors/revolution/css/settings.css';
 
 
+import "magnific-popup/dist/magnific-popup.css";
+import "magnific-popup";
+import WOW from "wow.js";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/navbar";
+import Footer from "./components/footer";
+import Home from "./pages/home";
+import Login from "./pages/login";
+import Register from "./pages/register";
+import NotFound from "./pages/notFound";
+import $ from "jquery";
 
-import { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/navbar';
-import Footer from './components/footer';
-import Home from './pages/home';
-import Authentication from './pages/authentication';
-import NotFound from './pages/notFound';
+const App = () => {
+  useEffect(() => {
+    const magnificPopupImageView = () => {
+      if (document.querySelectorAll(".magnific-image").length > 0) {
+        $(".magnific-image").magnificPopup({
+          delegate: ".magnific-anchor",
+          type: "image",
+          gallery: { enabled: true },
+        });
+      }
+    };
 
-function App() {
-  
+    const pageScrollToTop = () => {
+      const backToTopButton = document.querySelector("button.back-to-top");
 
+      if (backToTopButton) {
+        backToTopButton.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        window.addEventListener("scroll", () => {
+          if (window.scrollY > 900) {
+            backToTopButton.style.display = "block";
+          } else {
+            backToTopButton.style.display = "none";
+          }
+        });
+      }
+    };
+
+    const wowAnimation = () => {
+      if (document.querySelectorAll(".wow").length > 0) {
+        new WOW().init();
+      }
+    };
+
+    magnificPopupImageView();
+    pageScrollToTop();
+    wowAnimation();
+
+    return () => {
+      window.removeEventListener("scroll", null);
+    };
+  }, []);
 
   return (
-    <div className="App" style={{ margin: 0, padding: 0 }}>
+    <div>
       <Router>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/authentication" element={<Authentication />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
 
-        <div id="spinner" className="spinner-border text-primary" role="status">
+        {/* <div id="spinner" class   Name="spinner-border text-primary" role="status">
           <span className="visually-hidden">Loading...</span>
-        </div>
-        <button className="back-to-top btn btn-primary">
-          <i className="bi bi-arrow-up"></i>
-        </button>
+        </div> */}
+
+<button className="back-to-top fa fa-chevron-up" />
 
       </Router>
+
+
     </div>
   );
-}
+};
 
 export default App;
