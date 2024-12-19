@@ -13,6 +13,8 @@ import './assets/css/color/color-1.css';
 import './assets/vendors/revolution/css/layers.css';
 import './assets/vendors/revolution/css/navigation.css';
 import './assets/vendors/revolution/css/settings.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 
 import "magnific-popup/dist/magnific-popup.css";
@@ -25,10 +27,15 @@ import Home from "./pages/home";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import NotFound from "./pages/notFound";
+import Courses from "./pages/AllCourses";
 import $ from "jquery";
+
+
 
 const App = () => {
   useEffect(() => {
+
+    
     const magnificPopupImageView = () => {
       if (document.querySelectorAll(".magnific-image").length > 0) {
         $(".magnific-image").magnificPopup({
@@ -57,12 +64,14 @@ const App = () => {
       }
     };
 
+ 
     const wowAnimation = () => {
       if (document.querySelectorAll(".wow").length > 0) {
         new WOW().init();
       }
     };
 
+  
     magnificPopupImageView();
     pageScrollToTop();
     wowAnimation();
@@ -80,20 +89,15 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-
           <Route path="*" element={<NotFound />} />
+          <Route path="/courses" element={<Courses/>}/>
         </Routes>
         <Footer />
 
-        {/* <div id="spinner" class   Name="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div> */}
 
-<button className="back-to-top fa fa-chevron-up" />
-
+        {/* Back-to-Top Button */}
+        <button className="back-to-top fa fa-chevron-up" />
       </Router>
-
-
     </div>
   );
 };

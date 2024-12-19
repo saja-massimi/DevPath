@@ -14,13 +14,14 @@ class authorizeUser
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, ...$roles)
     {
+        $user = $request->user();
 
-        if (!Auth::user()) {
-            return redirect('/');
-        } else
-
+        if ($user && in_array($user->role, $roles)) {
             return $next($request);
+        }
+
+        return response()->json(['error' => 'Unauthorized'], 403);
     }
 }

@@ -54,7 +54,6 @@ class AuthApiController extends Controller
 
     public function login(Request $request)
     {
-        // Validation for login
         $request->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -63,9 +62,8 @@ class AuthApiController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if ($user) {
-            // Check if password matches
             if (Hash::check($request->password, $user->password)) {
-                // Create token
+
                 $token = $user->createToken('myToken')->plainTextToken;
 
                 return response()->json([
@@ -76,6 +74,7 @@ class AuthApiController extends Controller
                         'id' => $user->id,
                         'name' => $user->name,
                         'email' => $user->email,
+                        'role' => $user->role
 
                     ],
                 ]);
@@ -94,7 +93,6 @@ class AuthApiController extends Controller
 
     public function logout(Request $request)
     {
-      //delete user id from session  
       
 
         $request->user()->currentAccessToken()->delete();

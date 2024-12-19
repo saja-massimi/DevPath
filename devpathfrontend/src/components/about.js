@@ -12,20 +12,13 @@ function About() {
                             <div className="col-md-12">
                                 <div className="join-content-bx text-white">
                                     <h2>
-                                        Learn a new skill online on <br /> your time
+                                        Learn Coding online on <br /> your time
                                     </h2>
                                     <h4>
                                         <span className="counter">57,000</span> Online Courses
                                     </h4>
                                     <p>
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting
-                                        industry. Lorem Ipsum has been the industry's standard dummy text
-                                        ever since the 1500s, when an unknown printer took a galley of
-                                        type and scrambled it to make a type specimen book.Lorem Ipsum is
-                                        simply dummy text of the printing and typesetting industry. Lorem
-                                        Ipsum has been the industry's standard dummy text ever since the
-                                        1500s, when an unknown printer took a galley of type and scrambled
-                                        it to make a type specimen book.
+                                    An e-learning platform designed for coding education and instruction. It offers a user-friendly interface for learners to access diverse courses, from basic programming concepts to advanced software development.
                                     </p>
                                     <a href="#" className="btn button-md">
                                         Join Now

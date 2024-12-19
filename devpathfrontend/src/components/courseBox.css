@@ -1,0 +1,45 @@
+/* Add these styles to ensure the container is properly styled */
+.section-area {
+    padding: 50px 0;
+  }
+  
+  .popular-courses-bx .container {
+    max-width: 1200px;
+    margin: 0 auto;
+
+  }
+  
+  .cours-bx {
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-right: 20px !important; 
+
+
+  }
+  
+  .action-box img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .action-box img:hover {
+    transform: scale(1.05);
+  }
+  
+  .info-bx {
+    padding: 15px;
+    background-color: #fff;
+  }
+  
+  .info-bx h5 {
+    font-size: 1.25rem;
+    color: #333;
+  }
+  
+  .info-bx span {
+    color: #888;
+  }
+  

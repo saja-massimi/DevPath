@@ -1,30 +1,61 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import bgImage from '../assets/images/background/bg1.jpg';
+import axiosInstance from '../api/axiosInstance';
+
 function Header() {
+  const isLoggedIn = !!localStorage.getItem("authToken");
+  const [name, setName] = useState("");
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        if (token) {
+          const response = await axiosInstance.get('/profile', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          console.log(response);
+          setName(response.data.user.name);
+        } else {
+          setName(""); 
+        }
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+        setName(""); 
+      }
+    };
+
+    fetchProfile();
+  }, [isLoggedIn]);
+
   return (
     <>
       <div
         className="section-area section-sp1 ovpr-dark bg-fix online-cours"
-        style={{ backgroundImage: "url(assets/images/background/bg1.jpg)" }}
+        style={{ backgroundImage: `url(${bgImage})` }}
       >
         <div className="container">
           <div className="row">
             <div className="col-md-12 text-center text-white">
               <h2>Online Courses To Learn</h2>
-              <h5>Own Your Feature Learning New Skills Online</h5>
-              <form className="cours-search">
-                <div className="input-group">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="What do you want to learn today?	"
-                  />
-                  <div className="input-group-append">
-                    <button className="btn" type="submit">
-                      Search
-                    </button>
-                  </div>
+              <h5>Transform Your Ideas into Reality with Code</h5>
+
+              {isLoggedIn ? (
+                <p className="text-center mb-2">
+                  Welcome <strong>{name}</strong>, Start Learning
+                </p>
+              ) : (
+
+                <div className="d-flex justify-content-center mb-5">
+                  <a className="btn btn-primary" >Join Now</a>
                 </div>
-              </form>
+
+
+
+              )}
+
             </div>
           </div>
           <div className="mw800 m-auto">
@@ -34,10 +65,10 @@ function Header() {
                   <div className="icon-box">
                     <h3>
                       <i className="ti-user" />
-                      <span className="counter">5</span>M
+                      <span className="counter"></span>
                     </h3>
                   </div>
-                  <span className="cours-search-text">Over 5 million student</span>
+                  <span className="cours-search-text">Our instructors are passionate professionals with years of experience in programming and software development</span>
                 </div>
               </div>
               <div className="col-md-4 col-sm-6">
@@ -45,10 +76,10 @@ function Header() {
                   <div className="icon-box">
                     <h3>
                       <i className="ti-book" />
-                      <span className="counter">30</span>K
+                      <span className="counter"></span>
                     </h3>
                   </div>
-                  <span className="cours-search-text">30,000 Courses.</span>
+                  <span className="cours-search-text">Our online classes are designed to fit seamlessly into your schedule, letting you learn at your own pace and from the comfort of home</span>
                 </div>
               </div>
               <div className="col-md-4 col-sm-12">
@@ -56,19 +87,17 @@ function Header() {
                   <div className="icon-box">
                     <h3>
                       <i className="ti-layout-list-post" />
-                      <span className="counter">20</span>K
+                      <span className="counter"></span>
                     </h3>
                   </div>
-                  <span className="cours-search-text">Learn Anythink Online.</span>
+                  <span className="cours-search-text">Our platform’s assignments are crafted to turn theory into practice, allowing you to apply what you’ve learned and solidify your skills</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      {/* Main Slider */}
     </>
-
   );
 }
 

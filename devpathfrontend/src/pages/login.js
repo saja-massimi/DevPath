@@ -35,6 +35,8 @@ function Login() {
             setErrors({});
 
             const response = await axiosInstance.post('/login', formData);
+            
+            console.log(response);
 
             if (response.data.token || response.data.user) {
                 toast.success('Login successful!', { position: "top-right", autoClose: 3000 });
@@ -119,9 +121,9 @@ function Login() {
                                                 className="custom-control-input"
                                                 id="customControlAutosizing"
                                             />
-                                          
+
                                         </div>
-                                       
+
                                     </div>
                                 </div>
                                 <div className="col-lg-12 m-b30">

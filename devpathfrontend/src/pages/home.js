@@ -8,10 +8,10 @@ function Home() {
     return (
         <>
 
-            <div class="page-content bg-white">
+            <div className="page-content bg-white">
                 <Header />
             </div>
-            <div class="content-block">
+            <div className="content-block">
                 <Courses />
                 <About />
                 <About2></About2>

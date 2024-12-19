@@ -1972,7 +1972,6 @@ button.back-to-top {
 	display: inline-block;
 	font-size: 13px;
 	text-transform: capitalize;
-	font-family: ;
 	margin-right: 5px;
 }
 .media-post li a{
@@ -2140,6 +2139,8 @@ button.back-to-top {
 	border:1px solid rgba(255,255,255,0.2);
 	background-color:rgba(255,255,255,0.15);
 	padding:20px 20px 15px 20px;
+	min-height: 250px;
+	
 }
 .cours-search-bx h3{
 	color:#fff;

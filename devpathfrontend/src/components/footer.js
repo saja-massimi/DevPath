@@ -109,91 +109,11 @@ function footer() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="col-12 col-lg-3 col-md-5 col-sm-12 footer-col-4">
-                                    <div className="widget widget_gallery gallery-grid-4">
-                                        <h5 className="footer-title">Our Gallery</h5>
-                                        <ul className="magnific-image">
-                                            <li>
-                                                <a
-                                                    href="assets/images/gallery/pic1.jpg"
-                                                    className="magnific-anchor"
-                                                >
-                                                    <img src="assets/images/gallery/pic1.jpg" alt="" />
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                    href="assets/images/gallery/pic2.jpg"
-                                                    className="magnific-anchor"
-                                                >
-                                                    <img src="assets/images/gallery/pic2.jpg" alt="" />
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                    href="assets/images/gallery/pic3.jpg"
-                                                    className="magnific-anchor"
-                                                >
-                                                    <img src="assets/images/gallery/pic3.jpg" alt="" />
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                    href="assets/images/gallery/pic4.jpg"
-                                                    className="magnific-anchor"
-                                                >
-                                                    <img src="assets/images/gallery/pic4.jpg" alt="" />
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                    href="assets/images/gallery/pic5.jpg"
-                                                    className="magnific-anchor"
-                                                >
-                                                    <img src="assets/images/gallery/pic5.jpg" alt="" />
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                    href="assets/images/gallery/pic6.jpg"
-                                                    className="magnific-anchor"
-                                                >
-                                                    <img src="assets/images/gallery/pic6.jpg" alt="" />
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                    href="assets/images/gallery/pic7.jpg"
-                                                    className="magnific-anchor"
-                                                >
-                                                    <img src="assets/images/gallery/pic7.jpg" alt="" />
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                    href="assets/images/gallery/pic8.jpg"
-                                                    className="magnific-anchor"
-                                                >
-                                                    <img src="assets/images/gallery/pic8.jpg" alt="" />
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                           
                             </div>
                         </div>
                     </div>
-                    <div className="footer-bottom">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-lg-12 col-md-12 col-sm-12 text-center">
-                                    <a target="_blank" href="https://www.templateshub.net">
-                                        Templates Hub
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                
                 </footer>
                 {/* Footer END ==== */}
                 <button className="back-to-top fa fa-chevron-up" />

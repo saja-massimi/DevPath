@@ -24,7 +24,7 @@ Route::middleware(['auth', 'verified'])->group(
     }
 );
 
-Route::middleware('auth', 'authorize')->group(
+Route::middleware('auth', 'authorize:admin')->group(
     function () {
         Route::get('/dashboard/customer', [CustomerController::class, 'index'])->name('customer.index');
         Route::patch('/dashboard/customer/update/{id}', [CustomerController::class, 'update'])->name('customer.update');
@@ -32,7 +32,7 @@ Route::middleware('auth', 'authorize')->group(
     }
 );
 
-Route::middleware('auth', 'authorize')->group(
+Route::middleware('auth', 'authorize:admin')->group(
     function () {
         Route::get('/dashboard/contactUs', [ContactusController::class, 'index'])->name('contactus.index');
         Route::get('/dashboard/contactUs/edit/{id}', [ContactusController::class, 'edit'])->name('contactus.edit');
@@ -41,7 +41,7 @@ Route::middleware('auth', 'authorize')->group(
     }
 );
 
-Route::middleware('auth', 'authorize')->group(
+Route::middleware('auth', 'authorize:admin')->group(
     function () {
         Route::get('/dashboard/teacher', [TeacherController::class, 'index'])->name('teacher.index');
         Route::patch('/dashboard/teacher/update/{id}', [TeacherController::class, 'update'])->name('teacher.update');
@@ -49,7 +49,7 @@ Route::middleware('auth', 'authorize')->group(
     }
 );
 
-Route::middleware('auth', 'authorize')->group(
+Route::middleware('auth', 'authorize:admin')->group(
     function () {
         Route::get('/dashboard/categories', [CategoriesController::class, 'index'])->name('categories.index');
         Route::get('/dashboard/createCategory', [CategoriesController::class, 'create'])->name('categories.create');
@@ -59,7 +59,7 @@ Route::middleware('auth', 'authorize')->group(
     }
 );
 
-Route::middleware('auth', 'authorize')->group(
+Route::middleware('auth', 'authorize:admin')->group(
     function () {
         Route::get('/dashboard/transactions', [TransactionController::class, 'index'])->name('transactions.index');
         Route::get('/dashboard/transactions/edit/{id}', [TransactionController::class, 'edit'])->name('transactions.edit');
@@ -70,14 +70,14 @@ Route::middleware('auth', 'authorize')->group(
     }
 );
 
-Route::middleware('auth', 'authorize')->group(function () {
+Route::middleware('auth', 'authorize:admin')->group(function () {
     Route::get('dashboard/profile', [ProfileController::class, 'view'])->name('profile.view');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('dashboard/profile', [ProfileController::class, 'updateProfile'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'authorize'])->group(
+Route::middleware(['auth', 'authorize:admin'])->group(
     function () {
 
         Route::get('/dashboard/courses', [CoursesController::class, 'index'])->name('courses.index');
