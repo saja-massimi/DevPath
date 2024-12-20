@@ -67,6 +67,7 @@
                                                 <select name="role" class="form-control" disabled>
                                                     <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
                                                     <option value="student" {{ $user->role === 'student' ? 'selected' : '' }}>Student</option>
+                                                    <option value="teacher" {{ $user->role === 'teacher' ? 'selected' : '' }}>Teacher</option>
                                                 </select>
                                             </form>
                                         </td>

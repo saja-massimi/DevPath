@@ -39,6 +39,8 @@ class AuthApiController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'is_pending_teacher' => $request->is_pending_teacher,
+
         ]);
 
         return response()->json([
@@ -93,7 +95,8 @@ class AuthApiController extends Controller
 
     public function logout(Request $request)
     {
-      
+
+
 
         $request->user()->currentAccessToken()->delete();
 

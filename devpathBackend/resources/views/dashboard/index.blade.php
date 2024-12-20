@@ -14,12 +14,12 @@
 
 
 
-  
+
   <div id="main-wrapper">
 
     <div class="nav-header">
       <a href="{{route('dashboard')}}" class="brand-logo">
-        <img class="brand-title" src="{{ asset('dashboard_assets/images/logos/logo-devpath.png') }}" alt="logo" >
+        <img class="brand-title" src="{{ asset('dashboard_assets/images/logos/logo-devpath.png') }}" alt="logo">
       </a>
       <div class="nav-control">
         <div class="hamburger">
@@ -39,6 +39,8 @@
           <li><a href="{{route('courses.index')}}"><i class="ti-ruler-pencil"></i> <span class="nav-text">Courses</span> </a></li>
           <li><a href="{{route('categories.index')}}"><i class="ti-layout-grid2-alt"></i> <span class="nav-text">Categories</span> </a></li>
           <li><a href="{{route('transactions.index')}}"><i class="ti-money"></i> <span class="nav-text">Transactions</span> </a></li>
+          <li><a href="{{route('customer.pending')}}"><i class="ti-timer"></i> <span class="nav-text">Pending Teachers</span> </a></li>
+
           <li>
             <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
               <i class="ti-close"></i><span class="nav-text">Logout</span></a>

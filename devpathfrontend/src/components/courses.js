@@ -1,38 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
-import CourseBox from "./courseBox"; // Import the CourseBox component
-
-import Course1 from "../assets/images/courses/pic1.jpg";
-import Course2 from "../assets/images/courses/pic2.jpg";
-import Course3 from "../assets/images/courses/pic3.jpg";
-import Course4 from "../assets/images/courses/pic4.jpg";
+import CourseBox from "./courseBox";
+import axiosInstance from "../api/axiosInstance";
 
 const Courses = () => {
-  const courseData = [
-    { id: 1, image: Course1, title: "Course 1", category: "Programming" },
-    { id: 2, image: Course2, title: "Course 2", category: "Design" },
-    { id: 3, image: Course3, title: "Course 3", category: "Marketing" },
-    { id: 4, image: Course4, title: "Course 4", category: "Business" },
-  ];
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await axiosInstance.get("/courses");
+        console.log("Full Response:", response);
+
+        if (Array.isArray(response.data.data)) {
+          setCourses(response.data.data);
+        }
+
+    
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  useEffect(() => {
+    console.log("Courses state updated:", courses); // Confirm state update
+  }, [courses]);
 
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500, 
-    slidesToShow: 3, 
-    slidesToScroll: 1, 
-    draggable: true, 
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    draggable: true,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3, 
+          slidesToShow: 3,
         },
       },
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 2, 
+          slidesToShow: 2,
         },
       },
     ],
@@ -48,18 +65,23 @@ const Courses = () => {
             </h2>
           </div>
         </div>
-        {/* Slider */}
-        <Slider {...settings}>
-          {courseData.map((course) => (
-            <CourseBox
-              key={course.id}
-              id={course.id}
-              image={course.image}
-              title={course.title}
-              category={course.category}
-            />
-          ))}
-        </Slider>
+        {loading ? (
+          <p>Loading courses...</p>
+        ) : courses.length > 0 ? (
+          <Slider {...settings}>
+            {courses.map((course) => (
+              <CourseBox
+                key={course.course_id}
+                id={course.course_id}
+                image={course.course_image}
+                title={course.course_title}
+                category={course.category}
+              />
+            ))}
+          </Slider>
+        ) : (
+          <p>No courses available at the moment.</p>
+        )}
       </div>
     </div>
   );

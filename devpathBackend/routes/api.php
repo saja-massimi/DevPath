@@ -55,6 +55,6 @@ Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
 
 //***************************** Logout **************************** */
 
-Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthApiController::class, 'logout'])->name('logout');
 });

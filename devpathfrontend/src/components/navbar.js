@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Logo from "../assets/img/devpath-high-resolution-logo.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import axios from '../api/axiosInstance';
 
 function Navbar() {
     const isLoggedIn = !!localStorage.getItem("authToken");
@@ -8,14 +9,34 @@ function Navbar() {
 
     const [isMenuOpen, setMenuOpen] = useState(false);
     const [isSearchOpen, setSearchOpen] = useState(false);
+    const handleLogout = async () => {
+        try {
+            const token = localStorage.getItem("authToken");
+            if (token) {
+                await axios.post(
+                    '/logout',
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                        withCredentials: true, // Ensure cookies are sent for session-based authentication
+                    }
+                );
+            }
 
-    const handleLogout = () => {
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("user_id");
+            // Clear client-side data after successful logout
+            localStorage.removeItem("authToken");
+            localStorage.removeItem("user_id");
 
-        // Redirect to home page
-        navigate("/");
+            // Redirect to home or login page
+            navigate("/");
+            window.location.reload();
+        } catch (error) {
+            console.error('Logout failed:', error.response?.data || error.message);
+        }
     };
+
 
     const toggleMenu = () => {
         setMenuOpen(!isMenuOpen);
@@ -70,26 +91,26 @@ function Navbar() {
                                 <ul>
                                     <li>
                                         {isLoggedIn ? (
-                                            <Link to="/profile" className="btn-link">
+                                            <Link to="/profile" className="btn-link" style={{ textDecoration: "none" }}>
                                                 <span>
-                                                    <i className="ti-user"></i>
+                                                    <i className="ti-user" ></i>
                                                 </span>
                                             </Link>
                                         ) : (
-                                            <Link to="/register" className="btn-link">
+                                            <Link to="/register" className="btn-link" style={{ textDecoration: "none" }}>
                                                 <span>Register</span>
                                             </Link>
                                         )}
                                     </li>
                                     <li className="search-btn">
                                         {isLoggedIn ? (
-                                            <button onClick={handleLogout} className="btn-link">
+                                            <button onClick={handleLogout} className="btn-link" style={{ textDecoration: "none" }}>
                                                 <span>
-                                                    <i className="ti-power-off"></i> Logout
+                                                    <i className="ti-power-off" ></i> Logout
                                                 </span>
                                             </button>
                                         ) : (
-                                            <Link to="/login" className="btn-link">
+                                            <Link to="/login" className="btn-link" style={{ textDecoration: "none" }}>
                                                 <span>Login</span>
                                             </Link>
                                         )}

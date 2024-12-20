@@ -16,7 +16,7 @@ function Header() {
               Authorization: `Bearer ${token}`,
             },
           });
-          console.log(response);
+     
           setName(response.data.user.name);
         } else {
           setName(""); 

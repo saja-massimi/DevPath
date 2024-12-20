@@ -27,6 +27,9 @@ Route::middleware(['auth', 'verified'])->group(
 Route::middleware('auth', 'authorize:admin')->group(
     function () {
         Route::get('/dashboard/customer', [CustomerController::class, 'index'])->name('customer.index');
+        
+        Route::get('/dashboard/PendingTeachers', [CustomerController::class, 'pending'])->name('customer.pending');
+
         Route::patch('/dashboard/customer/update/{id}', [CustomerController::class, 'update'])->name('customer.update');
         Route::get('/dashboard/customer/user_courses/{id}', [CustomerController::class, 'user_courses'])->name('customer.user_courses');
     }

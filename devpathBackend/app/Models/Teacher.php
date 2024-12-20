@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Teacher extends Model
 {
     use HasFactory;
+
     // Specify the primary key column name
     protected $primaryKey = 'teacher_id';
 
@@ -17,11 +18,20 @@ class Teacher extends Model
     // Optional: Specify the primary key type if not 'int'
     protected $keyType = 'int';
 
-
     protected $fillable = [
         'name',
         'email',
         'phone',
-
+        'address',
+        'experience',
+        'user_id', 
     ];
+
+    /**
+     * Relationship with the User model
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

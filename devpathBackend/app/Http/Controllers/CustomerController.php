@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Enrollments;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Teacher;
 
 use Illuminate\Support\Facades\DB;
 
@@ -27,15 +28,32 @@ class CustomerController extends Controller
     {
         $user = User::findOrFail($id);
 
+        $wasPendingTeacher = $user->is_pending_teacher;
+
+
         $user->update([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'role' => $request->input('role'),
             'address' => $request->input('address'),
+            'is_pending_teacher' => 0,
         ]);
+
+        if ($request->input('role') === 'teacher' && $wasPendingTeacher) {
+            if (!Teacher::where('user_id', $user->id)->exists()) {
+                
+                Teacher::create([
+                    'user_id' => $user->id,
+                    'name' => $request->input('name'),
+                    'email' => $request->input('email'),
+                ]);
+            }
+        }
 
         return response()->json(['success' => true]);
     }
+
+
 
 
     public function user_courses($id)
@@ -52,5 +70,13 @@ class CustomerController extends Controller
             'user' => $user,
             'courses' => $courses,
         ]);
+    }
+
+    public function pending()
+    {
+        $users = User::where('role', 'student')->where('is_pending_teacher', 1)->get();
+
+
+        return view('dashboard.pending', compact('users'));
     }
 }

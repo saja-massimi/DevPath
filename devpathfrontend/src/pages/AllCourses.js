@@ -28,9 +28,9 @@ function AllCourses() {
 
 
             <div className="content-block">
-                <div class="section-area section-sp1">
-                    <div class="container">
-                        <div class="row">
+                <div className="section-area section-sp1">
+                    <div className="container">
+                        <div className="row">
 
 
                             <div className="col-lg-3 col-md-4 col-sm-12 m-b30">

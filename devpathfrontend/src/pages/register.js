@@ -11,7 +11,8 @@ function Register() {
         name: '',
         email: '',
         password: '',
-        password_confirmation: ''
+        password_confirmation: '',
+        is_pending_teacher: 0, 
     });
     const [errors, setErrors] = useState({});
     const [serverMessage, setServerMessage] = useState('');
@@ -19,7 +20,13 @@ function Register() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+
+        if (name === "role") {
+            setFormData({ ...formData, is_pending_teacher: parseInt(value, 10) });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
+
         setErrors({ ...errors, [name]: '' });
     };
 
@@ -76,7 +83,6 @@ function Register() {
 
     return (
         <>
-
             <div className="account-form">
                 <ToastContainer />
                 <div
@@ -156,6 +162,35 @@ function Register() {
                                         {errors.password_confirmation && (
                                             <p className="text-danger small">{errors.password_confirmation}</p>
                                         )}
+                                    </div>
+                                </div>
+                                <div className="col-lg-12">
+                                    <div className="form-group">
+                                        <label>Sign Up As</label>
+                                        <div>
+                                            <label>
+                                                <input
+                                                    className="mr-2"
+                                                    type="radio"
+                                                    name="role"
+                                                    value="1"
+                                                    checked={formData.is_pending_teacher === 1}
+                                                    onChange={handleChange}
+                                                />
+                                                Teacher
+                                            </label>
+                                            <label style={{ marginLeft: '15px' }}>
+                                                <input
+                                                    className="mr-2"
+                                                    type="radio"
+                                                    name="role"
+                                                    value="0"
+                                                    checked={formData.is_pending_teacher === 0}
+                                                    onChange={handleChange}
+                                                />
+                                                Student
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="col-lg-12 m-b30">
