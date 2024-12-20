@@ -14,7 +14,7 @@ function Home() {
             <div className="content-block">
                 <Courses />
                 <About />
-                <About2></About2>
+                <About2 />
             </div>
 
 

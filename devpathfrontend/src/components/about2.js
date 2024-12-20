@@ -9,7 +9,6 @@ function About2() {
                             <br /> <span className="text-primary"> on your time</span>
                         </h2>
                         <h4>
-                            <span className="counter">57,000</span> Online Courses
                         </h4>
                         <p>
                             Lorem Ipsum is simply dummy text of the printing and typesetting

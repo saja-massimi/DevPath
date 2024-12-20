@@ -1,3 +1,4 @@
+import bgImage from '../assets/images/background/bg1.jpg';
 
 function About() {
     return (
@@ -5,7 +6,7 @@ function About() {
             <>
                 <div
                     className="section-area section-sp2 bg-fix ovbl-dark join-bx text-center"
-                    style={{ backgroundImage: "url(assets/images/background/bg1.jpg)" }}
+                    style={{ backgroundImage: `url(${bgImage})` }}
                 >
                     <div className="container">
                         <div className="row">
@@ -18,7 +19,7 @@ function About() {
                                         <span className="counter">57,000</span> Online Courses
                                     </h4>
                                     <p>
-                                    An e-learning platform designed for coding education and instruction. It offers a user-friendly interface for learners to access diverse courses, from basic programming concepts to advanced software development.
+                                        An e-learning platform designed for coding education and instruction. It offers a user-friendly interface for learners to access diverse courses, from basic programming concepts to advanced software development.
                                     </p>
                                     <a href="#" className="btn button-md">
                                         Join Now

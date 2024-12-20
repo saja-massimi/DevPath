@@ -1,3 +1,5 @@
+import bgImage from '../assets/images/background/bg1.jpg';
+
 function AllCourses() {
     return (
 
@@ -5,7 +7,7 @@ function AllCourses() {
 
             <div
                 className="page-banner ovbl-dark"
-                style={{ backgroundImage: "url(assets/images/banner/banner3.jpg)" }}
+                style={{ backgroundImage: `url(${bgImage})` }}
             >
                 <div className="container">
                     <div className="page-banner-entry">
@@ -13,6 +15,8 @@ function AllCourses() {
                     </div>
                 </div>
             </div>
+
+
             {/* Breadcrumb row */}
             <div className="breadcrumb-row">
                 <div className="container">

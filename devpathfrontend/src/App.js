@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-
+import "animate.css";
 
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'animate.css/animate.min.css';
@@ -35,7 +35,7 @@ import $ from "jquery";
 const App = () => {
   useEffect(() => {
 
-    
+
     const magnificPopupImageView = () => {
       if (document.querySelectorAll(".magnific-image").length > 0) {
         $(".magnific-image").magnificPopup({
@@ -64,14 +64,14 @@ const App = () => {
       }
     };
 
- 
+
     const wowAnimation = () => {
       if (document.querySelectorAll(".wow").length > 0) {
         new WOW().init();
       }
     };
 
-  
+
     magnificPopupImageView();
     pageScrollToTop();
     wowAnimation();
@@ -84,13 +84,15 @@ const App = () => {
   return (
     <div>
       <Router>
+        
         <Navbar />
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<NotFound />} />
-          <Route path="/courses" element={<Courses/>}/>
+          <Route path="/courses" element={<Courses />} />
         </Routes>
         <Footer />
 

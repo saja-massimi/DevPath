@@ -17,7 +17,7 @@ const Courses = () => {
           setCourses(response.data.data);
         }
 
-    
+
       } catch (error) {
         console.error("Error fetching courses:", error);
       } finally {
@@ -29,7 +29,7 @@ const Courses = () => {
   }, []);
 
   useEffect(() => {
-    console.log("Courses state updated:", courses); // Confirm state update
+    console.log("Courses state updated:", courses);
   }, [courses]);
 
   const settings = {
@@ -68,7 +68,9 @@ const Courses = () => {
         {loading ? (
           <p>Loading courses...</p>
         ) : courses.length > 0 ? (
-          <Slider {...settings}>
+
+          <Slider {...settings} >
+
             {courses.map((course) => (
               <CourseBox
                 key={course.course_id}

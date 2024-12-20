@@ -33,7 +33,7 @@ function Header() {
   return (
     <>
       <div
-        className="section-area section-sp1 ovpr-dark bg-fix online-cours"
+        className="mt-5 section-area section-sp1 ovpr-dark bg-fix online-cours"
         style={{ backgroundImage: `url(${bgImage})` }}
       >
         <div className="container">
