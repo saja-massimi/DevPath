@@ -11,7 +11,6 @@ const Courses = () => {
     const fetchCourses = async () => {
       try {
         const response = await axiosInstance.get("/courses");
-        console.log("Full Response:", response);
 
         if (Array.isArray(response.data.data)) {
           setCourses(response.data.data);
@@ -28,9 +27,6 @@ const Courses = () => {
     fetchCourses();
   }, []);
 
-  useEffect(() => {
-    console.log("Courses state updated:", courses);
-  }, [courses]);
 
   const settings = {
     dots: true,

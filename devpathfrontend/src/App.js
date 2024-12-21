@@ -20,6 +20,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "magnific-popup/dist/magnific-popup.css";
 import "magnific-popup";
 import WOW from "wow.js";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
@@ -29,6 +30,8 @@ import Register from "./pages/register";
 import NotFound from "./pages/notFound";
 import Courses from "./pages/AllCourses";
 import Contact from "./pages/contact";
+import About from "./pages/aboutUs";
+import Profile from "./pages/profile";
 import $ from "jquery";
 
 
@@ -95,6 +98,9 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/contact" element={<Contact />}></Route>
+          <Route path="/about" element={<About />}></Route>
+          <Route path="/profile" element={<Profile />}></Route>
+
         </Routes>
         <Footer />
 
