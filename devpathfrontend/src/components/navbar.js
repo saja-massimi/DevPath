@@ -20,16 +20,14 @@ function Navbar() {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
-                        withCredentials: true, // Ensure cookies are sent for session-based authentication
+                        withCredentials: true,
                     }
                 );
             }
 
-            // Clear client-side data after successful logout
             localStorage.removeItem("authToken");
             localStorage.removeItem("user_id");
 
-            // Redirect to home or login page
             navigate("/");
             window.location.reload();
         } catch (error) {
@@ -159,7 +157,7 @@ function Navbar() {
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/contact-us" className={({ isActive }) => (isActive ? "active" : "")}>
+                                    <NavLink to="/contact" className={({ isActive }) => (isActive ? "active" : "")}>
                                         Contact Us
                                     </NavLink>
                                 </li>

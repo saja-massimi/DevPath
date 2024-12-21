@@ -13,4 +13,13 @@ class ContactUs extends Model
 
 
     protected $primaryKey = 'contactUs_id';
+
+
+    protected $fillable = [
+        'name',
+        'email',
+        'message',
+        'is_read',
+        'subject'
+    ];
 }

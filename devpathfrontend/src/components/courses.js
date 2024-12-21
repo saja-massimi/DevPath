@@ -56,7 +56,7 @@ const Courses = () => {
   };
 
   return (
-    <div className="section-area section-sp2 popular-courses-bx">
+    <div className="section-area section-sp2 vh-100">
       <div className="container">
         <div className="row">
           <div className="col-md-12 heading-bx left">
@@ -78,6 +78,8 @@ const Courses = () => {
                 image={course.course_image}
                 title={course.course_title}
                 category={course.category}
+                price={course.course_price}
+                difficulty={course.diffculty_leve}
               />
             ))}
           </Slider>

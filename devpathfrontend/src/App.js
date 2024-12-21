@@ -28,6 +28,7 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import NotFound from "./pages/notFound";
 import Courses from "./pages/AllCourses";
+import Contact from "./pages/contact";
 import $ from "jquery";
 
 
@@ -84,7 +85,7 @@ const App = () => {
   return (
     <div>
       <Router>
-        
+
         <Navbar />
 
         <Routes>
@@ -93,6 +94,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/courses" element={<Courses />} />
+          <Route path="/contact" element={<Contact />}></Route>
         </Routes>
         <Footer />
 

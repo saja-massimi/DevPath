@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CoursesApiController;
 use App\Http\Controllers\Api\EnrollmentsApiController;
 use App\Http\Controllers\Api\CategoriesApiController;
+use App\Http\Controllers\Api\ContactUsApiController;
 
 //************************** Login & Registration ************************ */
 Route::post('/register', [AuthApiController::class, 'register']);
@@ -52,6 +53,9 @@ Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
     Route::delete('/categories/{category}', [CategoriesApiController::class, 'destroy'])->name('destroy');
 });
 
+//****************************  Contact Us ************************** */
+
+Route::post('/contact-us', [ContactUsApiController::class, 'contactUs'])->name('contact-us');
 
 //***************************** Logout **************************** */
 

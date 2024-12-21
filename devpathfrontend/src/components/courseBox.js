@@ -1,18 +1,23 @@
 import React from "react";
+import Fallback from "../assets/img/coding.jpg";
 
-function CourseBox({ id, image, title, category }) {
+
+function CourseBox({ id, image, title, category, price, difficulty }) {
+
+
   return (
 
 
-    <div className=" mx-2 cours-bx rounded-lg shadow-md bg-white">
+    <div className=" mx-2 cours-bx rounded-lg shadow-sm bg-white">
 
       <div className="action-box">
         <img
-          src={image}
+          src={Fallback}
           alt={title}
           className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
         />
-        <a href="#" class="btn">Read More</a>
+
+        <a href="#" className="btn">Read More</a>
       </div>
 
       <div className="info-bx text-center">
@@ -29,18 +34,10 @@ function CourseBox({ id, image, title, category }) {
 
       <div className="cours-more-info">
         <div className="review">
-          <span>3 Review</span>
-          <ul className="cours-star">
-            <li className="active"><i className="fa fa-star"></i></li>
-            <li className="active"><i className="fa fa-star"></i></li>
-            <li className="active"><i className="fa fa-star"></i></li>
-            <li><i className="fa fa-star"></i></li>
-            <li><i className="fa fa-star"></i></li>
-          </ul>
+          <span>{difficulty}</span>
         </div>
         <div className="price">
-          <del>$190</del>
-          <h5>$120</h5>
+          <h5>{price} JD</h5>
         </div>
       </div>
       <div className="text-center py-3 bg-gray-100">
@@ -48,7 +45,7 @@ function CourseBox({ id, image, title, category }) {
           href={`#readMore${id}`}
           className="btn bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
         >
-          Read More
+          Enroll Now
         </a>
       </div>
     </div>
