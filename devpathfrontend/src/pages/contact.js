@@ -1,7 +1,9 @@
 import Backimg from '../assets/images/banner/banner3.jpg';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import axios from '../api/axiosInstance';
+import WOW from 'wow.js';
+import 'animate.css';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -45,12 +47,21 @@ function Contact() {
 
     }
 
-
+    useEffect(() => {
+        const wow = new WOW({
+            boxClass: "wow", // Default class for triggering animations
+            animateClass: "animate__animated", // Animate.css default class prefix
+            offset: 0,
+            mobile: true, // Enable animations on mobile
+            live: true, // Act on asynchronously loaded content
+        });
+        wow.init();
+    }, []);
 
 
     return (
         <>
-      
+
 
             <div className="page-content bg-white">
                 <>
@@ -62,7 +73,7 @@ function Contact() {
                     >
                         <div className="container">
                             <div className="page-banner-entry">
-                                <h1 className="text-white">Contact Us</h1>
+                                <h1 className="text-white wow animate__fadeInDown">Contact Us</h1>
                             </div>
                         </div>
                     </div>
@@ -76,15 +87,15 @@ function Contact() {
                                 <li>Contact Us</li>
                             </ul>
                         </div>
-                    </div>     
-                     <ToastContainer />
+                    </div>
+                    <ToastContainer />
                     {/* Breadcrumb row END */}
                     {/* inner page banner */}
                     <div className="page-banner contact-page section-sp2">
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-5 col-md-5 m-b30">
-                                    <div className="bg-primary text-white contact-info-bx">
+                                    <div className="bg-primary text-white contact-info-bx wow animate__fadeInLeft" data-wow-delay="0.2s">
                                         <h2 className="m-b10 title-head">
                                             Contact <span>Information</span>
                                         </h2>
@@ -128,7 +139,7 @@ function Contact() {
                                         </ul>
                                     </div>
                                 </div>
-                                <div className="col-lg-7 col-md-7">
+                                <div className="col-lg-7 col-md-7 wow animate__fadeInRight" data-wow-delay="0.2s">
                                     <form
                                         className="contact-bx"
                                         onSubmit={handleSubmit}

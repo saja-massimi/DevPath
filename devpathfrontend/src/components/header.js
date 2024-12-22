@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import bgImage from '../assets/images/background/bg1.jpg';
 import axiosInstance from '../api/axiosInstance';
+import WOW from 'wow.js';
+import 'animate.css';
 
 function Header() {
   const isLoggedIn = !!localStorage.getItem("authToken");
@@ -16,19 +18,30 @@ function Header() {
               Authorization: `Bearer ${token}`,
             },
           });
-     
+
           setName(response.data.user.name);
         } else {
-          setName(""); 
+          setName("");
         }
       } catch (error) {
         console.error("Error fetching profile:", error);
-        setName(""); 
+        setName("");
       }
     };
 
     fetchProfile();
   }, [isLoggedIn]);
+
+  useEffect(() => {
+    const wow = new WOW({
+      boxClass: "wow", // Default class for triggering animations
+      animateClass: "animate__animated", // Animate.css default class prefix
+      offset: 0,
+      mobile: true, // Enable animations on mobile
+      live: true, // Act on asynchronously loaded content
+    });
+    wow.init();
+  }, []);
 
   return (
     <>
@@ -37,7 +50,7 @@ function Header() {
         style={{ backgroundImage: `url(${bgImage})` }}
       >
         <div className="container">
-          <div className="row">
+          <div className="row wow animate__slideInDown"  data-wow-delay="0.5s">
             <div className="col-md-12 text-center text-white">
               <h2>Online Courses To Learn</h2>
               <h5>Transform Your Ideas into Reality with Code</h5>
@@ -58,7 +71,7 @@ function Header() {
 
             </div>
           </div>
-          <div className="mw800 m-auto">
+      <div className="mw800 m-auto wow animate__fadeInUp" data-wow-delay="0.5s">
             <div className="row">
               <div className="col-md-4 col-sm-6">
                 <div className="cours-search-bx m-b30">

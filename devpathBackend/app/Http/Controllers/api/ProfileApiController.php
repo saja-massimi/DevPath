@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileApiController extends Controller
 {
@@ -18,8 +19,42 @@ class ProfileApiController extends Controller
                 'name' => $request->user()->name,
                 'email' => $request->user()->email,
                 'role' => $request->user()->role,
+                'address' => $request->user()->address,
             ],
         ]);
+    }
+
+    public function updatePassword(Request $request){
+        $request->validate(
+            [
+                'current_password' => 'required',
+                'password' => 'required|confirmed|min:8',
+            ],
+            [
+                'current_password.required' => 'The current password field is required.',
+                'password.required' => 'The password field is required.',
+                'password.confirmed' => 'The password confirmation does not match.',
+                'password.min' => 'The password must be at least 8 characters.',
+            ]
+        );
+
+        $user = $request->user();
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json([
+                'status' => false,
+                'message' => 'The current password is incorrect. Please try again.',
+            ], 422);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Password updated successfully',
+        ]);
+
+
     }
 
     public function updateProfile(Request $request)
@@ -44,6 +79,7 @@ class ProfileApiController extends Controller
         $user = $request->user();
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->address = $request->address;
         $user->save();
 
         return response()->json([
@@ -53,6 +89,7 @@ class ProfileApiController extends Controller
                 'id' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
+                'address' => $user->address,
             ],
         ]);
     }

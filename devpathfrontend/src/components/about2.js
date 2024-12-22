@@ -1,9 +1,24 @@
+import {useEffect} from 'react';
+import WOW from 'wow.js';
+import 'animate.css';
+
 function About2() {
+    useEffect(() => {
+        const wow = new WOW({
+            boxClass: "wow", // Default class for triggering animations
+            animateClass: "animate__animated", // Animate.css default class prefix
+            offset: 0,
+            mobile: true, // Enable animations on mobile
+            live: true, // Act on asynchronously loaded content
+        });
+        wow.init();
+    }, []);
+
     return (
         <div className="section-area section-sp1">
             <div className="container">
                 <div className="row">
-                    <div className="col-lg-6 m-b30">
+                    <div className="col-lg-6 m-b30 wow animate__fadeInLeft" data-wow-delay="0.5s">
                         <h2 className="title-head ">
                             Learn a new skill online
                             <br /> <span className="text-primary"> on your time</span>
@@ -19,7 +34,7 @@ function About2() {
                             Join Now
                         </a>
                     </div>
-                    <div className="col-lg-6">
+                    <div className="col-lg-6 wow animate__fadeInRight" data-wow-delay="0.5s">
                         <div className="row">
                             <div className="col-lg-6 col-md-6 col-sm-6 m-b30">
                                 <div className="feature-container">

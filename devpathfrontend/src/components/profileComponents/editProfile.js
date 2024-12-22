@@ -1,14 +1,69 @@
+import { useState, useEffect } from "react";
+import axiosInstance from "../../api/axiosInstance";
+
 function EditProfile() {
+    const [userData, setUserData] = useState({
+        name: "",
+        email: "",
+        address: "",
+    });
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const token = localStorage.getItem("authToken");
+                if (token) {
+                    const response = await axiosInstance.get("/profile", {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+                    setUserData(response.data.user);
+                    console.log("User data:", response.data.user);
+                }
+            } catch (error) {
+                console.error("Error fetching user data", error);
+            }
+        };
+
+        fetchUserData();
+    }, []);
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setUserData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    };
+
+    const handleFormSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const token = localStorage.getItem("authToken");
+            const response = await axiosInstance.put("/profile", userData, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+            });
+            console.log("Profile updated successfully:", response.data);
+        } catch (error) {
+            console.error("Error updating profile:", error);
+        }
+    };
+
     return (
         <div className="tab-pane" id="edit-profile">
             <div className="profile-head">
                 <h3>Edit Profile</h3>
             </div>
-            <form className="edit-profile">
-                <div className="">
+            <form className="edit-profile" onSubmit={handleFormSubmit}>
+                <div>
                     <div className="form-group row">
                         <div className="col-12 col-sm-9 col-md-9 col-lg-10 ml-auto">
-                            <h3>1. Personal Details</h3>
+                            <h3>Personal Details</h3>
                         </div>
                     </div>
                     <div className="form-group row">
@@ -19,46 +74,31 @@ function EditProfile() {
                             <input
                                 className="form-control"
                                 type="text"
-                                defaultValue="Mark Andre"
+                                name="name"
+                                value={userData.name}
+                                onChange={handleInputChange}
                             />
                         </div>
                     </div>
                     <div className="form-group row">
                         <label className="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">
-                            Occupation
-                        </label>
-                        <div className="col-12 col-sm-9 col-md-9 col-lg-7">
-                            <input className="form-control" type="text" defaultValue="CTO" />
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">
-                            Company Name
-                        </label>
-                        <div className="col-12 col-sm-9 col-md-9 col-lg-7">
-                            <input className="form-control" type="text" defaultValue="EduChamp" />
-                            <span className="help">
-                                If you want your invoices addressed to a company. Leave blank to use
-                                your full name.
-                            </span>
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">
-                            Phone No.
+                            Email
                         </label>
                         <div className="col-12 col-sm-9 col-md-9 col-lg-7">
                             <input
                                 className="form-control"
                                 type="text"
-                                defaultValue="+120 012345 6789"
+                                name="email"
+                                value={userData.email}
+                                onChange={handleInputChange}
                             />
                         </div>
                     </div>
+
                     <div className="seperator" />
                     <div className="form-group row">
                         <div className="col-12 col-sm-9 col-md-9 col-lg-10 ml-auto">
-                            <h3>2. Address</h3>
+                            <h3> Address</h3>
                         </div>
                     </div>
                     <div className="form-group row">
@@ -69,99 +109,19 @@ function EditProfile() {
                             <input
                                 className="form-control"
                                 type="text"
-                                defaultValue="5-S2-20 Dummy City, UK"
-                            />
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">
-                            City
-                        </label>
-                        <div className="col-12 col-sm-9 col-md-9 col-lg-7">
-                            <input className="form-control" type="text" defaultValue="US" />
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">
-                            State
-                        </label>
-                        <div className="col-12 col-sm-9 col-md-9 col-lg-7">
-                            <input
-                                className="form-control"
-                                type="text"
-                                defaultValue="California"
-                            />
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">
-                            Postcode
-                        </label>
-                        <div className="col-12 col-sm-9 col-md-9 col-lg-7">
-                            <input className="form-control" type="text" defaultValue={'000702'} />
-                        </div>
-                    </div>
-                    <div className="m-form__seperator m-form__seperator--dashed m-form__seperator--space-2x" />
-                    <div className="form-group row">
-                        <div className="col-12 col-sm-9 col-md-9 col-lg-10 ml-auto">
-                            <h3 className="m-form__section">3. Social Links</h3>
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">
-                            Linkedin
-                        </label>
-                        <div className="col-12 col-sm-9 col-md-9 col-lg-7">
-                            <input
-                                className="form-control"
-                                type="text"
-                                defaultValue="www.linkedin.com"
-                            />
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">
-                            Facebook
-                        </label>
-                        <div className="col-12 col-sm-9 col-md-9 col-lg-7">
-                            <input
-                                className="form-control"
-                                type="text"
-                                defaultValue="www.facebook.com"
-                            />
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">
-                            Twitter
-                        </label>
-                        <div className="col-12 col-sm-9 col-md-9 col-lg-7">
-                            <input
-                                className="form-control"
-                                type="text"
-                                defaultValue="www.twitter.com"
-                            />
-                        </div>
-                    </div>
-                    <div className="form-group row">
-                        <label className="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">
-                            Instagram
-                        </label>
-                        <div className="col-12 col-sm-9 col-md-9 col-lg-7">
-                            <input
-                                className="form-control"
-                                type="text"
-                                defaultValue="www.instagram.com"
+                                name="address"
+                                value={userData.address}
+                                onChange={handleInputChange}
                             />
                         </div>
                     </div>
                 </div>
-                <div className="">
-                    <div className="">
+                <div>
+                    <div>
                         <div className="row">
                             <div className="col-12 col-sm-3 col-md-3 col-lg-2" />
                             <div className="col-12 col-sm-9 col-md-9 col-lg-7">
-                                <button type="reset" className="btn">
+                                <button type="submit" className="btn">
                                     Save changes
                                 </button>
                                 <button type="reset" className="btn-secondry">
@@ -173,7 +133,6 @@ function EditProfile() {
                 </div>
             </form>
         </div>
-
     );
 }
 

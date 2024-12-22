@@ -18,7 +18,8 @@ Route::post('/login', [AuthApiController::class, 'login']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/profile', [ProfileApiController::class, 'profile'])->name('profile');
-    Route::patch('/profile', [ProfileApiController::class, 'updateProfile'])->name('update');
+    Route::put('/profile', [ProfileApiController::class, 'updateProfile'])->name('update');
+    Route::put('/updatePassword', [ProfileApiController::class, 'updatePassword'])->name('updatePassword');
 });
 
 //***************************** Courses **************************** */
@@ -27,6 +28,8 @@ Route::get('/courses', [CoursesApiController::class, 'index'])->name('index');
 Route::get('/courses/{course}', [CoursesApiController::class, 'show'])->name('show');
 
 Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
+
+
     Route::post('/courses', [CoursesApiController::class, 'store'])->name('store');
     Route::patch('/courses/{course}', [CoursesApiController::class, 'update'])->name('update');
     Route::delete('/courses/{course}', [CoursesApiController::class, 'destroy'])->name('destroy');
@@ -35,7 +38,9 @@ Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
 
 //***************************** Enrollments **************************** */
 
-Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/user/courses', [EnrollmentsApiController::class, 'userCourses'])->name('user.courses');
+
     Route::get('/enrollments', [EnrollmentsApiController::class, 'index'])->name('index');
     Route::post('/enrollments', [EnrollmentsApiController::class, 'store'])->name('store');
     Route::get('/enrollments/{enrollment}', [EnrollmentsApiController::class, 'show'])->name('show');
@@ -45,7 +50,7 @@ Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
 
 //***************************** Categories **************************** */
 
-Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/categories', [CategoriesApiController::class, 'index'])->name('index');
     Route::post('/categories', [CategoriesApiController::class, 'store'])->name('store');
     Route::get('/categories/{category}', [CategoriesApiController::class, 'show'])->name('show');

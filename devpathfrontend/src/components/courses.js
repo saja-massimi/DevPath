@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import CourseBox from "./courseBox";
 import axiosInstance from "../api/axiosInstance";
+import WOW from 'wow.js';
+import 'animate.css';
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -25,6 +27,15 @@ const Courses = () => {
     };
 
     fetchCourses();
+
+    const wow = new WOW({
+      boxClass: "wow", // Default class for triggering animations
+      animateClass: "animate__animated", // Animate.css default class prefix
+      offset: 0,
+      mobile: true, // Enable animations on mobile
+      live: true, // Act on asynchronously loaded content
+    });
+    wow.init();
   }, []);
 
 
@@ -54,7 +65,7 @@ const Courses = () => {
   return (
     <div className="section-area section-sp2 vh-100">
       <div className="container">
-        <div className="row">
+        <div className="row wow animate__slideInLeft" data-wow-delay="0.5s">
           <div className="col-md-12 heading-bx left">
             <h2 className="title-head">
               Popular <span>Courses</span>
@@ -65,7 +76,7 @@ const Courses = () => {
           <p>Loading courses...</p>
         ) : courses.length > 0 ? (
 
-          <Slider {...settings} >
+          <Slider {...settings} className="wow animate__slideInRight" data-wow-delay="0.5s">
 
             {courses.map((course) => (
               <CourseBox
@@ -78,6 +89,8 @@ const Courses = () => {
                 difficulty={course.diffculty_leve}
               />
             ))}
+
+            
           </Slider>
         ) : (
           <p>No courses available at the moment.</p>

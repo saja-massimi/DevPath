@@ -12,6 +12,7 @@ class Courses extends Model
     protected $primaryKey = 'course_id';
     use SoftDeletes;
 
+
     public $timestamps = false;
     protected $fillable = [
         'course_title',
@@ -21,6 +22,7 @@ class Courses extends Model
         'course_duration',
         'difficulty_leve',
     ];
+
 
     public function enrollments()
     {

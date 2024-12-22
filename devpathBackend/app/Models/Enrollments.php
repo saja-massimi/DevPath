@@ -9,7 +9,11 @@ use App\Models\Courses;
 class Enrollments extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        'user_id',
+        'course_id',
+        'status',
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);

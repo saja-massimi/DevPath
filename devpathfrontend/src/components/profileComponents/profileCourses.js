@@ -1,4 +1,39 @@
+import React, { useEffect, useState } from 'react';
+import axioInstace from '../../api/axiosInstance';
+import CourseBox from '../courseBox';
+import axiosInstance from '../../api/axiosInstance';
+
 function ProfileCourses() {
+    const [courses, setCourses] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+
+    useEffect(() => {
+        const fetchCourses = async () => {
+            try {
+                const response = await axiosInstance.get('/user/courses', {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+                    },
+                });
+                
+                if (Array.isArray(response.data.data)) {
+                    setCourses(response.data.data);
+                }
+
+
+            } catch (error) {
+                console.error("Error fetching courses:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCourses();
+    }, []);
+
+
+
     return (
         <>
             <div className="tab-pane active" id="courses">
@@ -12,18 +47,6 @@ function ProfileCourses() {
                                     <span>All</span>
                                 </a>
                             </li>
-                            <li data-filter="publish" className="btn">
-                                <input type="radio" />
-                                <a href="#">
-                                    <span>Publish</span>
-                                </a>
-                            </li>
-                            <li data-filter="pending" className="btn">
-                                <input type="radio" />
-                                <a href="#">
-                                    <span>Pending</span>
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -31,51 +54,24 @@ function ProfileCourses() {
                     <div className="clearfix">
                         <ul id="masonry" className="list-unstyled ttr-gallery-listing magnific-image row">
                             <li className="action-card col-xl-4 col-lg-6 col-md-12 col-sm-6 publish">
-                                <div className="cours-bx">
-                                    <div className="action-box">
-                                        <img src="assets/images/courses/pic1.jpg" alt="" />
-                                        <a href="#" className="btn">
-                                            Read More
-                                        </a>
-                                    </div>
-                                    <div className="info-bx text-center">
-                                        <h5>
-                                            <a href="#">Introduction EduChamp – LMS plugin</a>
-                                        </h5>
-                                        <span>Programming</span>
-                                    </div>
-                                    <div className="cours-more-info">
-                                        <div className="review">
-                                            <span>3 Review</span>
-                                            <ul className="cours-star">
-                                                <li className="active">
-                                                    <i className="fa fa-star" />
-                                                </li>
-                                                <li className="active">
-                                                    <i className="fa fa-star" />
-                                                </li>
-                                                <li className="active">
-                                                    <i className="fa fa-star" />
-                                                </li>
-                                                <li>
-                                                    <i className="fa fa-star" />
-                                                </li>
-                                                <li>
-                                                    <i className="fa fa-star" />
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div className="price">
-                                            <del>$190</del>
-                                            <h5>$120</h5>
-                                        </div>
-                                    </div>
-                                </div>
+
+
+                                {courses.map((course) => (
+                                    <CourseBox
+                                        key={course.course_id}
+                                        id={course.course_id}
+                                        image={course.course_image}
+                                        title={course.course_title}
+                                        category={course.category}
+                                        price={course.course_price}
+                                        difficulty={course.diffculty_leve}
+                                    />
+                                ))}
                             </li>
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     )
 }

@@ -38,7 +38,7 @@ function Profile() {
 
   const tabs = [
     { id: "courses", label: "Courses", icon: "book" },
-    { id: "quiz-results", label: "Quiz Results", icon: "bookmark-alt" },
+    { id: "quiz-results", label: "Completed Courses", icon: "bookmark-alt" },
     { id: "edit-profile", label: "Edit Profile", icon: "pencil-alt" },
     { id: "change-password", label: "Change Password", icon: "lock" },
   ];
