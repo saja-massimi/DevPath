@@ -8,7 +8,7 @@ function CourseBox({ id, image, title, category, price, difficulty, description 
   return (
 
 
-    <div className=" mx-2 cours-bx rounded-lg shadow-sm bg-white">
+    <div className=" mx-2 cours-bx rounded-lg shadow-sm bg-white" style={{ minHeight: "400px" }}>
 
       <div className="action-box">
         <img

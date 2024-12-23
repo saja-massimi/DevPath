@@ -9,6 +9,10 @@ function Header() {
   const isLoggedIn = !!localStorage.getItem("authToken");
   const [name, setName] = useState("");
 
+  const isTeacher = localStorage.getItem("user_role") === "teacher";
+
+
+
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -46,6 +50,8 @@ function Header() {
 
   return (
     <>
+
+
       <div
         className="mt-5 section-area section-sp1 ovpr-dark bg-fix online-cours"
         style={{ backgroundImage: `url(${bgImage})` }}
@@ -53,24 +59,32 @@ function Header() {
         <div className="container">
           <div className="row wow animate__slideInDown" data-wow-delay="0.5s">
             <div className="col-md-12 text-center text-white">
-              <h2>Online Courses To Learn</h2>
-              <h5>Transform Your Ideas into Reality with Code</h5>
+              <h2>Explore Online Learning</h2>
+              <h5>Bring Your Creative Vision to Life with Coding</h5>
 
               {isLoggedIn ? (
                 <p className="text-center mb-2">
-                  Welcome <strong>{name}</strong>, Start Learning
+                  Welcome back, <strong>{name}</strong>! Let’s continue your journey.
                 </p>
               ) : (
 
-                <div className="d-flex justify-content-center mb-5">
-                  <a className="btn btn-primary" >Join Now</a>
-                </div>
+                <>
 
+                  <>
+                    <div className="d-flex justify-content-center mb-5">
+                      <a className="btn btn-primary mx-2" href="/register">Start Teaching Now</a>
+                      <a className="btn btn-primary mx-2" href="/register">Start Learning Now</a>
+                    </div>
+                  </>
+
+                </>
 
 
               )}
 
             </div>
+
+
           </div>
           <div className="mw800 m-auto wow animate__fadeInUp" data-wow-delay="0.5s">
             <div className="row">

@@ -12,7 +12,7 @@ function Register() {
         email: '',
         password: '',
         password_confirmation: '',
-        is_pending_teacher: 0, 
+        is_pending_teacher: 0,
     });
     const [errors, setErrors] = useState({});
     const [serverMessage, setServerMessage] = useState('');
@@ -29,6 +29,8 @@ function Register() {
 
         setErrors({ ...errors, [name]: '' });
     };
+
+
 
     const validationSchema = Yup.object().shape({
         name: Yup.string().required('Name is required'),
@@ -53,11 +55,23 @@ function Register() {
     };
 
     const showToast = (type, message) => {
+        console.log("Triggering toast:", type, message);
         toast[type](message, {
             position: "top-right",
             autoClose: type === 'success' ? 3000 : 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            style: {
+                zIndex: 9999,
+                top: "70px",
+            },
         });
     };
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -70,7 +84,7 @@ function Register() {
         try {
             const response = await axiosInstance.post('/register', formData);
             setServerMessage(response.data.message);
-            showToast('success', "Registered Successfully!");
+            showToast('success', 'Registration Successful!');
             setTimeout(() => navigate('/login'), 3000);
         } catch (error) {
             const serverErrors = error.response?.data?.errors || {};
@@ -82,8 +96,8 @@ function Register() {
     };
 
     return (
-        <>               
-         <ToastContainer />
+        <>
+            <ToastContainer />
 
             <div className="account-form">
                 <div
