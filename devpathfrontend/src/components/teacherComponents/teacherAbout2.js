@@ -1,13 +1,12 @@
 import { useEffect } from 'react';
 import WOW from 'wow.js';
 import 'animate.css';
-import Icon1 from '../assets/images/icon/icon1.png';
-import Icon2 from '../assets/images/icon/icon2.png';
-import Icon3 from '../assets/images/icon/icon3.png';
-import Icon4 from '../assets/images/icon/icon4.png';
+import Icon1 from '../../assets/images/icon/icon1.png';
+import Icon2 from '../../assets/images/icon/icon2.png';
+import Icon3 from '../../assets/images/icon/icon3.png';
+import Icon4 from '../../assets/images/icon/icon4.png';
 
-
-function About2() {
+function TeacherAbout2() {
     useEffect(() => {
         const wow = new WOW({
             boxClass: "wow", // Default class for triggering animations
@@ -25,17 +24,16 @@ function About2() {
                 <div className="row">
                     <div className="col-lg-6 m-b30 wow animate__fadeInLeft" data-wow-delay="0.5s">
                         <h2 className="title-head ">
-                            Learn a new skill online
-                            <br /> <span className="text-primary"> on your time</span>
+                            Share Your Expertise <br />
+                            <span className="text-primary">Teach with Confidence</span>
                         </h2>
                         <p>
-                            Unlock the doors to endless possibilities with our flexible online courses.
-                            Whether you're a beginner or looking to enhance your skills, we provide
-                            comprehensive resources to help you achieve your goals from the comfort
-                            of your own home.
+                            Empower learners worldwide by creating and delivering impactful courses.
+                            Our platform provides you with the tools to share your knowledge, build
+                            your brand, and inspire the next generation of coders and creators.
                         </p>
                         <a href="#" className="btn button-md">
-                            Join Now
+                            Start Teaching Now
                         </a>
                     </div>
                     <div className="col-lg-6 wow animate__fadeInRight" data-wow-delay="0.5s">
@@ -44,14 +42,13 @@ function About2() {
                                 <div className="feature-container">
                                     <div className="feature-md text-white m-b20">
                                         <a href="#" className="icon-cell">
-                                            <img src={Icon1} alt="" />
+                                            <img src={Icon1} alt="Empower Learners" />
                                         </a>
                                     </div>
                                     <div className="icon-content">
-                                        <h5 className="ttr-tilte">Our Philosophy</h5>
+                                        <h5 className="ttr-tilte">Empower Learners</h5>
                                         <p>
-                                            Empowering learners through innovation and dedication to
-                                            quality education.
+                                            Inspire students by delivering impactful, high-quality content that drives results.
                                         </p>
                                     </div>
                                 </div>
@@ -60,14 +57,13 @@ function About2() {
                                 <div className="feature-container">
                                     <div className="feature-md text-white m-b20">
                                         <a href="#" className="icon-cell">
-                                            <img src={Icon2} alt="" />
+                                            <img src={Icon2} alt="Flexible Tools" />
                                         </a>
                                     </div>
                                     <div className="icon-content">
-                                        <h5 className="ttr-tilte">Core Principles</h5>
+                                        <h5 className="ttr-tilte">Flexible Tools</h5>
                                         <p>
-                                            Integrity, creativity, and persistence drive our learning
-                                            environment forward.
+                                            Use our intuitive platform to create courses, host live sessions, and track performance.
                                         </p>
                                     </div>
                                 </div>
@@ -76,14 +72,13 @@ function About2() {
                                 <div className="feature-container">
                                     <div className="feature-md text-white m-b20">
                                         <a href="#" className="icon-cell">
-                                            <img src={Icon3} alt="" />
+                                            <img src={Icon3} alt="Earn Recognition" />
                                         </a>
                                     </div>
                                     <div className="icon-content">
-                                        <h5 className="ttr-tilte">Keys to Success</h5>
+                                        <h5 className="ttr-tilte">Earn Recognition</h5>
                                         <p>
-                                            A blend of dedication, expert guidance, and consistent practice
-                                            unlocks the path to success.
+                                            Build your reputation and become a trusted authority in your field of expertise.
                                         </p>
                                     </div>
                                 </div>
@@ -92,14 +87,13 @@ function About2() {
                                 <div className="feature-container">
                                     <div className="feature-md text-white m-b20">
                                         <a href="#" className="icon-cell">
-                                            <img src={Icon4} alt="" />
+                                            <img src={Icon4} alt="Global Reach" />
                                         </a>
                                     </div>
                                     <div className="icon-content">
-                                        <h5 className="ttr-tilte">Innovative Learning</h5>
+                                        <h5 className="ttr-tilte">Global Reach</h5>
                                         <p>
-                                            Utilizing cutting-edge tools and techniques to deliver an
-                                            engaging and effective educational experience.
+                                            Connect with a global audience and inspire learners from all corners of the world.
                                         </p>
                                     </div>
                                 </div>
@@ -112,4 +106,4 @@ function About2() {
     );
 }
 
-export default About2;
+export default TeacherAbout2;

@@ -30,8 +30,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 //**************************** Teachers ******************************** */
 Route::get('/teachers', [TeacherApiController::class, 'index'])->name('index');
 
-Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/teachers/{id}', [TeacherApiController::class, 'update'])->name('update');
+    Route::get('/teachers/{id}', [TeacherApiController::class, 'show'])->name('show');
+    Route::get('/teacher/courses/{id}', [TeacherApiController::class, 'teacher_courses'])->name('teacher.courses');
 });
 
 
@@ -40,7 +42,7 @@ Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
 //**************************** Customers ******************************** */
 Route::get('/customers', [CustomerApiController::class, 'index'])->name('index');
 
-Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/customers/{id}', [CustomerApiController::class, 'update'])->name('update');
     Route::get('/user/courses/{id}', [CustomerApiController::class, 'user_courses'])->name('user.courses');
 });

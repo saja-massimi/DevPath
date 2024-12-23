@@ -3,12 +3,12 @@ import Logo from "../assets/img/devpath-high-resolution-logo.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import axios from "../api/axiosInstance";
 
-function Navbar() {
+function TeacherNavbar() {
     const isLoggedIn = !!localStorage.getItem("authToken");
     const navigate = useNavigate();
+    const isTeacher = localStorage.getItem("user_role") === "teacher";
 
     const [isMenuOpen, setMenuOpen] = useState(false);
-    const [isSearchOpen, setSearchOpen] = useState(false);
     const [isDropdownOpen, setDropdownOpen] = useState(false);
 
     const handleLogout = async () => {
@@ -39,6 +39,7 @@ function Navbar() {
     };
 
     const toggleMenu = () => setMenuOpen(!isMenuOpen);
+
     const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
 
     useEffect(() => {
@@ -78,73 +79,45 @@ function Navbar() {
                             <span />
                             <span />
                         </button>
-                        {/* Author Nav */}
                         <div className="secondary-menu">
                             <div className="secondary-inner">
                                 <ul>
-                                    {isLoggedIn ? (
-                                        <>
-                                            <li>
-                                                <Link to="" className="btn-link" style={{ textDecoration: "none" }}>
-                                                    <i className="ti-heart"></i>
-                                                </Link>
+                                    {
+                                        isLoggedIn && isTeacher && (
+                                            <>
+                                                <li className="dropdown" id="userDropdown">
+                                                    <button
+                                                        className="btn-link dropdown-toggle"
+                                                        type="button"
+                                                        onClick={toggleDropdown}
+                                                        style={{ textDecoration: "none", backgroundColor: "transparent" }}
+                                                    >
+                                                        <i className="ti-user"></i>
+                                                    </button>
+                                                    {isDropdownOpen && (
+                                                        <ul className="dropdown-menu show">
+                                                            <li>
+                                                                <Link to={`/teacherProfile/${localStorage.getItem("user_id")}`} className="dropdown-item">
+                                                                    Profile
+                                                                </Link>
+                                                            </li>
+
+                                                            <li>
+                                                                <button
+                                                                    onClick={handleLogout}
+                                                                    className="dropdown-item"
+                                                                >
+                                                                    Sign Out
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+                                                    )}
+                                                </li>
+                                            </>
+                                        )
+                                    }
 
 
-                                            </li>
-
-                                            <li>
-                                                <Link to="" className="btn-link" style={{ textDecoration: "none" }}>
-                                                    <i className="ti-shopping-cart"></i>
-                                                </Link>
-
-
-
-                                            </li>
-
-                                            <li className="dropdown" id="userDropdown">
-                                                <button
-                                                    className="btn-link dropdown-toggle"
-                                                    type="button"
-                                                    onClick={toggleDropdown}
-                                                    style={{ textDecoration: "none", backgroundColor: "transparent" }}
-                                                >
-                                                    <i className="ti-user"></i>
-                                                </button>
-                                                {isDropdownOpen && (
-                                                    <ul className="dropdown-menu show">
-                                                        <li>
-                                                            <Link to="/profile" className="dropdown-item">
-                                                                Profile
-                                                            </Link>
-                                                        </li>
-                                                        <li>
-                                                            <button
-                                                                onClick={handleLogout}
-                                                                className="dropdown-item"
-                                                            >
-                                                                Sign Out
-                                                            </button>
-                                                        </li>
-                                                    </ul>
-                                                )}
-                                            </li>
-
-                                        </>
-                                    ) : (
-                                        <>
-                                            <li className="search-btn">
-                                                <Link to="/register" className="btn-link mr-3     " style={{ textDecoration: "none" }}>
-                                                    <span>Register</span>
-
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to="/login" className="btn-link" style={{ textDecoration: "none" }}>
-                                                    <span>Login</span>
-                                                </Link>
-                                            </li>
-                                        </>
-                                    )}
                                 </ul>
                             </div>
                         </div>
@@ -161,8 +134,8 @@ function Navbar() {
                                     </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink to="/courses" className={({ isActive }) => (isActive ? "active" : "")}>
-                                        Courses
+                                    <NavLink to="/teacherDashboard" className={({ isActive }) => (isActive ? "active" : "")}>
+                                        Dashboard
                                     </NavLink>
                                 </li>
                                 <li>
@@ -187,4 +160,4 @@ function Navbar() {
     );
 }
 
-export default Navbar;
+export default TeacherNavbar;

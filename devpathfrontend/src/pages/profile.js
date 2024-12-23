@@ -15,14 +15,23 @@ function Profile() {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem("authToken");
+        console.log("Token:", token);
         if (token) {
           const response = await axiosInstance.get("/profile", {
             headers: { Authorization: `Bearer ${token}` },
           });
+          console.log("Response:", response);
           setUserData(response.data.user);
+        } else {
+          console.warn("No token found in localStorage.");
+          window.location.href = "/login";
         }
       } catch (error) {
         console.error("Error fetching profile:", error);
+        if (error.response && error.response.status === 401) {
+          console.warn("Unauthorized. Redirecting to login.");
+          window.location.href = "/login";
+        }
       }
     };
 

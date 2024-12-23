@@ -33,14 +33,30 @@ import Contact from "./pages/contact";
 import About from "./pages/aboutUs";
 import Profile from "./pages/profile";
 import CourseDetails from "./pages/courseDetails";
-
+import TeacherDashboard from "./pages/teacherDashboard";
 import $ from "jquery";
+import TeacherNavbar from "./components/teacherNavbar";
+import TeacherProfile from "./pages/teacherProfile";
 
 
 
 const App = () => {
-  useEffect(() => {
 
+
+  const isTeacher = localStorage.getItem("user_role") === "teacher";
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const backToTopButton = document.querySelector("button.back-to-top");
+      if (backToTopButton) {
+        if (window.scrollY > 900) {
+          backToTopButton.style.display = "block";
+        } else {
+          backToTopButton.style.display = "none";
+        }
+      }
+    };
 
     const magnificPopupImageView = () => {
       if (document.querySelectorAll(".magnific-image").length > 0) {
@@ -54,22 +70,12 @@ const App = () => {
 
     const pageScrollToTop = () => {
       const backToTopButton = document.querySelector("button.back-to-top");
-
       if (backToTopButton) {
         backToTopButton.addEventListener("click", () => {
           window.scrollTo({ top: 0, behavior: "smooth" });
         });
-
-        window.addEventListener("scroll", () => {
-          if (window.scrollY > 900) {
-            backToTopButton.style.display = "block";
-          } else {
-            backToTopButton.style.display = "none";
-          }
-        });
       }
     };
-
 
     const wowAnimation = () => {
       if (document.querySelectorAll(".wow").length > 0) {
@@ -77,21 +83,29 @@ const App = () => {
       }
     };
 
-
     magnificPopupImageView();
     pageScrollToTop();
     wowAnimation();
 
+    window.addEventListener("scroll", handleScroll);
+
     return () => {
-      window.removeEventListener("scroll", null);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
 
   return (
     <div>
       <Router>
+        {isTeacher ? (
+          <TeacherNavbar />
 
-        <Navbar />
+        ) :
+          <Navbar />
+
+        }
+
 
         <Routes>
           <Route path="/" element={<Home />} />
@@ -103,6 +117,8 @@ const App = () => {
           <Route path="/about" element={<About />}></Route>
           <Route path="/profile" element={<Profile />}></Route>
           <Route path="/courseDetails/:courseId" element={<CourseDetails />} />
+          <Route path="/teacherDashboard" element={<TeacherDashboard />} />
+          <Route path="/teacherProfile/:id" element={<TeacherProfile />} />
 
         </Routes>
         <Footer />

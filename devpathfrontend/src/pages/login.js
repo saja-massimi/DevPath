@@ -48,6 +48,7 @@ function Login() {
                 });
                 localStorage.setItem('authToken', response.data.token || '');
                 localStorage.setItem('user_id', response.data.user?.id || '');
+                localStorage.setItem('user_role', response.data.user?.role || '');
                 setTimeout(() => {
                     navigate('/');
                 }, 3000);

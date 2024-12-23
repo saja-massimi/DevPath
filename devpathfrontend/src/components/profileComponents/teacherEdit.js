@@ -1,33 +1,43 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "../../api/axiosInstance";
+import { useParams } from "react-router-dom";
 
-function EditProfile() {
+function TeacherEditProfile() {
+    const { id } = useParams();
+
     const [userData, setUserData] = useState({
         name: "",
         email: "",
         address: "",
+        experiene: "",
+        phone: ""
     });
 
+
     useEffect(() => {
-        const fetchUserData = async () => {
+        const fetchProfile = async () => {
             try {
                 const token = localStorage.getItem("authToken");
                 if (token) {
-                    const response = await axiosInstance.get("/profile", {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
+                    const response = await axiosInstance.get(`/teachers/${id}`, {
+                        headers: { Authorization: `Bearer ${token}` },
                     });
-                    setUserData(response.data.user);
-                    console.log("User data:", response.data.user);
+                    setUserData(response.data.teacher);
+                } else {
+                    console.warn("No token found in localStorage.");
+                    window.location.href = "/login";
                 }
             } catch (error) {
-                console.error("Error fetching user data", error);
+                console.error("Error fetching profile:", error);
+                if (error.response && error.response.status === 401) {
+                    console.warn("Unauthorized. Redirecting to login.");
+                    window.location.href = "/login";
+                }
             }
         };
 
-        fetchUserData();
-    }, []);
+        if (id) fetchProfile();
+    }, [id]);
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -41,20 +51,22 @@ function EditProfile() {
         e.preventDefault();
         try {
             const token = localStorage.getItem("authToken");
-            const response = await axiosInstance.put("/profile", userData, {
+            const role = localStorage.getItem("user_role");
+
+            const response = await axiosInstance.put(`/teachers/${id}`, userData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
             });
+
             console.log("Profile updated successfully:", response.data);
         } catch (error) {
             console.error("Error updating profile:", error);
         }
-
-        
     };
+
 
     return (
         <div className="tab-pane" id="edit-profile">
@@ -96,6 +108,22 @@ function EditProfile() {
                             />
                         </div>
                     </div>
+                    <div className="form-group row">
+                        <label className="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">
+                            Phone
+                        </label>
+                        <div className="col-12 col-sm-9 col-md-9 col-lg-7">
+                            <input
+                                className="form-control"
+                                type="text"
+                                name="phone"
+                                value={userData.phone}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                    </div>
+
+
 
                     <div className="seperator" />
                     <div className="form-group row">
@@ -117,13 +145,39 @@ function EditProfile() {
                             />
                         </div>
                     </div>
+
+
+                    <div className="seperator" />
+                    <div className="form-group row">
+                        <div className="col-12 col-sm-9 col-md-9 col-lg-10 ml-auto">
+                            <h3>Experience</h3>
+                        </div>
+                    </div>
+                    <div className="form-group row">
+                        <label className="col-12 col-sm-3 col-md-3 col-lg-2 col-form-label">
+                            Experience
+                        </label>
+                        <div className="col-12 col-sm-9 col-md-9 col-lg-7">
+                            <input
+                                className="form-control"
+                                type="text"
+                                name="experience"
+                                value={userData.experiene}
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="seperator" />
+
+
                 </div>
                 <div>
                     <div>
                         <div className="row">
                             <div className="col-12 col-sm-3 col-md-3 col-lg-2" />
                             <div className="col-12 col-sm-9 col-md-9 col-lg-7">
-                                <button type="submit" className="btn main-btn">
+                                <button type="submit" className="btn mr-3">
                                     Save changes
                                 </button>
                                 <button type="reset" className="btn-secondry ">
@@ -138,4 +192,4 @@ function EditProfile() {
     );
 }
 
-export default EditProfile;
+export default TeacherEditProfile;

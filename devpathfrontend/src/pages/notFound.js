@@ -22,10 +22,8 @@ function NotFound() {
                             changed, or is temporarily unavailable.
                         </p>
                         <div className="">
-                            <a href="index.html" className="btn m-r5">
-                                Preview
-                            </a>
-                            <a href="index.html" className="btn outline black">
+
+                            <a href="/" className="btn outline black">
                                 Back To Home
                             </a>
                         </div>
