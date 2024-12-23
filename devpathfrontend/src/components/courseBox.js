@@ -1,8 +1,8 @@
 import React from "react";
 import Fallback from "../assets/img/coding.jpg";
+import { Link } from "react-router-dom";
 
-
-function CourseBox({ id, image, title, category, price, difficulty }) {
+function CourseBox({ id, image, title, category, price, difficulty, description }) {
 
 
   return (
@@ -16,8 +16,8 @@ function CourseBox({ id, image, title, category, price, difficulty }) {
           alt={title}
           className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
         />
+        <Link className="btn" to={`/courseDetails/${id}`}>Read More</Link>
 
-        <a href="#" className="btn">Read More</a>
       </div>
 
       <div className="info-bx text-center">
@@ -29,12 +29,12 @@ function CourseBox({ id, image, title, category, price, difficulty }) {
             {title}
           </a>
         </h5>
-        <span className="text-sm text-gray-600">{category}</span>
+        <span className="text-sm text-gray-600">{category.charAt(0).toUpperCase() + category.slice(1)}</span>
       </div>
 
       <div className="cours-more-info">
         <div className="review">
-          <span>{difficulty}</span>
+          <span>{difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}</span>
         </div>
         <div className="price">
           <h5>{price} JD</h5>

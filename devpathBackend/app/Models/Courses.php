@@ -38,4 +38,9 @@ class Courses extends Model
     {
         return $this->hasMany(Transaction::class);
     }
+
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class, 'teacher_id');
+    }
 }

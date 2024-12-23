@@ -32,6 +32,8 @@ import Courses from "./pages/AllCourses";
 import Contact from "./pages/contact";
 import About from "./pages/aboutUs";
 import Profile from "./pages/profile";
+import CourseDetails from "./pages/courseDetails";
+
 import $ from "jquery";
 
 
@@ -100,6 +102,7 @@ const App = () => {
           <Route path="/contact" element={<Contact />}></Route>
           <Route path="/about" element={<About />}></Route>
           <Route path="/profile" element={<Profile />}></Route>
+          <Route path="/courseDetails/:courseId" element={<CourseDetails />} />
 
         </Routes>
         <Footer />

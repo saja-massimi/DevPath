@@ -35,31 +35,43 @@ function Login() {
             setErrors({});
 
             const response = await axiosInstance.post('/login', formData);
-            
-            console.log(response);
+            console.log(response.data);
 
             if (response.data.token || response.data.user) {
-                toast.success('Login successful!', { position: "top-right", autoClose: 3000 });
+                toast.success('Login successful!', {
+                    position: "top-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
                 localStorage.setItem('authToken', response.data.token || '');
                 localStorage.setItem('user_id', response.data.user?.id || '');
                 setTimeout(() => {
                     navigate('/');
                 }, 3000);
             }
-        } catch (validationError) {
-            if (validationError.name === 'ValidationError') {
-                const validationErrors = validationError.inner.reduce((acc, error) => {
-                    acc[error.path] = error.message;
+
+
+        } catch (error) {
+            if (error.name === 'ValidationError') {
+                const validationErrors = error.inner.reduce((acc, err) => {
+                    acc[err.path] = err.message;
                     return acc;
                 }, {});
                 setErrors(validationErrors);
             } else {
-                const serverErrors = validationError.response?.data?.errors || {};
-                setErrors(serverErrors);
-                toast.error(
-                    validationError.response?.data?.message || 'Something went wrong!',
-                    { position: "top-right", autoClose: 5000 }
-                );
+                const serverErrorMessage = error.response?.data?.message || 'Something went wrong!';
+                setErrors({ server: serverErrorMessage });
+                toast.error(serverErrorMessage, {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                });
             }
         } finally {
             setIsLoading(false);
@@ -68,9 +80,8 @@ function Login() {
 
     return (
         <>
+            <ToastContainer />
             <div className="account-form">
-                <ToastContainer />
-
                 <div
                     className="account-head"
                     style={{ backgroundImage: `url(${Bgimg})` }}
@@ -95,7 +106,7 @@ function Login() {
                                             type="email"
                                             value={formData.email}
                                             onChange={handleChange}
-                                            className="form-control"
+                                            className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                                         />
                                         {errors.email && <p className="text-danger small">{errors.email}</p>}
                                     </div>
@@ -108,22 +119,9 @@ function Login() {
                                             type="password"
                                             value={formData.password}
                                             onChange={handleChange}
-                                            className="form-control"
+                                            className={`form-control ${errors.password ? 'is-invalid' : ''}`}
                                         />
                                         {errors.password && <p className="text-danger small">{errors.password}</p>}
-                                    </div>
-                                </div>
-                                <div className="col-lg-12">
-                                    <div className="form-group form-forget">
-                                        <div className="custom-control custom-checkbox">
-                                            <input
-                                                type="checkbox"
-                                                className="custom-control-input"
-                                                id="customControlAutosizing"
-                                            />
-
-                                        </div>
-
                                     </div>
                                 </div>
                                 <div className="col-lg-12 m-b30">
@@ -136,6 +134,11 @@ function Login() {
                                         {isLoading ? 'Logging in...' : 'Login'}
                                     </button>
                                 </div>
+                                {errors.server && (
+                                    <div className="col-lg-12">
+                                        <p className="text-danger small">{errors.server}</p>
+                                    </div>
+                                )}
                             </div>
                         </form>
                     </div>

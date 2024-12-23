@@ -19,4 +19,15 @@ class CoursesApiController extends Controller
             'data' => $courses
         ]);
     }
+
+    public function show(Courses $course)
+    {
+        $course->load('teacher'); 
+    
+        return response()->json([
+            'message' => 'Course fetched successfully',
+            'data' => $course
+        ]);
+    }
+    
 }
