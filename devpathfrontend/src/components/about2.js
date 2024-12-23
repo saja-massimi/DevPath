@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 import WOW from 'wow.js';
 import 'animate.css';
 
@@ -23,12 +23,11 @@ function About2() {
                             Learn a new skill online
                             <br /> <span className="text-primary"> on your time</span>
                         </h2>
-                        <h4>
-                        </h4>
                         <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the industry's standard dummy text ever
-                            since the 1500s, when an unknown printer took a galley of type.
+                            Unlock the doors to endless possibilities with our flexible online courses.
+                            Whether you're a beginner or looking to enhance your skills, we provide
+                            comprehensive resources to help you achieve your goals from the comfort
+                            of your own home.
                         </p>
                         <a href="#" className="btn button-md">
                             Join Now
@@ -45,7 +44,10 @@ function About2() {
                                     </div>
                                     <div className="icon-content">
                                         <h5 className="ttr-tilte">Our Philosophy</h5>
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing.</p>
+                                        <p>
+                                            Empowering learners through innovation and dedication to
+                                            quality education.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -57,8 +59,11 @@ function About2() {
                                         </a>
                                     </div>
                                     <div className="icon-content">
-                                        <h5 className="ttr-tilte">Kingster's Principle</h5>
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing.</p>
+                                        <h5 className="ttr-tilte">Core Principles</h5>
+                                        <p>
+                                            Integrity, creativity, and persistence drive our learning
+                                            environment forward.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -70,8 +75,11 @@ function About2() {
                                         </a>
                                     </div>
                                     <div className="icon-content">
-                                        <h5 className="ttr-tilte">Key Of Success</h5>
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing.</p>
+                                        <h5 className="ttr-tilte">Keys to Success</h5>
+                                        <p>
+                                            A blend of dedication, expert guidance, and consistent practice
+                                            unlocks the path to success.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -83,8 +91,11 @@ function About2() {
                                         </a>
                                     </div>
                                     <div className="icon-content">
-                                        <h5 className="ttr-tilte">Our Philosophy</h5>
-                                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing.</p>
+                                        <h5 className="ttr-tilte">Innovative Learning</h5>
+                                        <p>
+                                            Utilizing cutting-edge tools and techniques to deliver an
+                                            engaging and effective educational experience.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -93,7 +104,6 @@ function About2() {
                 </div>
             </div>
         </div>
-
     );
 }
 

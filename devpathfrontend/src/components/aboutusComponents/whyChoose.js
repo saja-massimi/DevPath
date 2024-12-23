@@ -1,3 +1,7 @@
+import Img1 from '../../assets/img/cat-3.jpg';
+import Img2 from '../../assets/img/cover22.jpg';
+import Img3 from '../../assets/img/books.jpeg';
+
 function WhyChoose() {
 
     return (
@@ -10,23 +14,23 @@ function WhyChoose() {
                             Why Choose <span> Our Institution</span>
                         </h2>
                         <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the industry's.
+                            Discover a world of opportunities with us. We are dedicated to providing
+                            unparalleled education and fostering an environment of innovation and growth.
                         </p>
                     </div>
                 </div>
                 <div className="row choose-bx-in">
                     <div className="col-lg-4 col-md-4 col-sm-6">
-                        <div className="service-bx">
+                        <div className="service-bx"> 
                             <div className="action-box">
-                                <img src="assets/images/our-services/pic1.jpg" alt="" />
+                                <img src={Img1} alt="" />
                             </div>
                             <div className="info-bx text-center">
                                 <div className="feature-box-sm radius bg-white">
                                     <i className="fa fa-bank text-primary" />
                                 </div>
                                 <h4>
-                                    <a href="#">Best Industry Leaders</a>
+                                    <a href="#">Best Industry Teachers</a>
                                 </h4>
                                 <a href="#" className="btn radius-xl">
                                     View More
@@ -37,14 +41,14 @@ function WhyChoose() {
                     <div className="col-lg-4 col-md-4 col-sm-6">
                         <div className="service-bx">
                             <div className="action-box">
-                                <img src="assets/images/our-services/pic2.jpg" alt="" />
+                                <img src={Img2} alt="" />
                             </div>
                             <div className="info-bx text-center">
                                 <div className="feature-box-sm radius bg-white">
                                     <i className="fa fa-book text-primary" />
                                 </div>
                                 <h4>
-                                    <a href="#">Learn Courses Online</a>
+                                    <a href="#">Learn Coding Online</a>
                                 </h4>
                                 <a href="#" className="btn radius-xl">
                                     View More
@@ -55,14 +59,14 @@ function WhyChoose() {
                     <div className="col-lg-4 col-md-4 col-sm-12">
                         <div className="service-bx m-b0">
                             <div className="action-box">
-                                <img src="assets/images/our-services/pic3.jpg" alt="" />
+                                <img src={Img3} alt="" />
                             </div>
                             <div className="info-bx text-center">
                                 <div className="feature-box-sm radius bg-white">
                                     <i className="fa fa-file-text-o text-primary" />
                                 </div>
                                 <h4>
-                                    <a href="#">Book Library &amp; Store</a>
+                                    <a href="#">Numerous Resources </a>
                                 </h4>
                                 <a href="#" className="btn radius-xl">
                                     View More

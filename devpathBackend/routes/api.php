@@ -8,13 +8,16 @@ use App\Http\Controllers\Api\CoursesApiController;
 use App\Http\Controllers\Api\EnrollmentsApiController;
 use App\Http\Controllers\Api\CategoriesApiController;
 use App\Http\Controllers\Api\ContactUsApiController;
+use App\Http\Controllers\Api\CustomerApiController;
+use App\Http\Controllers\Api\TeacherApiController;
 
 //************************** Login & Registration ************************ */
 Route::post('/register', [AuthApiController::class, 'register']);
 Route::post('/login', [AuthApiController::class, 'login']);
 
 
-/******************************* Profile ******************************** */
+
+//******************************* Profile ******************************** */
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/profile', [ProfileApiController::class, 'profile'])->name('profile');
@@ -22,8 +25,29 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/updatePassword', [ProfileApiController::class, 'updatePassword'])->name('updatePassword');
 });
 
+
+
+//**************************** Teachers ******************************** */
+Route::get('/teachers', [TeacherApiController::class, 'index'])->name('index');
+
+Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
+    Route::put('/teachers/{id}', [TeacherApiController::class, 'update'])->name('update');
+});
+
+
+
+
+//**************************** Customers ******************************** */
+Route::get('/customers', [CustomerApiController::class, 'index'])->name('index');
+
+Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
+    Route::put('/customers/{id}', [CustomerApiController::class, 'update'])->name('update');
+    Route::get('/user/courses/{id}', [CustomerApiController::class, 'user_courses'])->name('user.courses');
+});
+
+
 //***************************** Courses **************************** */
-// Routes accessible to everyone
+
 Route::get('/courses', [CoursesApiController::class, 'index'])->name('index');
 Route::get('/courses/{course}', [CoursesApiController::class, 'show'])->name('show');
 
@@ -50,8 +74,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 //***************************** Categories **************************** */
 
+Route::get('/categories', [CategoriesApiController::class, 'index'])->name('index');
+
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/categories', [CategoriesApiController::class, 'index'])->name('index');
+
     Route::post('/categories', [CategoriesApiController::class, 'store'])->name('store');
     Route::get('/categories/{category}', [CategoriesApiController::class, 'show'])->name('show');
     Route::patch('/categories/{category}', [CategoriesApiController::class, 'update'])->name('update');

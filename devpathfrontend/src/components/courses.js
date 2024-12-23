@@ -95,6 +95,8 @@ const Courses = () => {
         ) : (
           <p>No courses available at the moment.</p>
         )}
+
+        
       </div>
     </div>
   );

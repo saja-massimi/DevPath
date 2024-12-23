@@ -3,6 +3,7 @@ import bgImage from '../assets/images/background/bg1.jpg';
 import axiosInstance from '../api/axiosInstance';
 import WOW from 'wow.js';
 import 'animate.css';
+import '../componentsCSS/header.css';
 
 function Header() {
   const isLoggedIn = !!localStorage.getItem("authToken");
@@ -50,7 +51,7 @@ function Header() {
         style={{ backgroundImage: `url(${bgImage})` }}
       >
         <div className="container">
-          <div className="row wow animate__slideInDown"  data-wow-delay="0.5s">
+          <div className="row wow animate__slideInDown" data-wow-delay="0.5s">
             <div className="col-md-12 text-center text-white">
               <h2>Online Courses To Learn</h2>
               <h5>Transform Your Ideas into Reality with Code</h5>
@@ -71,7 +72,7 @@ function Header() {
 
             </div>
           </div>
-      <div className="mw800 m-auto wow animate__fadeInUp" data-wow-delay="0.5s">
+          <div className="mw800 m-auto wow animate__fadeInUp" data-wow-delay="0.5s">
             <div className="row">
               <div className="col-md-4 col-sm-6">
                 <div className="cours-search-bx m-b30">

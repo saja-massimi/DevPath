@@ -131,14 +131,14 @@ function ChangePassword() {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-12 col-sm-4 col-md-4 col-lg-3" />
-                    <div className="col-12 col-sm-8 col-md-8 col-lg-7">
-                        <button type="submit" className="btn">
+                    <div className="col-12 col-sm-3 col-md-3 col-lg-2" />
+                    <div className="col-12 col-sm-9 col-md-9 col-lg-7">
+                        <button type="submit" className="btn mr-3">
                             Save Changes
                         </button>
                         <button
                             type="button"
-                            className="btn-secondary"
+                            className="btn btn-secondary"
                             onClick={() =>
                                 setFormData({
                                     currentPassword: "",

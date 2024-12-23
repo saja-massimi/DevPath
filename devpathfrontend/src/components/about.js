@@ -29,7 +29,6 @@ function About() {
                                         Learn Coding online on <br /> your time
                                     </h2>
                                     <h4>
-                                        <span className="counter wow animate__slideInUp" >57,000</span> Online Courses
                                     </h4>
                                     <p className='wow animate__slideInUp'>
                                         An e-learning platform designed for coding education and instruction. It offers a user-friendly interface for learners to access diverse courses, from basic programming concepts to advanced software development.
