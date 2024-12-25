@@ -1,14 +1,16 @@
+import Img from '../assets/images/background/bg2.jpg';
+import Img2 from '../assets/img/logo-devpath.png';
 function NotFound() {
 
     return (<div className="page-wraper">
-        {/* <div id="loading-icon-bx" /> */}
+
         <div className="account-form">
             <div
                 className="account-head"
-                style={{ backgroundImage: "url(assets/images/background/bg2.jpg)" }}
+                style={{ backgroundImage: `url(${Img})` }}
             >
                 <a href="index.html">
-                    <img src="assets/images/logo-white-2.png" alt="" />
+                    <img src={Img2} alt="" />
                 </a>
             </div>
             <div className="account-form-inner">

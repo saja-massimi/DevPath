@@ -13,7 +13,7 @@ function ProfileCourses() {
             try {
                 const response = await axiosInstance.get('/user/courses', {
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+                        Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
                     },
                 });
                 

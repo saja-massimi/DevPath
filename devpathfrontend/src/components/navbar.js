@@ -1,43 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Logo from "../assets/img/devpath-high-resolution-logo.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import axios from "../api/axiosInstance";
+import { AuthContext } from "../context/AuthContext";
+import axiosInstance from '../api/axiosInstance';
 
 function Navbar() {
-    const isLoggedIn = !!localStorage.getItem("authToken");
+
     const navigate = useNavigate();
 
+
+
     const [isMenuOpen, setMenuOpen] = useState(false);
-    const [isSearchOpen, setSearchOpen] = useState(false);
     const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+
 
     const handleLogout = async () => {
         try {
-            const token = localStorage.getItem("authToken");
-            if (token) {
-                await axios.post(
-                    "/logout",
-                    {},
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                        withCredentials: true,
-                    }
-                );
-            }
 
-            localStorage.removeItem("authToken");
-            localStorage.removeItem("user_id");
-            localStorage.removeItem("user_role");
+            await axiosInstance.post("/logout", {}, {
 
+                withCredentials: true,
+            });
+            sessionStorage.removeItem("user");
+            sessionStorage.removeItem("authToken");
             navigate("/");
-            window.location.reload();
         } catch (error) {
-            console.error("Logout failed:", error.response?.data || error.message);
+            console.error("Failed to logout:", error);
         }
     };
-
     const toggleMenu = () => setMenuOpen(!isMenuOpen);
     const toggleDropdown = () => setDropdownOpen(!isDropdownOpen);
 
@@ -57,11 +48,17 @@ function Navbar() {
         };
     }, [isDropdownOpen]);
 
+    const user = JSON.parse(sessionStorage.getItem("user"));
+
+
     return (
         <header className="header rs-nav">
             <div className="sticky-header navbar-expand-lg">
                 <div className="menu-bar clearfix">
                     <div className="container clearfix">
+
+
+
                         {/* Header Logo */}
                         <div className="menu-logo">
                             <Link to="/">
@@ -78,11 +75,14 @@ function Navbar() {
                             <span />
                             <span />
                         </button>
-                        {/* Author Nav */}
+
+
+
+                        {/* User Section */}
                         <div className="secondary-menu">
                             <div className="secondary-inner">
                                 <ul>
-                                    {isLoggedIn ? (
+                                    {user ? (
                                         <>
                                             <li>
                                                 <Link to="" className="btn-link" style={{ textDecoration: "none" }}>
@@ -120,7 +120,7 @@ function Navbar() {
                                                         <li>
                                                             <button
                                                                 onClick={handleLogout}
-                                                                className="dropdown-item"
+                                                                className="dropdown-item "
                                                             >
                                                                 Sign Out
                                                             </button>
@@ -133,23 +133,26 @@ function Navbar() {
                                     ) : (
                                         <>
                                             <li className="search-btn">
-                                                <Link to="/register" className="btn-link mr-3     " style={{ textDecoration: "none" }}>
-                                                    <span>Register</span>
-
+                                                <Link to="/register" className="btn-link mr-3" style={{ textDecoration: "none" }}>
+                                                    Register
                                                 </Link>
                                             </li>
                                             <li>
                                                 <Link to="/login" className="btn-link" style={{ textDecoration: "none" }}>
-                                                    <span>Login</span>
+                                                    Login
                                                 </Link>
                                             </li>
                                         </>
                                     )}
                                 </ul>
+
+
                             </div>
                         </div>
 
 
+
+                        {/* Navigation Links */}
                         <div
                             className={`menu-links navbar-collapse collapse justify-content-start ${isMenuOpen ? "show" : ""}`}
                             id="menuDropdown"
@@ -175,15 +178,28 @@ function Navbar() {
                                         About
                                     </NavLink>
                                 </li>
-
-
                             </ul>
+
+
+
+
+
+
                         </div>
-                        {/* Navigation Menu END */}
+
+
+
+
+
+
+
+
+
+
                     </div>
                 </div>
             </div>
-        </header>
+        </header >
     );
 }
 

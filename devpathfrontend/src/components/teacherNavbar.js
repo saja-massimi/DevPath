@@ -4,9 +4,9 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import axios from "../api/axiosInstance";
 
 function TeacherNavbar() {
-    const isLoggedIn = !!localStorage.getItem("authToken");
+    const isLoggedIn = !!sessionStorage.getItem("authToken");
     const navigate = useNavigate();
-    const isTeacher = localStorage.getItem("user_role") === "teacher";
+    const isTeacher = sessionStorage.getItem("user_role") === "teacher";
 
     const [isMenuOpen, setMenuOpen] = useState(false);
     const [isDropdownOpen, setDropdownOpen] = useState(false);

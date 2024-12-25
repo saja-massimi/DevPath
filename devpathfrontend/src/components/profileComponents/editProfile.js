@@ -11,7 +11,7 @@ function EditProfile() {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const token = localStorage.getItem("authToken");
+                const token = sessionStorage.getItem("authToken");
                 if (token) {
                     const response = await axiosInstance.get("/profile", {
                         headers: {

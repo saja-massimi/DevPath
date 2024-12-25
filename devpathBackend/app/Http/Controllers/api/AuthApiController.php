@@ -58,7 +58,7 @@ class AuthApiController extends Controller
     {
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required|min:8|max:255',
         ]);
 
         $user = User::where('email', $request->email)->first();

@@ -6,17 +6,16 @@ import 'animate.css';
 import '../componentsCSS/header.css';
 
 function Header() {
-  const isLoggedIn = !!localStorage.getItem("authToken");
+  const isLoggedIn = !!sessionStorage.getItem("authToken");
   const [name, setName] = useState("");
 
-  const isTeacher = localStorage.getItem("user_role") === "teacher";
 
 
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem("authToken");
+        const token = sessionStorage.getItem("authToken");
         if (token) {
           const response = await axiosInstance.get('/profile', {
             headers: {

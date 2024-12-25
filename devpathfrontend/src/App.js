@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import "animate.css";
 
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -15,6 +15,7 @@ import './assets/vendors/revolution/css/navigation.css';
 import './assets/vendors/revolution/css/settings.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { AuthProvider } from './context/AuthContext';
 
 
 import "magnific-popup/dist/magnific-popup.css";
@@ -41,21 +42,6 @@ import TeacherProfile from "./pages/teacherProfile";
 
 
 const App = () => {
-  const [isTeacher, setIsTeacher] = useState(
-    localStorage.getItem("user_role") === "teacher"
-  );
-
-  useEffect(() => {
-    const handleStorageChange = () => {
-      setIsTeacher(localStorage.getItem("user_role") === "teacher");
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
-  }, []);
 
   useEffect(() => {
 
@@ -111,33 +97,30 @@ const App = () => {
   return (
     <div>
       <Router>
-        {isTeacher ? (
-          <TeacherNavbar />
 
-        ) :
-          <Navbar />
-
-        }
+        <Navbar></Navbar>
+        <AuthProvider>
 
 
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="*" element={<NotFound />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/contact" element={<Contact />}></Route>
-          <Route path="/about" element={<About />}></Route>
-          <Route path="/profile" element={<Profile />}></Route>
-          <Route path="/courseDetails/:courseId" element={<CourseDetails />} />
-          <Route path="/teacherDashboard" element={<TeacherDashboard />} />
-          <Route path="/teacherProfile/:id" element={<TeacherProfile />} />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="*" element={<NotFound />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/contact" element={<Contact />}></Route>
+            <Route path="/about" element={<About />}></Route>
+            <Route path="/profile" element={<Profile />}></Route>
+            <Route path="/courseDetails/:courseId" element={<CourseDetails />} />
+            <Route path="/teacherDashboard" element={<TeacherDashboard />} />
+            <Route path="/teacherProfile/:id" element={<TeacherProfile />} />
 
-        </Routes>
+          </Routes>
+
+        </AuthProvider>
         <Footer />
 
 
-        {/* Back-to-Top Button */}
         <button className="back-to-top fa fa-chevron-up" />
       </Router>
     </div>

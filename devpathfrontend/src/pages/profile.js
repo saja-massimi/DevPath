@@ -14,7 +14,7 @@ function Profile() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem("authToken");
+        const token = sessionStorage.getItem("authToken");
         console.log("Token:", token);
         if (token) {
           const response = await axiosInstance.get("/profile", {
@@ -23,7 +23,7 @@ function Profile() {
           console.log("Response:", response);
           setUserData(response.data.user);
         } else {
-          console.warn("No token found in localStorage.");
+          console.warn("No token found in session.");
           window.location.href = "/login";
         }
       } catch (error) {

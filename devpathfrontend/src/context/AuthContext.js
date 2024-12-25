@@ -1,51 +1,74 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from 'react';
+import axios from '../api/axiosInstance';
 
+const AuthContext = createContext({
+    user: null,
+    token: null,
+    loading: true,
+    login: () => { },
 
-export const AuthContext = createContext();
+    clearSession: () => { },
+});
 
 export const AuthProvider = ({ children }) => {
-    const [authToken, setAuthToken] = useState(null);
-    const [user, setUser] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
+    const [user, setUser] = useState(() => JSON.parse(sessionStorage.getItem("user")) || null);
+    const [token, setToken] = useState(() => sessionStorage.getItem("authToken") || null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const loadAuthData = async () => {
-            const token = localStorage.getItem("authToken");
-            if (token) {
-                setAuthToken(token);
+        const fetchUser = async () => {
+            const sessionToken = sessionStorage.getItem("authToken");
+            if (sessionToken && !user) {
+                try {
+                    const { data } = await axios.post("/login", {}, {
+                        headers: { Authorization: `Bearer ${sessionToken}` },
+                        withCredentials: true,
+                    });
 
-                // const userData = await fetchUserProfile(token);
-                // setUser(userData);
+                    const { user } = data;
+                    setUser(user);
+                    setToken(sessionToken);
+                    sessionStorage.setItem("user", JSON.stringify(user));
+                    sessionStorage.setItem("authToken", sessionToken);
+                } catch (error) {
+                    console.error("Failed to fetch user:", error.response?.data || error.message);
+                    clearSession();
+                } finally {
+                    setLoading(false);
+                }
+            } else {
+                setLoading(false);
             }
-            setIsLoading(false);
         };
 
-        loadAuthData();
-    }, []);
+        fetchUser();
+    }, [user]);
 
-    const login = (token, userData) => {
-        setAuthToken(token);
+
+    const login = (userData, authToken) => {
         setUser(userData);
-        localStorage.setItem("authToken", token);
+        setToken(authToken);
+
+        sessionStorage.setItem("user", JSON.stringify(userData));
+        sessionStorage.setItem("authToken", authToken);
     };
 
-    const logout = () => {
-        setAuthToken(null);
+
+
+    const clearSession = () => {
+        alert("Clearing session");
+        sessionStorage.removeItem("user");
+        sessionStorage.removeItem("authToken");
         setUser(null);
-        localStorage.removeItem("authToken");
+        setToken(null);
     };
+
 
     return (
-        <AuthContext.Provider
-            value={{
-                authToken,
-                user,
-                isLoading,
-                login,
-                logout,
-            }}
-        >
-            {!isLoading && children}
+        <AuthContext.Provider value={{ user, token, loading, login, clearSession }}>
+            {children}
         </AuthContext.Provider>
     );
 };
+
+export { AuthContext };

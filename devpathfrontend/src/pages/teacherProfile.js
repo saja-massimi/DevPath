@@ -15,16 +15,9 @@ function TeacherProfile() {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const token = localStorage.getItem("authToken");
-                if (token) {
-                    const response = await axiosInstance.get(`/teachers/${id}`, {
-                        headers: { Authorization: `Bearer ${token}` },
-                    });
+                    const response = await axiosInstance.get(`/teachers/${id}`);
                     setTeacherData(response.data.teacher);
-                } else {
-                    console.warn("No token found in localStorage.");
-                    window.location.href = "/login";
-                }
+             
             } catch (error) {
                 console.error("Error fetching profile:", error);
                 if (error.response && error.response.status === 401) {

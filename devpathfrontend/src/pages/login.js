@@ -1,9 +1,11 @@
 import Bgimg from '../assets/images/background/bg1.jpg';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import axiosInstance from '../api/axiosInstance';
 import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from '../api/axiosInstance';
 import * as Yup from 'yup';
 
 function Login() {
@@ -11,6 +13,7 @@ function Login() {
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
 
+    const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const validationSchema = Yup.object().shape({
@@ -35,27 +38,25 @@ function Login() {
             setErrors({});
 
             const response = await axiosInstance.post('/login', formData);
-            console.log(response.data);
 
-            if (response.data.token || response.data.user) {
+            const { user, token } = response.data;
+
+            if (token && user) {
+                login(user, token);
+
                 toast.success('Login successful!', {
-                    position: "top-right",
+                    position: 'top-right',
                     autoClose: 3000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
                 });
-                localStorage.setItem('authToken', response.data.token || '');
-                localStorage.setItem('user_id', response.data.user?.id || '');
-                localStorage.setItem('user_role', response.data.user?.role || '');
+
                 setTimeout(() => {
                     navigate('/');
                 }, 3000);
-                
             }
-
-
         } catch (error) {
             if (error.name === 'ValidationError') {
                 const validationErrors = error.inner.reduce((acc, err) => {
@@ -66,8 +67,9 @@ function Login() {
             } else {
                 const serverErrorMessage = error.response?.data?.message || 'Something went wrong!';
                 setErrors({ server: serverErrorMessage });
+
                 toast.error(serverErrorMessage, {
-                    position: "top-right",
+                    position: 'top-right',
                     autoClose: 5000,
                     hideProgressBar: false,
                     closeOnClick: true,
@@ -79,6 +81,7 @@ function Login() {
             setIsLoading(false);
         }
     };
+
 
     return (
         <>

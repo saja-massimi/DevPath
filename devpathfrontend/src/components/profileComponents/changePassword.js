@@ -29,7 +29,7 @@ function ChangePassword() {
         }
 
         try {
-            const token = localStorage.getItem("authToken");
+            const token = sessionStorage.getItem("authToken");
             const response = await axiosInstance.put(
                 "/updatePassword",
                 {
