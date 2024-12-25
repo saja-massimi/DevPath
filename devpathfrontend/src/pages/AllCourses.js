@@ -9,6 +9,7 @@ function AllCourses() {
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [priceRange, setPriceRange] = useState([0, 100]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -47,13 +48,14 @@ function AllCourses() {
   useEffect(() => {
     const result = courses.filter(
       (course) =>
+        (selectedCategory === "All" || course.category === selectedCategory) &&
         course.course_price >= priceRange[0] &&
         course.course_price <= priceRange[1] &&
         course.course_title.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredCourses(result);
     setCurrentPage(1);
-  }, [courses, priceRange, searchQuery]);
+  }, [courses, priceRange, searchQuery, selectedCategory]);
 
   const indexOfLastCourse = currentPage * coursesPerPage;
   const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
@@ -87,9 +89,27 @@ function AllCourses() {
                 <div className="widget widget_archive">
                   <h5 className="widget-title style-1">All Categories</h5>
                   <ul>
+                    <li>
+                      <a
+                        style={{ cursor: "pointer" }}
+                        className={selectedCategory === "All" ? "active" : ""}
+                        onClick={() => setSelectedCategory("All")}
+                      >
+                        All
+                      </a>
+                    </li>
                     {categories.map((category, index) => (
                       <li key={index}>
-                        <a href="#">{category.category_name}</a>
+                        <a
+                          style={{ cursor: "pointer" }}
+
+                          className={
+                            selectedCategory === category.category_name ? "active" : ""
+                          }
+                          onClick={() => setSelectedCategory(category.category_name)}
+                        >
+                          {category.category_name}
+                        </a>
                       </li>
                     ))}
                   </ul>
@@ -136,7 +156,6 @@ function AllCourses() {
                     </div>
                   )}
                 </div>
-
 
                 {/* Pagination */}
                 {totalPages > 1 && (

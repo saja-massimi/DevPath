@@ -1,8 +1,15 @@
+import SideBar from '../components/teacherDashboardComponents/sideBar';
+import Banner from '../components/aboutusComponents/banner';
+
 function TeacherDashboard() {
-    
+
     return (
-        <div>
-            <h1>Teacher Dashboard</h1>
+        <div className="page-content bg-white">
+
+            <Banner title="Teacher Dashboard" />
+            <SideBar />
+
+
         </div>
     );
 }

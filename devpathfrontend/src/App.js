@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import "animate.css";
 
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -41,12 +41,25 @@ import TeacherProfile from "./pages/teacherProfile";
 
 
 const App = () => {
-
-
-  const isTeacher = localStorage.getItem("user_role") === "teacher";
-
+  const [isTeacher, setIsTeacher] = useState(
+    localStorage.getItem("user_role") === "teacher"
+  );
 
   useEffect(() => {
+    const handleStorageChange = () => {
+      setIsTeacher(localStorage.getItem("user_role") === "teacher");
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
+  useEffect(() => {
+
+
     const handleScroll = () => {
       const backToTopButton = document.querySelector("button.back-to-top");
       if (backToTopButton) {

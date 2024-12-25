@@ -52,6 +52,7 @@ function Login() {
                 setTimeout(() => {
                     navigate('/');
                 }, 3000);
+                
             }
 
 
@@ -81,8 +82,10 @@ function Login() {
 
     return (
         <>
-            <ToastContainer />
-            <div className="account-form">
+            <div className="account-form mt-3">
+                <ToastContainer />
+
+
                 <div
                     className="account-head"
                     style={{ backgroundImage: `url(${Bgimg})` }}
