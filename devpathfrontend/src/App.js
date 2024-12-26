@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "animate.css";
 
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -36,8 +36,11 @@ import Profile from "./pages/profile";
 import CourseDetails from "./pages/courseDetails";
 import TeacherDashboard from "./pages/teacherDashboard";
 import $ from "jquery";
-import TeacherNavbar from "./components/teacherNavbar";
 import TeacherProfile from "./pages/teacherProfile";
+import Cart from "./pages/cart";
+import Wishlist from "./pages/wishlist";
+
+
 
 
 
@@ -98,7 +101,7 @@ const App = () => {
     <div>
       <Router>
 
-        <Navbar></Navbar>
+        <Navbar />
         <AuthProvider>
 
 
@@ -114,6 +117,9 @@ const App = () => {
             <Route path="/courseDetails/:courseId" element={<CourseDetails />} />
             <Route path="/teacherDashboard" element={<TeacherDashboard />} />
             <Route path="/teacherProfile/:id" element={<TeacherProfile />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/wishlist" element={<Wishlist />} />
+
 
           </Routes>
 

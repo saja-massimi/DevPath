@@ -40,7 +40,7 @@ function EditProfile() {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         try {
-            const token = localStorage.getItem("authToken");
+            const token = sessionStorage.getItem("authToken");
             const response = await axiosInstance.put("/profile", userData, {
                 headers: {
                     Authorization: `Bearer ${token}`,

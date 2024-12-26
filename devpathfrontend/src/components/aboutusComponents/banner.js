@@ -20,7 +20,7 @@ function Banner({ title }) {
         <>
             <div
                 className="page-banner ovbl-dark"
-                style={{ backgroundImage: `url(${bgImage})` }}
+                style={{ backgroundImage: `url(${bgImage})`, marginTop: '50px' }}
             >
                 <div className="container">
                     <div className="page-banner-entry">

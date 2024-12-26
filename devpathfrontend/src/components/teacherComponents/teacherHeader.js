@@ -6,23 +6,18 @@ import 'animate.css';
 
 
 function TeacherHeader() {
-    const isLoggedIn = !!localStorage.getItem("authToken");
+    const isLoggedIn = !!sessionStorage.getItem("authToken");
     const [name, setName] = useState("");
 
-    const isTeacher = localStorage.getItem("user_role") === "teacher";
 
 
 
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const token = localStorage.getItem("authToken");
+                const token = sessionStorage.getItem("authToken");
                 if (token) {
-                    const response = await axiosInstance.get('/profile', {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    });
+                    const response = await axiosInstance.get('/profile');
 
                     setName(response.data.user.name);
                 } else {
@@ -63,8 +58,8 @@ function TeacherHeader() {
                             <h5>Share Your Expertise and Inspire the Next Generation</h5>
 
 
-                            <p className="text-center mb-2">
-                                Welcome back, <strong>{name}</strong>! Ready to inspire your students?
+                            <p className="text-center mb-3">
+                                Welcome back, <strong style={{ color: '#EFBB20' }}>{name}</strong>! Ready to inspire your students?
 
                             </p>
 

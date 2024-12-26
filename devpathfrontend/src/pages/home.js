@@ -5,43 +5,42 @@ import Courses from "../components/courses";
 import TeacherHeader from "../components/teacherComponents/teacherHeader";
 import TeacherAbout2 from "../components/teacherComponents/teacherAbout2";
 import TeacherAbout from "../components/teacherComponents/teacherAbout";
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+
 function Home() {
-    const user = JSON.parse(sessionStorage.getItem("user"));
-    const isLoggedIn = user ? true : false;
-    const isTeacher = user && user.user_role === 'teacher' ? true : false;
+    const { user } = useContext(AuthContext);
+    const isTeacherLoggedIn = user?.role === 'teacher';
+
+    if (!user) {
+        <div id="loading-icon-bx"></div>
+    }
+
     return (
         <>
-            {isTeacher && isLoggedIn? (
-
-                <div style={{ marginTop: "100px" }}>
+            {isTeacherLoggedIn ? (
+                <div className="teacher-page" >
                     <div className="page-content bg-white">
                         <TeacherHeader />
                     </div>
                     <div className="content-block">
-
                         <Courses />
                         <TeacherAbout />
                         <TeacherAbout2 />
                     </div>
                 </div>
-
             ) : (
-
-                <>
-                    <div className="page-content bg-white">
-                        <Header />
-                    </div>
+                <div className="page-content bg-white">
+                    <Header />
                     <div className="content-block">
-
                         <Courses />
                         <About />
                         <About2 />
                     </div>
-                </>
+                </div>
             )}
-
         </>
-    )
-
+    );
 }
+
 export default Home;

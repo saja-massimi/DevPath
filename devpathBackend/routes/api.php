@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\CategoriesApiController;
 use App\Http\Controllers\Api\ContactUsApiController;
 use App\Http\Controllers\Api\CustomerApiController;
 use App\Http\Controllers\Api\TeacherApiController;
+use App\Http\Controllers\Api\WishlistApiController;
+use App\Http\Controllers\Api\CartApiController;
 
 //************************** Login & Registration ************************ */
 Route::post('/register', [AuthApiController::class, 'register']);
@@ -88,6 +90,26 @@ Route::middleware(['auth:sanctum'])->group(function () {
 //****************************  Contact Us ************************** */
 
 Route::post('/contact-us', [ContactUsApiController::class, 'contactUs'])->name('contact-us');
+
+//****************************** Wishlist **************************** */
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/wishlist', [WishlistApiController::class, 'index'])->name('index');
+    Route::post('/wishlist', [WishlistApiController::class, 'store'])->name('store');
+    Route::delete('/wishlist/{id}', [WishlistApiController::class, 'destroy'])->name('destroy');
+});
+
+
+//****************************** Cart ******************************* */
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/cart', [CartApiController::class, 'index'])->name('index');
+    Route::post('/cart', [CartApiController::class, 'store'])->name('store');
+    Route::delete('/cart/{id}', [CartApiController::class, 'destroy'])->name('destroy');
+});
+
+
+
 
 //***************************** Logout **************************** */
 

@@ -99,7 +99,7 @@ function Register() {
         <>
             <ToastContainer />
 
-            <div className="account-form">
+            <div className="account-form mt-4">
                 <div
                     className="account-head"
                     style={{ backgroundImage: `url(${Bgimg})` }}

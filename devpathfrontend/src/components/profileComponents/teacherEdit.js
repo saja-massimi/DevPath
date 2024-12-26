@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "../../api/axiosInstance";
 import { useParams } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 function TeacherEditProfile() {
     const { id } = useParams();
@@ -12,28 +13,32 @@ function TeacherEditProfile() {
         experiene: "",
         phone: ""
     });
-
-
+    const [statusMessage, setStatusMessage] = useState("");
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const token = localStorage.getItem("authToken");
-                if (token) {
-                    const response = await axiosInstance.get(`/teachers/${id}`, {
-                        headers: { Authorization: `Bearer ${token}` },
-                    });
-                    setUserData(response.data.teacher);
-                } else {
-                    console.warn("No token found in localStorage.");
-                    window.location.href = "/login";
+                const token = sessionStorage.getItem("authToken");
+                if (!token) {
+                    console.warn("No token found. Redirecting to login.");
+                    navigate("/login");
+                    return;
                 }
+
+                const response = await axiosInstance.get(`/teachers/${id}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setUserData(response.data.teacher);
             } catch (error) {
                 console.error("Error fetching profile:", error);
-                if (error.response && error.response.status === 401) {
-                    console.warn("Unauthorized. Redirecting to login.");
-                    window.location.href = "/login";
+                if (error.response?.status === 401) {
+                    navigate("/login");
                 }
+            } finally {
+                setLoading(false);
             }
+
         };
 
         if (id) fetchProfile();
@@ -50,8 +55,7 @@ function TeacherEditProfile() {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         try {
-            const token = localStorage.getItem("authToken");
-            const role = localStorage.getItem("user_role");
+            const token = sessionStorage.getItem("authToken");
 
             const response = await axiosInstance.put(`/teachers/${id}`, userData, {
                 headers: {
@@ -67,6 +71,9 @@ function TeacherEditProfile() {
         }
     };
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="tab-pane" id="edit-profile">
@@ -188,6 +195,8 @@ function TeacherEditProfile() {
                     </div>
                 </div>
             </form>
+            {statusMessage && <p className="status-message">{statusMessage}</p>}
+
         </div>
     );
 }

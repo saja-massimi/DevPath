@@ -4,13 +4,22 @@ import axiosInstance from '../api/axiosInstance';
 import WOW from 'wow.js';
 import 'animate.css';
 import '../componentsCSS/header.css';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
+import { Link, NavLink, useNavigate } from "react-router-dom";
+
+
 
 function Header() {
-  const isLoggedIn = !!sessionStorage.getItem("authToken");
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
+  const { user, token } = useContext(AuthContext);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!token);
 
-
-
+  useEffect(() => {
+    setIsLoggedIn(!!token);
+  }, [token]);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -63,17 +72,25 @@ function Header() {
 
               {isLoggedIn ? (
                 <p className="text-center mb-2">
-                  Welcome back, <strong>{name}</strong>! Let’s continue your journey.
+                  Welcome back, <strong style={{ color: '#EFBB20' }}>{name}</strong>! Let’s continue your journey.
                 </p>
               ) : (
 
                 <>
 
                   <>
-                    <div className="d-flex justify-content-center mb-5">
-                      <a className="btn btn-primary mx-2" href="/register">Start Teaching Now</a>
-                      <a className="btn btn-primary mx-2" href="/register">Start Learning Now</a>
-                    </div>
+                    {isLoggedIn ? (
+                      <div className="d-flex justify-content-center mb-5">
+                        <a className="btn btn-primary mx-2" href="/dashboard">Go to Dashboard</a>
+                        <a className="btn btn-primary mx-2" href="/courses">View Courses</a>
+                      </div>
+                    ) : (
+                      <div className="d-flex justify-content-center mb-5">
+                        <a className="btn btn-primary mx-2" href="/register">Start Teaching Now</a>
+                        <a className="btn btn-primary mx-2" href="/register">Start Learning Now</a>
+                      </div>
+                    )}
+
                   </>
 
                 </>

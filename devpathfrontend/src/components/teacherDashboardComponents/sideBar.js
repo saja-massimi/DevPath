@@ -3,7 +3,7 @@ import axiosInstance from '../../api/axiosInstance';
 import Profilepic from '../../assets/img/profilePic.png';
 
 function SideBar({ activeTab, setActiveTab }) {
-    const isLoggedIn = !!localStorage.getItem("authToken");
+    const isLoggedIn = !!sessionStorage.getItem("authToken");
     const [userData, setUserData] = useState({
         name: "",
         email: "",
@@ -14,7 +14,7 @@ function SideBar({ activeTab, setActiveTab }) {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const token = localStorage.getItem("authToken");
+                const token = sessionStorage.getItem("authToken");
                 if (token) {
                     const response = await axiosInstance.get("/profile", {
                         headers: {
