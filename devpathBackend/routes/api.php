@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\CustomerApiController;
 use App\Http\Controllers\Api\TeacherApiController;
 use App\Http\Controllers\Api\WishlistApiController;
 use App\Http\Controllers\Api\CartApiController;
+use App\Http\Controllers\api\TransactionApiController;
 
 //************************** Login & Registration ************************ */
 Route::post('/register', [AuthApiController::class, 'register']);
@@ -100,12 +101,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
 });
 
 
-//****************************** Cart ******************************* */
+//****************************** Transaction ******************************* */
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/cart', [CartApiController::class, 'index'])->name('index');
-    Route::post('/cart', [CartApiController::class, 'store'])->name('store');
-    Route::delete('/cart/{id}', [CartApiController::class, 'destroy'])->name('destroy');
+    Route::get('/transaction', [TransactionApiController::class, 'index'])->name('index');
+    Route::post('/transaction', [TransactionApiController::class, 'store'])->name('store');
+    Route::delete('/transaction/{id}', [TransactionApiController::class, 'destroy'])->name('destroy');
 });
 
 

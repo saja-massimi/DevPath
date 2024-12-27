@@ -72,7 +72,7 @@ class CoursesController extends Controller
 
         if ($request->hasFile('course_image')) {
             $file = $request->file('course_image');
-            $imagePath = 'dashboard_assets/images/product/' . $file->getClientOriginalName();
+            $imagePath = 'storage/' . $file->getClientOriginalName();
             $file->move(public_path('dashboard_assets/images/product/'), $file->getClientOriginalName());
             $course->course_image = basename($imagePath);
         }

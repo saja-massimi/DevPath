@@ -72,7 +72,7 @@ function Header() {
 
               {isLoggedIn ? (
                 <p className="text-center mb-2">
-                  Welcome back, <strong style={{ color: '#EFBB20' }}>{name}</strong>! Let’s continue your journey.
+                  Welcome back, <strong style={{ color: '#EFBB20' }}>{name}! </strong>Let’s continue your journey.
                 </p>
               ) : (
 

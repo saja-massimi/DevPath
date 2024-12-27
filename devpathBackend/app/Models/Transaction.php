@@ -10,18 +10,19 @@ class Transaction extends Model
 {
     use HasFactory;
     use SoftDeletes;
-    
 
-    
+
+
     protected $casts = [
         'created_at' => 'datetime',
     ];
     protected $fillable = [
-
-        'type',
+        'user_id',
+        'course_id',
         'amount',
+        'type',
         'payment_status',
-
+        'stripe_payment_intent_id',
     ];
     protected $primaryKey = 'transaction_id';
 

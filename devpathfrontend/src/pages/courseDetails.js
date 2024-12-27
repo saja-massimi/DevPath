@@ -32,6 +32,7 @@ function CourseDetails() {
                     <div className="row d-flex flex-row-reverse">
 
                         <CourseBreif
+                            id={courseId}
                             price={course.course_price}
                             difficulty={course.diffculty_leve}
                             teacher={teacher.name}
@@ -39,6 +40,7 @@ function CourseDetails() {
 
 
                         <CourseContent 
+                        id = {courseId}
                         title={course.course_title}
                         description={course.course_description}
                         duration={course.course_duration}

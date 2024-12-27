@@ -3,7 +3,7 @@ import Fallback from "../assets/img/coding.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import AxiosInstance from '../api/axiosInstance.js';
 
-function CourseBox({ id, image, title, category, price, difficulty, description }) {
+function CourseBox({ id, image, title, category, price, difficulty }) {
   const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -43,6 +43,7 @@ function CourseBox({ id, image, title, category, price, difficulty, description 
             setIsFavorite(true);
           } else if (error.response?.status === 401) {
             console.log('Unauthorized');
+      
             navigate('/login');
           }
           console.error('Error:', error);
@@ -89,7 +90,7 @@ function CourseBox({ id, image, title, category, price, difficulty, description 
       {/* Footer Section */}
       <div className="text-center py-3 bg-gray-100 flex justify-center items-center gap-2">
         <a
-          href={`#readMore${id}`}
+          href={`/checkout/${id}`}
           className="btn bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
         >
           Enroll Now
