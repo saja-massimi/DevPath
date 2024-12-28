@@ -1,7 +1,37 @@
-// import Img from '../../assets/images/background/bg1.jpg';
 import Profile from '../../assets/img/profilePic.png';
+import React, { useEffect, useState } from 'react';
+import axiosInstance from '../../api/axiosInstance';
 
-function CourseContent({ title, description, duration, teacher_name, teacher_skills, difficulty, img, students, assessments }) {
+
+function CourseContent({ id, title, description, duration, teacher_name, teacher_skills, difficulty, img, language, learning_outcomes, lectures, quizzes }) {
+
+    const [splitLearningOutcomes, setSplitLearningOutcomes] = useState([]);
+    const [content, setContent] = useState([]);
+
+    useEffect(() => {
+        if (learning_outcomes) {
+            const outcomes = learning_outcomes.split('.').filter(outcome => outcome.trim() !== '');
+            setSplitLearningOutcomes(outcomes);
+        }
+    }, [learning_outcomes]);
+
+
+    useEffect(() => {
+        const getContent = () => {
+            axiosInstance.get(`/sections/${id}`).then((res) => {
+                setContent(res.data);
+
+
+            }).catch((err) => {
+
+                console.log(err);
+            });
+
+
+        };
+        getContent();
+    }, []);
+
 
 
     return (
@@ -16,11 +46,7 @@ function CourseContent({ title, description, duration, teacher_name, teacher_ski
                     <div className="ttr-post-title ">
                         <h2 className="post-title">{title}</h2>
                     </div>
-                    <div className="ttr-post-text">
-                        <p>
-                            {description}
-                        </p>
-                    </div>
+
                 </div>
             </div>
             <div className="courese-overview" id="overview">
@@ -30,11 +56,11 @@ function CourseContent({ title, description, duration, teacher_name, teacher_ski
                         <ul className="course-features">
                             <li>
                                 <i className="ti-book" /> <span className="label">Lectures</span>
-                                <span className="value">8</span>
+                                <span className="value">{lectures}</span>
                             </li>
                             <li>
                                 <i className="ti-help-alt" /> <span className="label">Quizzes</span>
-                                <span className="value">1</span>
+                                <span className="value">{quizzes}</span>
                             </li>
                             <li>
                                 <i className="ti-time" /> <span className="label">Duration</span>
@@ -48,122 +74,59 @@ function CourseContent({ title, description, duration, teacher_name, teacher_ski
                             <li>
                                 <i className="ti-smallcap" />{" "}
                                 <span className="label">Language</span>{" "}
-                                <span className="value">English</span>
+                                <span className="value">{language}</span>
                             </li>
-                            <li>
-                                <i className="ti-user" /> <span className="label">Students</span>{" "}
-                                <span className="value">32</span>
-                            </li>
-                       
+
+
                         </ul>
                     </div>
                     <div className="col-md-12 col-lg-8">
                         <h5 className="m-b5">Course Description</h5>
                         <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the industry’s standard dummy text ever
-                            since the 1500s, when an unknown printer took a galley of type and
-                            scrambled it to make a type specimen book. It has survived not only
-                            five centuries, but also the leap into electronic typesetting,
-                            remaining essentially unchanged.
+                            {description}
                         </p>
 
                         <h5 className="m-b5">Learning Outcomes</h5>
                         <ul className="list-checked primary">
-                            <li>Over 37 lectures and 55.5 hours of content!</li>
-                            <li>LIVE PROJECT End to End Software Testing Training Included.</li>
-                            <li>
-                                Learn Software Testing and Automation basics from a professional
-                                trainer from your own desk.
-                            </li>
-                            <li>
-                                Information packed practical training starting from basics to
-                                advanced testing techniques.
-                            </li>
-                            <li>
-                                Best suitable for beginners to advanced level users and who learn
-                                faster when demonstrated.
-                            </li>
-                            <li>
-                                Course content designed by considering current software testing
-                                technology and the job market.
-                            </li>
-                            <li>Practical assignments at the end of every session.</li>
-                            <li>
-                                Practical learning experience with live project work and examples.cv
-                            </li>
+                            {splitLearningOutcomes.map((outcome, index) => (
+                                <li key={index}>{outcome}</li>)
+
+                            )}
+
                         </ul>
                     </div>
                 </div>
             </div>
+
+
             <div className="m-b30" id="curriculum">
                 <h4>Curriculum</h4>
                 <ul className="curriculum-list">
-                    <li>
-                        <h5>First Level</h5>
-                        <ul>
-                            <li>
-                                <div className="curriculum-list-box">
-                                    <span>Lesson 1.</span> Introduction to UI Design
-                                </div>
-                                <span>120 minutes</span>
-                            </li>
-                            <li>
-                                <div className="curriculum-list-box">
-                                    <span>Lesson 2.</span> User Research and Design
-                                </div>
-                                <span>60 minutes</span>
-                            </li>
-                            <li>
-                                <div className="curriculum-list-box">
-                                    <span>Lesson 3.</span> Evaluating User Interfaces Part 1
-                                </div>
-                                <span>85 minutes</span>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <h5>Second Level</h5>
-                        <ul>
-                            <li>
-                                <div className="curriculum-list-box">
-                                    <span>Lesson 1.</span> Prototyping and Design
-                                </div>
-                                <span>110 minutes</span>
-                            </li>
-                            <li>
-                                <div className="curriculum-list-box">
-                                    <span>Lesson 2.</span> UI Design Capstone
-                                </div>
-                                <span>120 minutes</span>
-                            </li>
-                            <li>
-                                <div className="curriculum-list-box">
-                                    <span>Lesson 3.</span> Evaluating User Interfaces Part 2
-                                </div>
-                                <span>120 minutes</span>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <h5>Final</h5>
-                        <ul>
-                            <li>
-                                <div className="curriculum-list-box">
-                                    <span>Part 1.</span> Final Test
-                                </div>
-                                <span>120 minutes</span>
-                            </li>
-                            <li>
-                                <div className="curriculum-list-box">
-                                    <span>Part 2.</span> Online Test
-                                </div>
-                                <span>120 minutes</span>
-                            </li>
-                        </ul>
-                    </li>
+
+
+                    {content.map((section, index) => (
+                        <li key={index}>
+                            <h5>{section.title}: {section.description}</h5>
+                            <ul>
+                                {section.content.map((lesson, index) => (
+                                    <li key={index}>
+                                        <div className="curriculum-list-box">
+                                            <span>Lesson {index + 1}.</span> {lesson.title}
+                                        </div>
+                                        <span>{lesson.duration} Hours</span>
+                                    </li>
+                                ))}
+                            </ul>
+
+                        </li>
+
+                    ))}
+
+
                 </ul>
             </div>
+
+
             <div className="" id="instructor">
                 <h4>Instructor</h4>
                 <div className="instructor-bx">
@@ -181,102 +144,11 @@ function CourseContent({ title, description, duration, teacher_name, teacher_ski
                 </div>
 
             </div>
-            <div className="" id="reviews">
-                <h4>Reviews</h4>
-                <div className="review-bx">
-                    <div className="all-review">
-                        <h2 className="rating-type">3</h2>
-                        <ul className="cours-star">
-                            <li className="active">
-                                <i className="fa fa-star" />
-                            </li>
-                            <li className="active">
-                                <i className="fa fa-star" />
-                            </li>
-                            <li className="active">
-                                <i className="fa fa-star" />
-                            </li>
-                            <li>
-                                <i className="fa fa-star" />
-                            </li>
-                            <li>
-                                <i className="fa fa-star" />
-                            </li>
-                        </ul>
-                        <span>3 Rating</span>
-                    </div>
-                    <div className="review-bar">
-                        <div className="bar-bx">
-                            <div className="side">
-                                <div>5 star</div>
-                            </div>
-                            <div className="middle">
-                                <div className="bar-container">
-                                    <div className="bar-5" style={{ width: "90%" }} />
-                                </div>
-                            </div>
-                            <div className="side right">
-                                <div>150</div>
-                            </div>
-                        </div>
-                        <div className="bar-bx">
-                            <div className="side">
-                                <div>4 star</div>
-                            </div>
-                            <div className="middle">
-                                <div className="bar-container">
-                                    <div className="bar-5" style={{ width: "70%" }} />
-                                </div>
-                            </div>
-                            <div className="side right">
-                                <div>140</div>
-                            </div>
-                        </div>
-                        <div className="bar-bx">
-                            <div className="side">
-                                <div>3 star</div>
-                            </div>
-                            <div className="middle">
-                                <div className="bar-container">
-                                    <div className="bar-5" style={{ width: "50%" }} />
-                                </div>
-                            </div>
-                            <div className="side right">
-                                <div>120</div>
-                            </div>
-                        </div>
-                        <div className="bar-bx">
-                            <div className="side">
-                                <div>2 star</div>
-                            </div>
-                            <div className="middle">
-                                <div className="bar-container">
-                                    <div className="bar-5" style={{ width: "40%" }} />
-                                </div>
-                            </div>
-                            <div className="side right">
-                                <div>110</div>
-                            </div>
-                        </div>
-                        <div className="bar-bx">
-                            <div className="side">
-                                <div>1 star</div>
-                            </div>
-                            <div className="middle">
-                                <div className="bar-container">
-                                    <div className="bar-5" style={{ width: "20%" }} />
-                                </div>
-                            </div>
-                            <div className="side right">
-                                <div>80</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+
         </div>
 
-    );
+    )
 }
 
 export default CourseContent;

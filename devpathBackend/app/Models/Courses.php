@@ -21,6 +21,13 @@ class Courses extends Model
         'course_price',
         'course_duration',
         'difficulty_leve',
+        'category',
+        'learning_outcomes',
+        'lectures',
+        'quizzes',
+        'language',
+        'teacher_id'
+        
     ];
 
 

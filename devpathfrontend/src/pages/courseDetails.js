@@ -17,6 +17,8 @@ function CourseDetails() {
                 const response = await axiosInstance.get(`/courses/${courseId}`);
                 setTeacher(response.data.data.teacher);
                 setCourse(response.data.data);
+
+                console.log(response.data.data);
             } catch (error) {
                 console.error('Error fetching course details:', error);
             }
@@ -39,16 +41,20 @@ function CourseDetails() {
                             category={course.category} />
 
 
-                        <CourseContent 
-                        id = {courseId}
-                        img={course.course_image}
-                        title={course.course_title}
-                        description={course.course_description}
-                        duration={course.course_duration}
-                        teacher_name={teacher.name}
-                        teacher_skills={teacher.experiene}
-                        difficulty={course.diffculty_leve}
-                        
+                        <CourseContent
+                            id={courseId}
+                            img={course.course_image}
+                            title={course.course_title}
+                            description={course.course_description}
+                            duration={course.course_duration}
+                            teacher_name={teacher.name}
+                            teacher_skills={teacher.experiene}
+                            difficulty={course.diffculty_leve}
+                            language={course.language}
+                            learning_outcomes={course.learning_outcomes}
+                            lectures={course.lectures}
+                            quizzes={course.quizzes}
+
                         />
 
                     </div>

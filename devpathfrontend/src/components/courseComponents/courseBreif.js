@@ -17,6 +17,7 @@ function CourseBreif({ id, price, teacher, difficulty, category }) {
                     <h4 className="price">{price} JD</h4>
                 </div>
                 <div className="course-buy-now text-center">
+                    
                     <button
                         onClick={() => navigateToCheckout(id, price)}
                         className="btn radius-xl text-uppercase"
@@ -65,12 +66,7 @@ function CourseBreif({ id, price, teacher, difficulty, category }) {
                                 Instructor
                             </a>
                         </li>
-                        <li>
-                            <a className="nav-link" href="#reviews">
-                                <i className="ti-comments" />
-                                Reviews
-                            </a>
-                        </li>
+
                     </ul>
                 </div>
             </div>
