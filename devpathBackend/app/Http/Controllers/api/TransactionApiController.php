@@ -63,7 +63,7 @@ class TransactionApiController extends Controller
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
-            Log::error('Transaction Error: ' . $e->getMessage()); // Log error for debugging
+            Log::error('Transaction Error: ' . $e->getMessage()); 
             return response()->json([
                 'error' => $e->getMessage(),
             ], 500);

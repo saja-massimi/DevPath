@@ -42,8 +42,9 @@ function CourseBox({ id, image, title, category, price, difficulty }) {
             console.log('Course already added to wishlist');
             setIsFavorite(true);
           } else if (error.response?.status === 401) {
+
             console.log('Unauthorized');
-      
+
             navigate('/login');
           }
           console.error('Error:', error);
@@ -52,14 +53,22 @@ function CourseBox({ id, image, title, category, price, difficulty }) {
   };
 
   return (
-    <div className="mx-2 cours-bx rounded-lg shadow-sm bg-white relative" style={{ minHeight: "400px" }}>
+    <div className="mx-2 cours-bx rounded-lg shadow-sm bg-white relative" style={{ minHeight: "450px" }}>
       {/* Action Box */}
       <div className="action-box relative">
-        <img
-          src={Fallback}
-          alt={title}
-          className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
-        />
+
+        {image ? (
+          <img src={image} alt={title}
+            className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105" />
+        ) : (
+          <img
+            src={Fallback}
+            alt={title}
+            className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
+          />
+        )}
+
+
         <Link className="btn" to={`/courseDetails/${id}`}>
           Read More
         </Link>

@@ -44,7 +44,7 @@ const CheckoutForm = ({ id, price }) => {
           Authorization: `Bearer ${authToken}`,
         },
         body: JSON.stringify({
-          amount: price * 100,
+          amount: price,
           payment_method_id: paymentMethod.id,
           type: "Purchase",
           payment_status: "paid",
@@ -61,12 +61,23 @@ const CheckoutForm = ({ id, price }) => {
         setPaymentSuccess(true);
         setErrorMessage("");
 
-        // Redirect to the details page after successful payment
+      
+
 
         //create enrollement record
 
-        const response = await axiosInstance.post("/enrollments/");
+        const response = await axiosInstance.post("/enrollments"
+        , {
+          course_id: id,
+          user_id: user.id,
+        }
+        ).then(
+          (response) => {
+            console.log(response);
+        }
+        );
 
+  
 
       }
     } catch (err) {

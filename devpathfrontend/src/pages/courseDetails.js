@@ -41,6 +41,7 @@ function CourseDetails() {
 
                         <CourseContent 
                         id = {courseId}
+                        img={course.course_image}
                         title={course.course_title}
                         description={course.course_description}
                         duration={course.course_duration}

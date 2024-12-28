@@ -11,7 +11,7 @@ class Courses extends Model
     use HasFactory;
     protected $primaryKey = 'course_id';
     use SoftDeletes;
-
+    protected $table = 'courses';
 
     public $timestamps = false;
     protected $fillable = [

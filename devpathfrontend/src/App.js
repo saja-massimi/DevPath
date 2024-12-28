@@ -37,7 +37,6 @@ import CourseDetails from "./pages/courseDetails";
 import TeacherDashboard from "./pages/teacherDashboard";
 import $ from "jquery";
 import TeacherProfile from "./pages/teacherProfile";
-import Cart from "./pages/cart";
 import Wishlist from "./pages/wishlist";
 import Checkout from "./pages/checkout";
 
@@ -115,7 +114,6 @@ const App = () => {
             <Route path="/courseDetails/:courseId" element={<CourseDetails />} />
             <Route path="/teacherDashboard" element={<TeacherDashboard />} />
             <Route path="/teacherProfile/:id" element={<TeacherProfile />} />
-            <Route path="/cart" element={<Cart />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/checkout/:id" element={<Checkout />} />
 

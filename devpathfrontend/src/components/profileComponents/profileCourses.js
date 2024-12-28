@@ -16,7 +16,7 @@ function ProfileCourses() {
                         Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
                     },
                 });
-                
+
                 if (Array.isArray(response.data.data)) {
                     setCourses(response.data.data);
                 }
@@ -53,10 +53,12 @@ function ProfileCourses() {
                 <div className="courses-filter">
                     <div className="clearfix">
                         <ul id="masonry" className="list-unstyled ttr-gallery-listing magnific-image row">
-                            <li className="action-card col-xl-4 col-lg-6 col-md-12 col-sm-6 publish">
 
 
-                                {courses.map((course) => (
+
+                            {courses.map((course) => (
+
+                                <li className="action-card col-xl-4 col-lg-6 col-md-12 col-sm-6 publish">
                                     <CourseBox
                                         key={course.course_id}
                                         id={course.course_id}
@@ -66,8 +68,10 @@ function ProfileCourses() {
                                         price={course.course_price}
                                         difficulty={course.diffculty_leve}
                                     />
-                                ))}
-                            </li>
+
+                                </li>
+                            ))}
+
                         </ul>
                     </div>
                 </div>

@@ -23,10 +23,7 @@ class CoursesController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
@@ -51,7 +48,6 @@ class CoursesController extends Controller
     {
         //
     }
-
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -64,6 +60,8 @@ class CoursesController extends Controller
         ]);
 
         $course = Courses::findOrFail($id);
+
+    
         $course->course_title = $request->course_title;
         $course->course_description = $request->course_description;
         $course->course_price = $request->course_price;
@@ -71,16 +69,17 @@ class CoursesController extends Controller
         $course->diffculty_leve = $request->diffculty_leve;
 
         if ($request->hasFile('course_image')) {
-            $file = $request->file('course_image');
-            $imagePath = 'storage/' . $file->getClientOriginalName();
-            $file->move(public_path('dashboard_assets/images/product/'), $file->getClientOriginalName());
-            $course->course_image = basename($imagePath);
+
+            $filePath = $request->file('course_image')->store('courses', 'public');
+            $course->course_image = basename($filePath);
         }
+
 
         $course->save();
 
         return response()->json(['success' => true, 'message' => 'Course updated successfully']);
     }
+
 
 
 

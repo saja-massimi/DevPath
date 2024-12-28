@@ -14,7 +14,8 @@ class ContactusController extends Controller
             return redirect('/');
         }
         $contactus = Contactus::all();
-        
+        // dd($contactus);
+
         return view('dashboard/contactUs', compact('contactus'));
     }
 

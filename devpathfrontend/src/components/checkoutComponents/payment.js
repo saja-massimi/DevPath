@@ -4,7 +4,7 @@ import { Elements } from "@stripe/react-stripe-js"; // Stripe's React wrappe
 
 const stripePromise = loadStripe("pk_test_51QacE7Ej0SujJLjmTdvw257qdXut2Jchu0UKgmjCz5bC2siO85MBezt1dLU2hK6VBxD5zXCzoBNEca7tMDFUCNal00lZHxWdjM");
 
-function Payment({id,price}) {
+function Payment({ id, price }) {
 
 
     const userData = JSON.parse(sessionStorage.getItem('user'));
@@ -44,7 +44,7 @@ function Payment({id,price}) {
                     </div>
                     <div className="ttr-post-text">
                         <Elements stripe={stripePromise}>
-                            <CheckoutForm id={id} price={price}/>
+                            <CheckoutForm id={id} price={price} />
                         </Elements>
                     </div>
                 </div>

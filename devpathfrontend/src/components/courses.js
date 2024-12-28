@@ -12,12 +12,13 @@ const Courses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axiosInstance.get("/courses");
+        const response = await axiosInstance.get("courses/latestThree");
+
 
         if (Array.isArray(response.data.data)) {
           setCourses(response.data.data);
         }
-
+console.log(response.data.data);
 
       } catch (error) {
         console.error("Error fetching courses:", error);
@@ -68,7 +69,7 @@ const Courses = () => {
         <div className="row wow animate__slideInLeft" data-wow-delay="0.5s">
           <div className="col-md-12 heading-bx left">
             <h2 className="title-head">
-              Popular <span>Courses</span>
+              Latest <span>Courses</span>
             </h2>
           </div>
         </div>
@@ -90,13 +91,13 @@ const Courses = () => {
               />
             ))}
 
-            
+
           </Slider>
         ) : (
           <p>No courses available at the moment.</p>
         )}
 
-        
+
       </div>
     </div>
   );

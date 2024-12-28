@@ -24,8 +24,21 @@ class EnrollmentsApiController extends Controller
 
     public function store(Request $request)
     {
+
+        //make sure its not already enrolled
+        $enrollment = Enrollments::where('user_id', Auth::id())
+            ->where('course_id', $request->course_id)
+            ->first();
+
+        if ($enrollment) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You are already enrolled in this course.',
+            ], 422);
+        }
+        
         $validator = Validator::make($request->all(), [
-            'course_id' => 'required|exists:courses,id' 
+            'course_id' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -40,12 +53,14 @@ class EnrollmentsApiController extends Controller
             $enrollment = Enrollments::create([
                 'user_id' => Auth::id(),
                 'course_id' => $request->course_id,
+                'enrolled_at' => now(),
             ]);
 
             return response()->json([
                 'success' => true,
                 'data' => $enrollment,
-            ], 201); // 201 Created status
+            ], 201); 
+
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

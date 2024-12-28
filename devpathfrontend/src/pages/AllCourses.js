@@ -30,6 +30,7 @@ function AllCourses() {
       }
     };
 
+
     const fetchCategories = async () => {
       try {
         const response = await axiosInstance.get("/categories");
@@ -139,6 +140,7 @@ function AllCourses() {
                         className="col-md-6 col-lg-4 col-sm-6 m-b30"
                         key={course.course_id}
                       >
+                        
                         <CourseBox
                           id={course.course_id}
                           image={course.course_image}

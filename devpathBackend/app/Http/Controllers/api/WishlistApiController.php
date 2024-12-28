@@ -10,7 +10,14 @@ class WishlistApiController extends Controller
 {
     public function index()
     {
+      
         $wishlist = Wishlist::with('course')->where('user_id', auth()->id())->get();
+
+        $wishlist = $wishlist->map(function ($item) {
+            $item->course->course_image = $item->course->course_image ? url('storage/courses/' . $item->course->course_image) : null;
+            return $item;
+        });
+
         return response()->json([
             'success' => true,
             'message' => 'Wishlist Items',
@@ -50,6 +57,8 @@ class WishlistApiController extends Controller
     public function show($id)
     {
         $wishlistItem = Wishlist::with('course')->where('course_id', $id)->where('user_id', auth()->id())->first();
+
+
         if (!$wishlistItem) {
             return response()->json(['success' => false, 'message' => 'Wishlist Item Not Found'], 404);
         }

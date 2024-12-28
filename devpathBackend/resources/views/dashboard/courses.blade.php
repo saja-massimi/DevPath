@@ -84,8 +84,11 @@
                                                 @method('PATCH')
 
 
-                                                <img src="{{ asset('dashboard_assets/images/product/'.$course->course_image) }}"
-                                                    alt="image"
+
+
+                                                <img src="{{ asset('storage/courses/' . $course->course_image) }}"
+                                                    alt="{{ $course->course_title }}"
+                                                    style="width: 100px; height: 100px;"
                                                     style="width: 100px; height: 100px; cursor: pointer;"
                                                     id="image-preview-{{ $course->course_id }}">
 

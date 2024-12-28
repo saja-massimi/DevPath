@@ -1,7 +1,7 @@
-import Img from '../../assets/images/background/bg1.jpg';
+// import Img from '../../assets/images/background/bg1.jpg';
 import Profile from '../../assets/img/profilePic.png';
 
-function CourseContent({ title, description, duration, teacher_name,teacher_skills, difficulty, students, assessments }) {
+function CourseContent({ title, description, duration, teacher_name, teacher_skills, difficulty, img, students, assessments }) {
 
 
     return (
@@ -9,7 +9,7 @@ function CourseContent({ title, description, duration, teacher_name,teacher_skil
             <div className="courses-post">
                 <div className="ttr-post-media media-effect">
                     <a href="#">
-                        <img src={Img} alt="" />
+                        <img src={img} alt="" />
                     </a>
                 </div>
                 <div className="ttr-post-info">
@@ -54,11 +54,7 @@ function CourseContent({ title, description, duration, teacher_name,teacher_skil
                                 <i className="ti-user" /> <span className="label">Students</span>{" "}
                                 <span className="value">32</span>
                             </li>
-                            <li>
-                                <i className="ti-check-box" />{" "}
-                                <span className="label">Assessments</span>{" "}
-                                <span className="value">Yes</span>
-                            </li>
+                       
                         </ul>
                     </div>
                     <div className="col-md-12 col-lg-8">
@@ -177,9 +173,9 @@ function CourseContent({ title, description, duration, teacher_name,teacher_skil
                     <div className="instructor-info">
                         <h6>{teacher_name} </h6>
                         <span>Instructor</span>
-                    
+
                         <p className="m-b0">
-                           {teacher_skills}
+                            {teacher_skills}
                         </p>
                     </div>
                 </div>
