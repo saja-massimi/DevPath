@@ -15,6 +15,10 @@ class EnrollmentsApiController extends Controller
         // Get the logged-in user
         $user = Auth::user();
         $courses = $user->courses()->get();
+        $courses = $courses->map(function ($course) {
+            $course->course_image = $course->course_image ? url('storage/courses/' . $course->course_image) : null;
+            return $course;
+        });
 
         return response()->json([
             'success' => true,
@@ -25,7 +29,7 @@ class EnrollmentsApiController extends Controller
     public function store(Request $request)
     {
 
-        //make sure its not already enrolled
+
         $enrollment = Enrollments::where('user_id', Auth::id())
             ->where('course_id', $request->course_id)
             ->first();
@@ -36,7 +40,7 @@ class EnrollmentsApiController extends Controller
                 'message' => 'You are already enrolled in this course.',
             ], 422);
         }
-        
+
         $validator = Validator::make($request->all(), [
             'course_id' => 'required'
         ]);
@@ -59,8 +63,7 @@ class EnrollmentsApiController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $enrollment,
-            ], 201); 
-
+            ], 201);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

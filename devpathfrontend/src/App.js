@@ -39,6 +39,7 @@ import $ from "jquery";
 import TeacherProfile from "./pages/teacherProfile";
 import Wishlist from "./pages/wishlist";
 import Checkout from "./pages/checkout";
+import CourseVideos from "./pages/courseVideos";
 
 
 const App = () => {
@@ -116,6 +117,7 @@ const App = () => {
             <Route path="/teacherProfile/:id" element={<TeacherProfile />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/checkout/:id" element={<Checkout />} />
+            <Route path="/courseVideos/:id" element={<CourseVideos />} />
 
 
           </Routes>

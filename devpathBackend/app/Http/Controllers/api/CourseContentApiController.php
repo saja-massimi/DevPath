@@ -15,4 +15,6 @@ class CourseContentApiController extends Controller
 
         return response()->json($content);
     }
+
+    
 }

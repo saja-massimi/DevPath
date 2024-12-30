@@ -3,23 +3,26 @@ import Fallback from "../assets/img/coding.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import AxiosInstance from '../api/axiosInstance.js';
 
-function CourseBox({ id, image, title, category, price, difficulty }) {
+function CourseBox({ id, image, title, category, price, difficulty, isEnrolled }) {
   const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    AxiosInstance.get('/wishlist')
-      .then((response) => {
-        const wishlistData = response.data.data;
+    if (sessionStorage.getItem('token') !== null) {
+      AxiosInstance.get('/wishlist')
+        .then((response) => {
+          const wishlistData = response.data.data;
 
-        if (wishlistData.some(item => item.course_id === id)) {
-          setIsFavorite(true);
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching wishlist:', error);
-      });
+          if (wishlistData.some(item => item.course_id === id)) {
+            setIsFavorite(true);
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching wishlist:', error);
+        });
+    }
   }, [id]);
+
 
   const toggleWishlist = (id) => {
     if (isFavorite) {
@@ -53,7 +56,7 @@ function CourseBox({ id, image, title, category, price, difficulty }) {
   };
 
   return (
-    <div className="mx-2 cours-bx rounded-lg shadow-sm bg-white relative" style={{ minHeight: "450px" }}>
+    <div className="mx-2 cours-bx rounded-lg shadow-sm bg-white relative" style={{ minHeight: "400px" }}>
       {/* Action Box */}
       <div className="action-box relative">
 
@@ -98,12 +101,26 @@ function CourseBox({ id, image, title, category, price, difficulty }) {
 
       {/* Footer Section */}
       <div className="text-center py-3 bg-gray-100 flex justify-center items-center gap-2">
-        <a
-          href={`/checkout/${id}`}
-          className="btn bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-        >
-          Enroll Now
-        </a>
+
+        {
+
+          isEnrolled ? (
+            <a
+              href={`/courseVideos/${id} `}
+              className="btn bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+            >
+              Watch Now
+            </a>
+          ) : (
+            <a
+              href={`/checkout/${id}?price=${price}`}
+              className="btn bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+            >
+              Enroll Now
+            </a>
+
+          )
+        }
 
         {/* Heart Icon */}
         <a

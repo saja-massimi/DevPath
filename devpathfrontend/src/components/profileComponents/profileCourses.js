@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import axioInstace from '../../api/axiosInstance';
 import CourseBox from '../courseBox';
 import axiosInstance from '../../api/axiosInstance';
 
 function ProfileCourses() {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(true);
-
-
+    const [isEnrolled, setIsEnrolled] = useState(true);
     useEffect(() => {
         const fetchCourses = async () => {
             try {
@@ -56,9 +54,9 @@ function ProfileCourses() {
 
 
 
-                            {courses.map((course) => (
+                            {courses.map((course, key) => (
 
-                                <li className="action-card col-xl-4 col-lg-6 col-md-12 col-sm-6 publish">
+                                <li className="action-card col-xl-4 col-lg-6 col-md-12 col-sm-6 publish" key={key}>
                                     <CourseBox
                                         key={course.course_id}
                                         id={course.course_id}
@@ -67,6 +65,7 @@ function ProfileCourses() {
                                         category={course.category}
                                         price={course.course_price}
                                         difficulty={course.diffculty_leve}
+                                        isEnrolled={isEnrolled}
                                     />
 
                                 </li>

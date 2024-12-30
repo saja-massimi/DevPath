@@ -15,12 +15,10 @@ function Profile() {
     const fetchProfile = async () => {
       try {
         const token = sessionStorage.getItem("authToken");
-        console.log("Token:", token);
         if (token) {
           const response = await axiosInstance.get("/profile", {
             headers: { Authorization: `Bearer ${token}` },
           });
-          console.log("Response:", response);
           setUserData(response.data.user);
         } else {
           console.warn("No token found in session.");

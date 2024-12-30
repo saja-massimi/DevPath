@@ -57,4 +57,10 @@ class CoursesApiController extends Controller
             'data' => $courses
         ], 200);
     }
+
+    function getAllCourseData($id)
+    {
+        
+
+    }
 }

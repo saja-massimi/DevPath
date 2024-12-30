@@ -1,11 +1,12 @@
 import React from 'react';
 import Summary from '../components/checkoutComponents/summary';
 import Payment from '../components/checkoutComponents/payment';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 function Checkout() {
     const location = useLocation();
     const { id, price } = location.state || {};
+
 
     if (!id || !price) {
         return (

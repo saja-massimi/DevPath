@@ -12,10 +12,12 @@ class CustomerApiController extends Controller
     public function index()
     {
 
-
         $users = User::where('role', 'student')->get();
+        
         return response()->json([
             'users' => $users
         ], 200);
     }
+
+
 }
