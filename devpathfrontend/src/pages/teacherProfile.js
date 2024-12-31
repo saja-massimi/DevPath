@@ -15,9 +15,9 @@ function TeacherProfile() {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                    const response = await axiosInstance.get(`/teachers/${id}`);
-                    setTeacherData(response.data.teacher);
-             
+                const response = await axiosInstance.get(`/teachers/${id}`);
+                setTeacherData(response.data.teacher);
+
             } catch (error) {
                 console.error("Error fetching profile:", error);
                 if (error.response && error.response.status === 401) {

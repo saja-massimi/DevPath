@@ -34,6 +34,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
 Route::get('/teachers', [TeacherApiController::class, 'index'])->name('index');
 
 Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::get('/teacherDashboard/{id}', [TeacherApiController::class, 'getTotalNumOfStudents'])->name('teacher');
+    Route::get('/teacherCourses/{id}', [TeacherApiController::class, 'getAllTeacherCourses'])->name('teacherCourses');
     Route::put('/teachers/{id}', [TeacherApiController::class, 'update'])->name('update');
     Route::get('/teachers/{id}', [TeacherApiController::class, 'show'])->name('show');
     Route::get('/teacher/courses/{id}', [TeacherApiController::class, 'teacher_courses'])->name('teacher.courses');

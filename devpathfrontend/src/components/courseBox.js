@@ -55,6 +55,11 @@ function CourseBox({ id, image, title, category, price, difficulty, isEnrolled }
     }
   };
 
+
+  const handleButtonClick = () => {
+    navigate(`/checkout/${id}`, { state: { id: id, price: price } });
+  };
+
   return (
     <div className="mx-2 cours-bx rounded-lg shadow-sm bg-white relative" style={{ minHeight: "400px" }}>
       {/* Action Box */}
@@ -113,7 +118,7 @@ function CourseBox({ id, image, title, category, price, difficulty, isEnrolled }
             </a>
           ) : (
             <a
-              href={`/checkout/${id}?price=${price}`}
+              onClick={handleButtonClick}
               className="btn bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
             >
               Enroll Now

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Teacher;
 use App\Models\User;
+use App\Models\Courses;
 
 class TeacherApiController extends Controller
 {
@@ -61,6 +62,36 @@ class TeacherApiController extends Controller
             'message' => 'Profile updated successfully',
             'user' => $user,
             'teacher' => $teacher ?? null,
+        ], 200);
+    }
+
+    public function getTotalNumOfStudents($teacherId)
+    {
+        $courses = Courses::where('teacher_id', $teacherId)
+            ->withCount('enrollments')
+            ->get();
+
+        return response()->json([
+            'courses' => $courses->map(function ($course) {
+                return [
+                    'course_id' => $course->course_id,
+                    'course_name' => $course->course_title,
+                    'students_count' => $course->enrollments_count,
+                ];
+            }),
+        ], 200);
+    }
+
+
+    function getAllTeacherCourses($teacherId)
+    {
+        $courses = Courses::where('teacher_id', $teacherId)->get();
+        $courses = $courses->map(function ($course) {
+            $course->course_image = $course->course_image ? url('storage/courses/' . $course->course_image) : null;
+            return $course;
+        });
+        return response()->json([
+            'courses' => $courses
         ], 200);
     }
 }

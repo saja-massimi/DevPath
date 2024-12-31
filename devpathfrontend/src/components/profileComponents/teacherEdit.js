@@ -30,6 +30,8 @@ function TeacherEditProfile() {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setUserData(response.data.teacher);
+
+
             } catch (error) {
                 console.error("Error fetching profile:", error);
                 if (error.response?.status === 401) {

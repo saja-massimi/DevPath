@@ -34,7 +34,7 @@ const CourseVideos = () => {
           const firstLesson = data[0]?.content?.[0];
           if (firstLesson) {
             setCurrentVideo(firstLesson.video_url);
-            setSelectedLesson(firstLesson.courseContent_id); // Set the first lesson as selected
+            setSelectedLesson(firstLesson.courseContent_id); 
           }
         }
       } catch (err) {
@@ -52,7 +52,7 @@ const CourseVideos = () => {
 
   const handleLessonClick = (lessonId, videoUrl) => {
     setCurrentVideo(videoUrl);
-    setSelectedLesson(lessonId); // Update selected lesson
+    setSelectedLesson(lessonId); 
   };
 
   return (

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+
 class Courses extends Model
 {
     use HasFactory;
@@ -27,14 +28,13 @@ class Courses extends Model
         'quizzes',
         'language',
         'teacher_id'
-        
+
     ];
-
-
     public function enrollments()
     {
-        return $this->hasMany(Enrollments::class);
+        return $this->hasMany(Enrollments::class, 'course_id');
     }
+
 
     public function users()
     {
