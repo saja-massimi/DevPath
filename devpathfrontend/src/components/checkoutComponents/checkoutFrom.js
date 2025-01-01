@@ -13,8 +13,12 @@ const CheckoutForm = ({ id, price }) => {
   const user = JSON.parse(sessionStorage.getItem("user"));
   const authToken = sessionStorage.getItem("authToken");
 
+
+  // console.log(price);
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+
 
     if (!stripe || !elements) {
       setErrorMessage("Stripe is not properly initialized.");
@@ -61,23 +65,23 @@ const CheckoutForm = ({ id, price }) => {
         setPaymentSuccess(true);
         setErrorMessage("");
 
-      
+
 
 
         //create enrollement record
 
         const response = await axiosInstance.post("/enrollments"
-        , {
-          course_id: id,
-          user_id: user.id,
-        }
+          , {
+            course_id: id,
+            user_id: user.id,
+          }
         ).then(
           (response) => {
             console.log(response);
-        }
+          }
         );
 
-  
+
 
       }
     } catch (err) {

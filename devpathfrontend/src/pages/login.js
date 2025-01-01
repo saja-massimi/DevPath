@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from '../api/axiosInstance';
 import * as Yup from 'yup';
-
+import Swal from 'sweetalert2';
 function Login() {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [errors, setErrors] = useState({});
@@ -44,14 +44,16 @@ function Login() {
             if (token && user) {
                 login(user, token);
 
-                toast.success('Login successful!', {
-                    position: 'top-right',
-                    autoClose: 3000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                });
+                Swal.fire({
+                    icon: "success",
+                    title: "Success!",
+                    text: "Login successful! Welcome back!",
+                    toast: true,
+                    position: "bottom-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                })
 
                 setTimeout(() => {
                     navigate('/');
@@ -68,14 +70,16 @@ function Login() {
                 const serverErrorMessage = error.response?.data?.message || 'Something went wrong!';
                 setErrors({ server: serverErrorMessage });
 
-                toast.error(serverErrorMessage, {
-                    position: 'top-right',
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                });
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!",
+                    text: 'Wrong email or password!',
+                    toast: true,
+                    position: "bottom-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                })
             }
         } finally {
             setIsLoading(false);

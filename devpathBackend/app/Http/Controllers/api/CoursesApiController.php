@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\api;
 
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Courses;
@@ -58,9 +59,54 @@ class CoursesApiController extends Controller
         ], 200);
     }
 
-    function getAllCourseData($id)
+    function destroy(Courses $course)
     {
-        
+        $course->delete();
+        return response()->json([
+            'message' => 'Course deleted successfully'
+        ]);
+    }
 
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'course_name' => 'required|string|max:255',
+            'course_description' => 'required|string',
+            'course_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'teacher_id' => 'required|exists:teachers,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation errors',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        try {
+            $imagePath = null;
+            if ($request->hasFile('course_image')) {
+                $file = $request->file('course_image');
+                $imagePath = $file->store('course_images', 'public');
+            }
+
+            $course = new Courses();
+            $course->course_name = $request->input('course_name');
+            $course->course_description = $request->input('course_description');
+            $course->course_image = $imagePath;
+            $course->teacher_id = $request->input('teacher_id');
+            $course->save();
+
+            return response()->json([
+                'message' => 'Course added successfully',
+                'data' => $course,
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to add course',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 }

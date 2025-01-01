@@ -6,6 +6,7 @@ import AxiosInstance from '../api/axiosInstance.js';
 function CourseBox({ id, image, title, category, price, difficulty, isEnrolled }) {
   const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(false);
+  const isLogged = sessionStorage.getItem('token') !== null;
 
   useEffect(() => {
     if (sessionStorage.getItem('token') !== null) {
@@ -57,6 +58,10 @@ function CourseBox({ id, image, title, category, price, difficulty, isEnrolled }
 
 
   const handleButtonClick = () => {
+    if (!isLogged) {
+      navigate('/login');
+      return;
+    }
     navigate(`/checkout/${id}`, { state: { id: id, price: price } });
   };
 

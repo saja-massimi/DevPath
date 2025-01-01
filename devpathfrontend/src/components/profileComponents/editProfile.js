@@ -53,7 +53,7 @@ function EditProfile() {
             console.error("Error updating profile:", error);
         }
 
-        
+
     };
 
     return (
@@ -123,7 +123,7 @@ function EditProfile() {
                         <div className="row">
                             <div className="col-12 col-sm-3 col-md-3 col-lg-2" />
                             <div className="col-12 col-sm-9 col-md-9 col-lg-7">
-                                <button type="submit" className="btn main-btn">
+                                <button type="submit" className="btn main-btn mx-3">
                                     Save changes
                                 </button>
                                 <button type="reset" className="btn-secondry ">

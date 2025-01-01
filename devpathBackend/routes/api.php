@@ -60,7 +60,8 @@ Route::get('/courses', [CoursesApiController::class, 'index'])->name('index');
 Route::get('/courses/latestThree', [CoursesApiController::class, 'getLatestThreeCourses'])->name('latestThree');
 Route::get('/courses/{course}', [CoursesApiController::class, 'show'])->name('show');
 
-Route::middleware(['auth:sanctum', 'authorize'])->group(function () {
+Route::middleware(['auth:sanctum'])->group(function () {
+
     Route::post('/courses', [CoursesApiController::class, 'store'])->name('store');
     Route::patch('/courses/{course}', [CoursesApiController::class, 'update'])->name('update');
     Route::delete('/courses/{course}', [CoursesApiController::class, 'destroy'])->name('destroy');
