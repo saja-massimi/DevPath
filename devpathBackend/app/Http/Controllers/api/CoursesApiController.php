@@ -71,10 +71,10 @@ class CoursesApiController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'course_name' => 'required|string|max:255',
+            'course_title' => 'required|string|max:255',
             'course_description' => 'required|string',
             'course_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'teacher_id' => 'required|exists:teachers,id',
+            'teacher_id' => 'required|exists:teachers,teacher_id',
         ]);
 
         if ($validator->fails()) {
@@ -83,19 +83,30 @@ class CoursesApiController extends Controller
                 'errors' => $validator->errors(),
             ], 422);
         }
+        $course = new Courses();
 
         try {
-            $imagePath = null;
+
             if ($request->hasFile('course_image')) {
-                $file = $request->file('course_image');
-                $imagePath = $file->store('course_images', 'public');
+
+                $filePath = $request->file('course_image')->store('courses', 'public');
+                $course->course_image = basename($filePath);
             }
 
-            $course = new Courses();
-            $course->course_name = $request->input('course_name');
+            $course->course_title = $request->input('course_title');
             $course->course_description = $request->input('course_description');
-            $course->course_image = $imagePath;
+            // $course->course_image = $imagePath;
             $course->teacher_id = $request->input('teacher_id');
+            $course->course_price = $request->input('course_price');
+            $course->course_duration = $request->input('course_duration');
+            $course->diffculty_leve = $request->input('diffculty_leve');
+            $course->category = $request->input('category');
+            $course->learning_outcomes = $request->input('learning_outcomes');
+            $course->lectures = $request->input('lectures');
+            $course->quizzes = $request->input('quizzes');
+            $course->language = $request->input('language');
+
+
             $course->save();
 
             return response()->json([

@@ -5,6 +5,7 @@ import axiosInstance from '../api/axiosInstance';
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import * as Yup from 'yup';
+import useTypingEffect from '../customHooks/useTypingEffect';
 
 function Register() {
     const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ function Register() {
         password_confirmation: '',
         is_pending_teacher: 0,
     });
+
     const [errors, setErrors] = useState({});
     const [serverMessage, setServerMessage] = useState('');
     const navigate = useNavigate();
@@ -99,16 +101,16 @@ function Register() {
         <>
             <ToastContainer />
 
-            <div className="account-form mt-4">
+            <div className="account-form ">
                 <div
                     className="account-head"
                     style={{ backgroundImage: `url(${Bgimg})` }}
                 />
-                <div className="account-form-inner">
+                <div className="account-form-inner mt-5">
                     <div className="account-container">
                         <div className="heading-bx left">
                             <h2 className="title-head">
-                                Sign Up <span>Now</span>
+                                {useTypingEffect("Sign Up Now", 100)}
                             </h2>
                             <p>
                                 Already have an account? <a href="/login">Click here</a>

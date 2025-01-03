@@ -18,7 +18,7 @@ class SectionApiController extends Controller
             $section->content = courseContent::where('section_id', $section->section_id)->get();
         }
 
-      
+
         return response()->json($sections);
     }
 

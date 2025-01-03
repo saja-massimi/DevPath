@@ -2,30 +2,31 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import CourseBox from "./courseBox";
 import axiosInstance from "../api/axiosInstance";
-import WOW from 'wow.js';
-import 'animate.css';
+import WOW from "wow.js";
+import "animate.css";
+import TeacherCourseBox from "../components/teacherDashboardComponents/teacherCourseBox";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const userData = JSON.parse(sessionStorage.getItem("user"));
+
   useEffect(() => {
     const fetchCourses = async () => {
       try {
         const response = await axiosInstance.get("courses/latestThree");
-
-
         if (Array.isArray(response.data.data)) {
           setCourses(response.data.data);
         }
-console.log(response.data.data);
-
+        console.log(response.data.data);
       } catch (error) {
         console.error("Error fetching courses:", error);
       } finally {
         setLoading(false);
       }
     };
+
 
     fetchCourses();
 
@@ -38,7 +39,6 @@ console.log(response.data.data);
     });
     wow.init();
   }, []);
-
 
   const settings = {
     dots: true,
@@ -64,6 +64,7 @@ console.log(response.data.data);
   };
 
   return (
+
     <div className="section-area section-sp2 vh-100">
       <div className="container">
         <div className="row wow animate__slideInLeft" data-wow-delay="0.5s">
@@ -76,10 +77,9 @@ console.log(response.data.data);
         {loading ? (
           <p>Loading courses...</p>
         ) : courses.length > 0 ? (
-
           <Slider {...settings} className="wow animate__slideInRight" data-wow-delay="0.5s">
+            {courses.map((course) =>
 
-            {courses.map((course) => (
               <CourseBox
                 key={course.course_id}
                 id={course.course_id}
@@ -89,15 +89,12 @@ console.log(response.data.data);
                 price={course.course_price}
                 difficulty={course.diffculty_leve}
               />
-            ))}
 
-
+            )}
           </Slider>
         ) : (
           <p>No courses available at the moment.</p>
         )}
-
-
       </div>
     </div>
   );

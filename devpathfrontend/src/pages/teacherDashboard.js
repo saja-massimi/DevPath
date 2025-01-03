@@ -71,7 +71,7 @@ function TeacherDasboard() {
     const TabContent = {
         dashboard: teacherID ? <Dashboard id={teacherID} /> : <div>Loading dashboard...</div>,
         "my-courses": teacherID ? <MyCourses id={teacherID} /> : <div>Loading courses...</div>,
-        "add-course": <AddCourse />,
+        "add-course": teacherID ? <AddCourse id={teacherID} /> : <div>Loading courses...</div>
     };
 
 

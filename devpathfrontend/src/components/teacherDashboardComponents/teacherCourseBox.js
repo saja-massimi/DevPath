@@ -6,7 +6,6 @@ import axiosInstance from "../../api/axiosInstance";
 function TeacherCourseBox({ id, image, title, category, price, difficulty, description }) {
     const navigate = useNavigate();
 
-    // Function to handle course deletion
     const deleteCourse = async () => {
         try {
             const response = await axiosInstance.delete(`/courses/${id}`);
@@ -64,16 +63,7 @@ function TeacherCourseBox({ id, image, title, category, price, difficulty, descr
                                         <h5>Category</h5>
                                         <h4>{category}</h4>
                                     </li>
-                                    <li className="card-courses-review">
-                                        <h5>3 Review</h5>
-                                        <ul className="cours-star">
-                                            <li className="active"><i className="fa fa-star" /></li>
-                                            <li className="active"><i className="fa fa-star" /></li>
-                                            <li className="active"><i className="fa fa-star" /></li>
-                                            <li><i className="fa fa-star" /></li>
-                                            <li><i className="fa fa-star" /></li>
-                                        </ul>
-                                    </li>
+
                                     <li className="card-courses-price">
                                         <h5 className="text-primary">{price} JD</h5>
                                     </li>

@@ -11,7 +11,7 @@ const CourseVideos = () => {
   const [selectedSection, setSelectedSection] = useState(null);
   const [splitLearningOutcomes, setSplitLearningOutcomes] = useState([]);
   const [currentVideo, setCurrentVideo] = useState('');
-  const [selectedLesson, setSelectedLesson] = useState(null); // Track selected lesson
+  const [selectedLesson, setSelectedLesson] = useState(null);
 
   useEffect(() => {
     const getCourseData = async () => {
@@ -34,7 +34,7 @@ const CourseVideos = () => {
           const firstLesson = data[0]?.content?.[0];
           if (firstLesson) {
             setCurrentVideo(firstLesson.video_url);
-            setSelectedLesson(firstLesson.courseContent_id); 
+            setSelectedLesson(firstLesson.courseContent_id);
           }
         }
       } catch (err) {
@@ -52,7 +52,7 @@ const CourseVideos = () => {
 
   const handleLessonClick = (lessonId, videoUrl) => {
     setCurrentVideo(videoUrl);
-    setSelectedLesson(lessonId); 
+    setSelectedLesson(lessonId);
   };
 
   return (

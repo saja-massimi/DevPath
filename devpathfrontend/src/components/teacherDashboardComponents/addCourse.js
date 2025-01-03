@@ -5,20 +5,23 @@ import axiosInstance from "../../api/axiosInstance";
 import Steps from "./steps";
 import AddSection from "./addSections";
 
-function AddCourse() {
+function AddCourse({ id }) {
+
+
     const [currentStep, setCurrentStep] = useState(1);
     const [formData, setFormData] = useState({
         course_title: "",
         course_duration: "",
         diffculty_leve: "",
         category: "",
-        teacher_id: "",
+        teacher_id: id,
         course_description: "",
         course_price: "",
         language: "",
         learning_outcomes: "",
         lectures: "",
         quizzes: "",
+        course_image: "",
     });
 
     const [file, setFile] = useState(null);
@@ -29,8 +32,19 @@ function AddCourse() {
     };
 
     const onDrop = (acceptedFiles) => {
-        setFile(acceptedFiles[0]);
+        const file = acceptedFiles[0];
+
+        setFile(file);
+
+        const formDataWithFile = new FormData();
+        formDataWithFile.append('course_image', file);
+
+        setFormData({
+            ...formData,
+            course_image: file.name,
+        });
     };
+
 
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,
@@ -40,23 +54,57 @@ function AddCourse() {
     const handleNext = () => setCurrentStep((prev) => prev + 1);
     const handlePrevious = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
 
+    const [courseId, setCourseId] = useState(null);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await axiosInstance.post('/courses', formData);
 
-        console.log("Form Submitted", response.data);
+        const formDataWithFile = new FormData();
+        if (file) {
+            formDataWithFile.append("course_image", file);
+        }
 
-        Swal.fire({
-            icon: "success",
-            title: "Success!",
-            text: "Course added successfully",
-            toast: true,
-            position: "bottom-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
+        Object.keys(formData).forEach((key) => {
+            formDataWithFile.append(key, formData[key]);
         });
+
+        try {
+            const response = await axiosInstance.post("/courses", formDataWithFile, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+
+            const course_id = response.data.course_id;
+            setCourseId(course_id);
+            console.log("Form Submitted", response.data);
+
+            Swal.fire({
+                icon: "success",
+                title: "Success!",
+                text: "Course added successfully",
+                toast: true,
+                position: "bottom-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            });
+
+            handleNext();
+        } catch (error) {
+            console.error("Error submitting form:", error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops!",
+                text: "Something went wrong while adding the course.",
+                toast: true,
+                position: "bottom-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            });
+        }
     };
+
+
 
     return (
         <main className="ttr-wrapper">
@@ -74,6 +122,8 @@ function AddCourse() {
                     </ul>
                 </div>
                 <Steps currentStep={currentStep} />
+
+
                 <div className="row">
                     <div className="col-lg-12 m-b30">
                         <div className="widget-box">
@@ -82,6 +132,7 @@ function AddCourse() {
                             </div>
                             <div className="widget-inner">
                                 <form className="edit-profile m-b30" onSubmit={handleSubmit}>
+
                                     {currentStep === 1 && (
                                         <div className="row">
                                             <div className="col-12">
@@ -213,6 +264,8 @@ function AddCourse() {
                                                                     width: "100px",
                                                                     height: "100px",
                                                                 }}
+
+
                                                             />
                                                             <p>{file.name}</p>
                                                         </div>
@@ -233,16 +286,18 @@ function AddCourse() {
                                         </div>
                                     )}
 
+
                                     {currentStep === 2 && (
                                         <div>
-                                            <AddSection />
+                                            <AddSection courseId={courseId} />
+
                                             <button
                                                 className="btn btn-secondary"
                                                 onClick={handlePrevious}
                                             >
                                                 Previous
                                             </button>
-                                            <button className="btn btn-primary" onClick={handleNext}>
+                                            <button className="btn btn-primary mx-3" onClick={handleNext}>
                                                 Next
                                             </button>
                                         </div>

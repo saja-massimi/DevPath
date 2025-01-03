@@ -10,6 +10,7 @@ function CourseDetails() {
     const [course, setCourse] = useState({});
     const [teacher, setTeacher] = useState({});
     const [loading, setLoading] = useState(true);
+    const isLogged = sessionStorage.getItem('authToken') !== null;
 
     useEffect(() => {
         const fetchCourseDetails = async () => {
@@ -38,7 +39,8 @@ function CourseDetails() {
                             price={course.course_price}
                             difficulty={course.diffculty_leve}
                             teacher={teacher.name}
-                            category={course.category} />
+                            category={course.category}
+                            isLogged={isLogged} />
 
 
                         <CourseContent

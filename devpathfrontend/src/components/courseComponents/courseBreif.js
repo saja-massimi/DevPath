@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Img from '../../assets/img/profilePic.png';
 
-function CourseBreif({ id, price, teacher, difficulty, category }) {
+function CourseBreif({ id, price, teacher, difficulty, category, isLogged }) {
     const navigate = useNavigate();
 
     const navigateToCheckout = (id, price) => {
@@ -17,13 +17,19 @@ function CourseBreif({ id, price, teacher, difficulty, category }) {
                     <h4 className="price">{price} JD</h4>
                 </div>
                 <div className="course-buy-now text-center">
-                    
-                    <button
+
+                    {isLogged ? (<button
                         onClick={() => navigateToCheckout(id, price)}
                         className="btn radius-xl text-uppercase"
                     >
                         Buy This Course
-                    </button>
+                    </button>) : (
+
+                        <button className="btn radius-xl text-uppercase"
+                            onClick={() => navigate('/login')}
+                        >Login to Buy This Course</button>
+                    )}
+
                 </div>
                 <div className="teacher-bx">
                     <div className="teacher-info">

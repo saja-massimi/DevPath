@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import AddContent from "./addContent";
 import { v4 as uuidv4 } from "uuid";
+import axiosInstance from "../../api/axiosInstance";
+import Swal from "sweetalert2";
 
-function AddSection() {
+function AddSection({ courseId }) {
     const [sections, setSections] = useState([
         { id: uuidv4(), name: "", description: "", content: [] },
     ]);
@@ -15,11 +17,58 @@ function AddSection() {
         );
     };
 
-    const addSection = () => {
-        setSections([
-            ...sections,
-            { id: uuidv4(), name: "", description: "", content: [] },
-        ]);
+    const addSection = async () => {
+        if (!courseId) {
+            Swal.fire({
+                icon: "error",
+                title: "Error!",
+                text: "Course ID is missing. Please ensure the course is added first.",
+                toast: true,
+                position: "bottom-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            });
+            return;
+        }
+
+        try {
+            const response = await axiosInstance.post("/sections", {
+                course_id: courseId, // Link section to the course
+                name: "New Section",
+                description: "Section Description",
+            });
+
+            const sectionId = response.data.section_id;
+
+            setSections((prevSections) => [
+                ...prevSections,
+                { id: sectionId, name: "New Section", description: "Section Description", content: [] },
+            ]);
+
+            Swal.fire({
+                icon: "success",
+                title: "Section Added",
+                text: "The section was successfully added.",
+                toast: true,
+                position: "bottom-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            });
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Error!",
+                text: "There was an issue adding the section. Please try again.",
+                toast: true,
+                position: "bottom-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            });
+            console.error("Error adding section:", error);
+        }
     };
 
     const removeSection = (id) => {
@@ -34,13 +83,8 @@ function AddSection() {
         );
     };
 
-
-
     return (
         <div className="widget-box">
-            <div className="wc-title">
-                <h3>3. Add Sections</h3>
-            </div>
             <div className="widget-inner">
                 {sections.map((section) => (
                     <div
@@ -58,6 +102,7 @@ function AddSection() {
                                 type="text"
                                 className="form-control"
                                 value={section.name}
+                                placeholder="ex: Section 1"
                                 onChange={(e) =>
                                     handleSectionChange(section.id, "name", e.target.value)
                                 }
@@ -89,7 +134,7 @@ function AddSection() {
                         />
                     </div>
                 ))}
-                <button className="btn btn-primary" onClick={addSection}>
+                <button type="button" className="btn btn-primary" onClick={addSection}>
                     Add Section
                 </button>
             </div>

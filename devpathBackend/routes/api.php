@@ -118,6 +118,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 //****************************** Section  ******************************* */
 
 Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/sections', [SectionApiController::class, 'store'])->name('store');
     Route::get('/sections/{course_id}', [SectionApiController::class, 'getSections'])->name('sections');
 });
 

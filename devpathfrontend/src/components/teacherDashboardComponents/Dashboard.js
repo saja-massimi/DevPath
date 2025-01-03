@@ -26,7 +26,6 @@ function Dashboard({ id }) {
 
   return (
     <div>
-
       <ResponsiveContainer width="70%" height={400}>
         <BarChart data={courseData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />
@@ -34,9 +33,11 @@ function Dashboard({ id }) {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="students_count" fill="#EFBB20" />
+          <Bar dataKey="students_count" fill="#EFBB20" name="Number of Students" label={{ position: "top" }} />
         </BarChart>
       </ResponsiveContainer>
+
+
     </div>
   );
 }

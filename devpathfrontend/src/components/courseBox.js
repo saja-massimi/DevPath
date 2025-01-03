@@ -2,13 +2,16 @@ import React, { useState, useEffect } from "react";
 import Fallback from "../assets/img/coding.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import AxiosInstance from '../api/axiosInstance.js';
+import Swal from "sweetalert2";
 
 function CourseBox({ id, image, title, category, price, difficulty, isEnrolled }) {
   const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(false);
-  const isLogged = sessionStorage.getItem('token') !== null;
+  const isLogged = sessionStorage.getItem('authToken') !== null;
 
   useEffect(() => {
+
+
     if (sessionStorage.getItem('token') !== null) {
       AxiosInstance.get('/wishlist')
         .then((response) => {
@@ -113,6 +116,7 @@ function CourseBox({ id, image, title, category, price, difficulty, isEnrolled }
       <div className="text-center py-3 bg-gray-100 flex justify-center items-center gap-2">
 
         {
+
 
           isEnrolled ? (
             <a
