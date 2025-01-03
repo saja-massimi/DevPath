@@ -33,7 +33,19 @@ class CourseContentApiController extends Controller
     {
         $content = new courseContent();
         $content->course_id = request('course_id');
-        $content->content = request('content');
+        $content->section_id = request('section_id');
+
+        $content->title = request('title');
+
+        $content->description = request('description');
+        $content->video_url = request('video_url');
+
+        $content->duration = request('duration');
+        $content->content_type = request('content_type');
+
+
+
+
         $content->save();
 
         return response()->json([

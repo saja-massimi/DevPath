@@ -27,13 +27,13 @@ class SectionApiController extends Controller
     {
         $request->validate([
             'course_id' => 'required',
-            'name' => 'required',
+            'title' => 'required',
             'description' => 'required',
         ]);
 
         $section = new Section();
         $section->course_id = $request->course_id;
-        $section->name = $request->name;
+        $section->title = $request->title;
         $section->description = $request->description;
         $section->save();
 

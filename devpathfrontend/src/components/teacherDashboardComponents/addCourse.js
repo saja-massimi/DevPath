@@ -24,11 +24,16 @@ function AddCourse({ id }) {
         course_image: "",
     });
 
+    const [courseId, setCourseId] = useState(null);
     const [file, setFile] = useState(null);
+    const [validationErrors, setValidationErrors] = useState({});
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+        setValidationErrors({ ...validationErrors, [name]: "" });
+
     };
 
     const onDrop = (acceptedFiles) => {
@@ -45,64 +50,93 @@ function AddCourse({ id }) {
         });
     };
 
-
     const { getRootProps, getInputProps } = useDropzone({
-        onDrop,
+        onDrop: (acceptedFiles) => {
+            const file = acceptedFiles[0];
+            setFile(file);
+            setValidationErrors({ ...validationErrors, course_image: "" });
+        },
         accept: "image/*",
     });
 
-    const handleNext = () => setCurrentStep((prev) => prev + 1);
+    const handleGoBack = () => {
+        window.location.href = "/teacherDashboard";
+    }
+
+    const validateForm = () => {
+        const errors = {};
+        if (!formData.course_title.trim()) errors.course_title = "Course Title is required.";
+        if (!formData.course_price.trim() || formData.course_price <= 0)
+            errors.course_price = "Price must be a positive number.";
+        if (!formData.course_duration.trim()) errors.course_duration = "Course Duration is required.";
+        if (!formData.lectures.trim() || formData.lectures <= 0)
+            errors.lectures = "Number of Lectures must be a positive number.";
+        if (!formData.language.trim()) errors.language = "Language is required.";
+        if (!formData.category.trim()) errors.category = "Category is required.";
+        if (!formData.diffculty_leve.trim()) errors.diffculty_leve = "Difficulty Level is required.";
+        if (!formData.learning_outcomes.trim()) errors.learning_outcomes = "Learning Outcomes are required.";
+        if (!formData.course_description.trim()) errors.course_description = "Course Description is required.";
+        if (!file) errors.course_image = "Course Image is required.";
+
+        setValidationErrors(errors);
+        return Object.keys(errors).length === 0;
+    };
+    const handleNext = async (e) => {
+        e.preventDefault();
+        if (!validateForm()) return;
+
+        if (currentStep === 1) {
+            const formDataWithFile = new FormData();
+            if (file) {
+                formDataWithFile.append("course_image", file);
+            }
+            Object.keys(formData).forEach((key) => {
+                formDataWithFile.append(key, formData[key]);
+            });
+
+            try {
+                const response = await axiosInstance.post("/courses", formDataWithFile, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                }).then((response) => {
+                    const course_id = response.data.data.course_id;
+                    setCourseId(course_id);
+
+                });
+
+
+
+
+                Swal.fire({
+                    icon: "success",
+                    title: "Success!",
+                    text: "Course added successfully",
+                    toast: true,
+                    position: "bottom-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+            } catch (error) {
+                console.error("Error submitting form:", error);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops!",
+                    text: "Something went wrong while adding the course.",
+                    toast: true,
+                    position: "bottom-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+                return;
+            }
+        }
+
+        setCurrentStep((prev) => prev + 1);
+    };
+
     const handlePrevious = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
 
-    const [courseId, setCourseId] = useState(null);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const formDataWithFile = new FormData();
-        if (file) {
-            formDataWithFile.append("course_image", file);
-        }
-
-        Object.keys(formData).forEach((key) => {
-            formDataWithFile.append(key, formData[key]);
-        });
-
-        try {
-            const response = await axiosInstance.post("/courses", formDataWithFile, {
-                headers: { "Content-Type": "multipart/form-data" },
-            });
-
-            const course_id = response.data.course_id;
-            setCourseId(course_id);
-            console.log("Form Submitted", response.data);
-
-            Swal.fire({
-                icon: "success",
-                title: "Success!",
-                text: "Course added successfully",
-                toast: true,
-                position: "bottom-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-            });
-
-            handleNext();
-        } catch (error) {
-            console.error("Error submitting form:", error);
-            Swal.fire({
-                icon: "error",
-                title: "Oops!",
-                text: "Something went wrong while adding the course.",
-                toast: true,
-                position: "bottom-end",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-            });
-        }
-    };
 
 
 
@@ -131,7 +165,7 @@ function AddCourse({ id }) {
                                 <h4>Add Course</h4>
                             </div>
                             <div className="widget-inner">
-                                <form className="edit-profile m-b30" onSubmit={handleSubmit}>
+                                <form className="edit-profile m-b30" onSubmit={handleNext}>
 
                                     {currentStep === 1 && (
                                         <div className="row">
@@ -147,6 +181,9 @@ function AddCourse({ id }) {
                                                     value={formData.course_title}
                                                     onChange={handleChange}
                                                 />
+                                                {validationErrors.course_title && (
+                                                    <span className="text-danger">{validationErrors.course_title}</span>
+                                                )}
                                             </div>
                                             <div className="form-group col-6">
                                                 <label>Price (JOD)</label>
@@ -157,6 +194,9 @@ function AddCourse({ id }) {
                                                     value={formData.course_price}
                                                     onChange={handleChange}
                                                 />
+                                                {validationErrors.course_price && (
+                                                    <span className="text-danger">{validationErrors.course_price}</span>
+                                                )}
                                             </div>
                                             <div className="form-group col-6">
                                                 <label>Course Duration (in hours)</label>
@@ -167,6 +207,9 @@ function AddCourse({ id }) {
                                                     value={formData.course_duration}
                                                     onChange={handleChange}
                                                 />
+                                                {validationErrors.course_duration && (
+                                                    <span className="text-danger">{validationErrors.course_duration}</span>
+                                                )}
                                             </div>
                                             <div className="form-group col-6">
                                                 <label>Number of Lectures</label>
@@ -177,6 +220,9 @@ function AddCourse({ id }) {
                                                     value={formData.lectures}
                                                     onChange={handleChange}
                                                 />
+                                                {validationErrors.lectures && (
+                                                    <span className="text-danger">{validationErrors.lectures}</span>
+                                                )}
                                             </div>
                                             <div className="form-group col-6">
                                                 <label>Number of Quizzes</label>
@@ -187,6 +233,9 @@ function AddCourse({ id }) {
                                                     value={formData.quizzes}
                                                     onChange={handleChange}
                                                 />
+                                                {validationErrors.quizzes && (
+                                                    <span className="text-danger">{validationErrors.quizzes}</span>
+                                                )}
                                             </div>
                                             <div className="form-group col-6">
                                                 <label>Language</label>
@@ -197,6 +246,9 @@ function AddCourse({ id }) {
                                                     value={formData.language}
                                                     onChange={handleChange}
                                                 />
+                                                {validationErrors.language && (
+                                                    <span className="text-danger">{validationErrors.language}</span>
+                                                )}
                                             </div>
                                             <div className="form-group col-6">
                                                 <label>Category</label>
@@ -207,6 +259,9 @@ function AddCourse({ id }) {
                                                     value={formData.category}
                                                     onChange={handleChange}
                                                 />
+                                                {validationErrors.category && (
+                                                    <span className="text-danger">{validationErrors.category}</span>
+                                                )}
                                             </div>
                                             <div className="form-group col-6">
                                                 <label>Difficulty Level</label>
@@ -221,6 +276,9 @@ function AddCourse({ id }) {
                                                     <option value="intermediate">Intermediate</option>
                                                     <option value="advanced">Advanced</option>
                                                 </select>
+                                                {validationErrors.diffculty_leve && (
+                                                    <span className="text-danger">{validationErrors.diffculty_leve}</span>
+                                                )}
                                             </div>
                                             <div className="form-group col-12">
                                                 <label>Learning Outcomes</label>
@@ -232,6 +290,9 @@ function AddCourse({ id }) {
                                                     value={formData.learning_outcomes}
                                                     onChange={handleChange}
                                                 />
+                                                {validationErrors.learning_outcomes && (
+                                                    <span className="text-danger">{validationErrors.learning_outcomes}</span>
+                                                )}
                                             </div>
                                             <div className="form-group col-12">
                                                 <label>Course Description</label>
@@ -241,6 +302,9 @@ function AddCourse({ id }) {
                                                     value={formData.course_description}
                                                     onChange={handleChange}
                                                 />
+                                                {validationErrors.course_description && (
+                                                    <span className="text-danger">{validationErrors.course_description}</span>
+                                                )}
                                             </div>
                                             <div className="form-group col-12">
                                                 <h3>2. Upload Course Image</h3>
@@ -305,19 +369,17 @@ function AddCourse({ id }) {
 
                                     {currentStep === 3 && (
                                         <div>
-                                            <h3>Review & Submit</h3>
-                                            <p>Review your course details and submit</p>
+                                            <h3>Course Added Successfully!</h3>
                                             <button
                                                 className="btn btn-secondary"
-                                                onClick={handlePrevious}
+                                                onClick={handleGoBack}
                                             >
-                                                Previous
-                                            </button>
-                                            <button className="btn btn-success" onClick={handleSubmit}>
-                                                Submit
+                                                Go Back
                                             </button>
                                         </div>
                                     )}
+
+
                                 </form>
                             </div>
                         </div>

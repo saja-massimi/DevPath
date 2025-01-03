@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import AddContent from "./addContent";
 import { v4 as uuidv4 } from "uuid";
 import axiosInstance from "../../api/axiosInstance";
 import Swal from "sweetalert2";
 
 function AddSection({ courseId }) {
     const [sections, setSections] = useState([
-        { id: uuidv4(), name: "", description: "", content: [] },
+        { id: uuidv4(), title: "New Section", description: "Section Description", content: [] },
     ]);
 
     const handleSectionChange = (id, field, value) => {
@@ -34,8 +33,8 @@ function AddSection({ courseId }) {
 
         try {
             const response = await axiosInstance.post("/sections", {
-                course_id: courseId, // Link section to the course
-                name: "New Section",
+                course_id: courseId,
+                title: "New Section",
                 description: "Section Description",
             });
 
@@ -43,7 +42,7 @@ function AddSection({ courseId }) {
 
             setSections((prevSections) => [
                 ...prevSections,
-                { id: sectionId, name: "New Section", description: "Section Description", content: [] },
+                { id: sectionId, title: "New Section", description: "Section Description", content: [] },
             ]);
 
             Swal.fire({
@@ -67,20 +66,38 @@ function AddSection({ courseId }) {
                 timer: 3000,
                 timerProgressBar: true,
             });
-            console.error("Error adding section:", error);
+            console.error("Error adding section:", error.response?.data || error.message);
         }
     };
 
-    const removeSection = (id) => {
-        setSections(sections.filter((section) => section.id !== id));
-    };
+    const removeSection = async (id) => {
+        try {
+            await axiosInstance.delete(`/sections/${id}`);
+            setSections((prev) => prev.filter((section) => section.id !== id));
 
-    const handleContentUpdate = (id, updatedContent) => {
-        setSections((prev) =>
-            prev.map((section) =>
-                section.id === id ? { ...section, content: updatedContent } : section
-            )
-        );
+            Swal.fire({
+                icon: "success",
+                title: "Section Removed",
+                text: "The section was successfully removed.",
+                toast: true,
+                position: "bottom-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            });
+        } catch (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Error!",
+                text: "There was an issue removing the section. Please try again.",
+                toast: true,
+                position: "bottom-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+            });
+            console.error("Error removing section:", error.response?.data || error.message);
+        }
     };
 
     return (
@@ -101,10 +118,10 @@ function AddSection({ courseId }) {
                             <input
                                 type="text"
                                 className="form-control"
-                                value={section.name}
-                                placeholder="ex: Section 1"
+                                value={section.title}
+                                placeholder="Enter Section Name"
                                 onChange={(e) =>
-                                    handleSectionChange(section.id, "name", e.target.value)
+                                    handleSectionChange(section.id, "title", e.target.value)
                                 }
                             />
                         </div>
@@ -113,6 +130,7 @@ function AddSection({ courseId }) {
                             <textarea
                                 className="form-control"
                                 value={section.description}
+                                placeholder="Enter Section Description"
                                 onChange={(e) =>
                                     handleSectionChange(section.id, "description", e.target.value)
                                 }
@@ -125,16 +143,14 @@ function AddSection({ courseId }) {
                         >
                             Remove Section
                         </button>
-                        <AddContent
-                            sectionId={section.id}
-                            content={section.content}
-                            onUpdate={(updatedContent) =>
-                                handleContentUpdate(section.id, updatedContent)
-                            }
-                        />
                     </div>
                 ))}
-                <button type="button" className="btn btn-primary" onClick={addSection}>
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={addSection}
+                    style={{ marginTop: "10px" }}
+                >
                     Add Section
                 </button>
             </div>

@@ -6,9 +6,9 @@ import Banner from '../components/aboutusComponents/banner';
 import Dashboard from '../components/teacherDashboardComponents/Dashboard';
 import MyCourses from '../components/teacherDashboardComponents/myCourses';
 import AddCourse from '../components/teacherDashboardComponents/addCourse';
+import AddContent from '../components/teacherDashboardComponents/addContent';
 
-
-function TeacherDasboard() {
+function TeacherDashboard() {
     const [activeTab, setActiveTab] = useState("dashboard");
     const isLoggedIn = !!sessionStorage.getItem("authToken");
     const userId = JSON.parse(sessionStorage.getItem("user")).id;
@@ -71,14 +71,20 @@ function TeacherDasboard() {
     const TabContent = {
         dashboard: teacherID ? <Dashboard id={teacherID} /> : <div>Loading dashboard...</div>,
         "my-courses": teacherID ? <MyCourses id={teacherID} /> : <div>Loading courses...</div>,
-        "add-course": teacherID ? <AddCourse id={teacherID} /> : <div>Loading courses...</div>
+        "add-course": teacherID ? <AddCourse id={teacherID} /> : <div>Loading courses...</div>,
+        "add-content": teacherID ? <AddContent id={teacherID} /> : <div>Loading courses...</div>
+
+
     };
 
 
     const tabs = [
-        { id: "dasboard", label: "Dashboard", icon: "book" },
+        { id: "dashboard", label: "Dashboard", icon: "book" },
         { id: "my-courses", label: "My Courses", icon: "bookmark-alt" },
-        { id: "add-course", label: "Add New Course", icon: "pencil-alt" }
+        { id: "add-course", label: "Add New Course", icon: "pencil-alt" },
+        { id: "add-content", label: "Add Content", icon: "file-alt" },
+
+
     ];
 
 
@@ -141,16 +147,16 @@ function TeacherDasboard() {
                                                     Add New Course
                                                 </a>
                                             </li>
-                                            {/* <li className="nav-item">
+                                            <li className="nav-item">
                                                 <a
-                                                    className={`nav-link ${activeTab === "change-password" ? "active" : ""}`}
-                                                    onClick={() => handleTabClick("change-password")}
-                                                    href="#change-password"
+                                                    className={`nav-link ${activeTab === "add-content" ? "active" : ""}`}
+                                                    onClick={() => handleTabClick("add-content")}
+                                                    href="#add-content"
                                                 >
-                                                    <i className="ti-lock" />
-                                                    Reviews
+                                                    <i className="ti-video-camera" />
+                                                    Add Content
                                                 </a>
-                                            </li> */}
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -176,4 +182,4 @@ function TeacherDasboard() {
     );
 }
 
-export default TeacherDasboard;
+export default TeacherDashboard;

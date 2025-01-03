@@ -13,7 +13,7 @@ function Dashboard({ id }) {
 
 
         const response = await axiosInstance.get(`/teacherDashboard/${id}`);
-        console.log(response.data);
+
         setCourseData(response.data.courses);
       } catch (error) {
         console.error("Error fetching profile:", error);

@@ -68,7 +68,6 @@ const CheckoutForm = ({ id, price }) => {
 
 
 
-        //create enrollement record
 
         const response = await axiosInstance.post("/enrollments"
           , {

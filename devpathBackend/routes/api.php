@@ -126,6 +126,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/course-content', [CourseContentApiController::class, 'getCourseContent'])->name('course-content');
+    Route::get('/course-content/{id}', [CourseContentApiController::class, 'getCourseContentById'])->name('course-content-by-id');
+    Route::post('/course-content', [CourseContentApiController::class, 'store'])->name('course-content-store');
 });
 
 //***************************** Logout **************************** */
